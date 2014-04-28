@@ -27,6 +27,7 @@ public class DialogGenerarReporte extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogGenerarReporte(Ventana ventana) {
+		setResizable(false);
 		
 		principal = ventana;
 		setTitle("Generar Reporte");

@@ -36,6 +36,7 @@ public class DialogEditarCosto extends JDialog {
 	 */
 	public DialogEditarCosto(Ventana ventana) 
 	{
+		setResizable(false);
 		setTitle("Editar Costo");
 		principal = ventana;
 
