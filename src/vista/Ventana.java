@@ -14,7 +14,7 @@ public class Ventana extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					tabGerente frame = new tabGerente();
+					Ventana frame = new Ventana();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -26,7 +26,7 @@ public class Ventana extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public tabGerente() {
+	public Ventana() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 682, 472);
 		contentPane = new JPanel();
