@@ -1,9 +1,6 @@
-package Interfaz;
+package vista;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -21,14 +18,14 @@ public class DialogGenerarReporte extends JDialog {
 	private JTextField txtTotalDescuentos;
 	private ButtonGroup butGroup;
 	
-	private tabGerente principal;
+	private Ventana principal;
 	private JRadioButton rdbtnCantidadDineroRecaudado;
 	private JRadioButton rdbtnCantidadViajesVendidos;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DialogGenerarReporte(tabGerente ventana) {
+	public DialogGenerarReporte(Ventana ventana) {
 		
 		principal = ventana;
 		setTitle("Generar Reporte");

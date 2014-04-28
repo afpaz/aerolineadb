@@ -1,4 +1,4 @@
-package Interfaz;
+package vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -21,7 +20,7 @@ public class DialogEditarCosto extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	private tabGerente principal;
+	private Ventana principal;
 	private JTextField txtDescuentos;
 	private JTextField txtOrigen;
 	private JTextField txtDestino;
@@ -30,7 +29,7 @@ public class DialogEditarCosto extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogEditarCosto(tabGerente ventana) 
+	public DialogEditarCosto(Ventana ventana) 
 	{
 		setTitle("Editar Costo");
 		principal = ventana;
