@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -72,7 +73,7 @@ public class DialogEditarCosto extends JDialog {
 			txtOrigen.setColumns(10);
 		}
 		{
-			ImageIcon image = new ImageIcon("./data/delete.png");
+			ImageIcon image = new ImageIcon( getClass().getResource("delete.png"));
 			JButton butEliminarOrigen = new JButton(image);
 			butEliminarOrigen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) 
@@ -95,7 +96,7 @@ public class DialogEditarCosto extends JDialog {
 			txtDestino.setColumns(10);
 		}
 		{
-			ImageIcon image = new ImageIcon("./data/delete.png");
+			ImageIcon image = new ImageIcon(getClass().getResource("delete.png"));
 			JButton butEliminarDestino = new JButton(image);
 			butEliminarDestino.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) 
