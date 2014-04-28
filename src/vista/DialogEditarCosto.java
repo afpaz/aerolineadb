@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class DialogEditarCosto extends JDialog {
 
@@ -55,11 +56,6 @@ public class DialogEditarCosto extends JDialog {
 			JLabel lblCiudades = new JLabel("Ciudades:");
 			lblCiudades.setBounds(10, 61, 117, 14);
 			contentPanel.add(lblCiudades);
-		}
-		{
-			JList ciudadesList = new JList();
-			ciudadesList.setBounds(10, 86, 214, 173);
-			contentPanel.add(ciudadesList);
 		}
 		{
 			JLabel lblOrigen = new JLabel("Origen:");
@@ -140,6 +136,15 @@ public class DialogEditarCosto extends JDialog {
 		butGroup.add(rdbtnBaja);
 		butGroup.add(rdbtnMedia);
 		butGroup.add(rdbtnAlta);
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 81, 214, 184);
+			contentPanel.add(scrollPane);
+			{
+				JList listCiudades = new JList();
+				scrollPane.setViewportView(listCiudades);
+			}
+		}
 
 		{
 			JPanel buttonPane = new JPanel();

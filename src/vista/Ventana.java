@@ -13,6 +13,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 
 public class Ventana extends JFrame {
 
@@ -42,11 +43,6 @@ public class Ventana extends JFrame {
 		JLabel lblTiquetes = new JLabel("Tiquetes:");
 		lblTiquetes.setBounds(10, 11, 92, 14);
 		panel.add(lblTiquetes);
-		
-		JList list = new JList();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(20, 386, 257, -349);
-		panel.add(list);
 		
 		JLabel lblCosto = new JLabel("Costo:");
 		lblCosto.setBounds(615, 65, 46, 14);
@@ -81,9 +77,11 @@ public class Ventana extends JFrame {
 		btnGenerarReporte.setBounds(517, 161, 134, 23);
 		panel.add(btnGenerarReporte);
 		
-		JList list_1 = new JList();
-		list_1.setBounds(10, 36, 483, 359);
-		panel.add(list_1);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 36, 497, 359);
+		panel.add(scrollPane);
+		JList listTiquetes = new JList();
+		scrollPane.setViewportView(listTiquetes);
 		
 		PanelConsultaViajes panelConsultaViajes = new PanelConsultaViajes();
 		tabbedPane.addTab("Panel Consuta", null, panelConsultaViajes, null);

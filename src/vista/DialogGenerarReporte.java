@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 public class DialogGenerarReporte extends JDialog {
 
@@ -38,11 +39,6 @@ public class DialogGenerarReporte extends JDialog {
 			JLabel lblVendedores = new JLabel("Ranking Vendedores:");
 			lblVendedores.setBounds(10, 11, 174, 14);
 			contentPanel.add(lblVendedores);
-		}
-		{
-			JList vendedoresList = new JList();
-			vendedoresList.setBounds(10, 29, 228, 298);
-			contentPanel.add(vendedoresList);
 		}
 		{
 			rdbtnCantidadDineroRecaudado = new JRadioButton("Cantidad dinero recaudado", true);
@@ -94,6 +90,15 @@ public class DialogGenerarReporte extends JDialog {
 			txtTotalDescuentos.setBounds(365, 261, 158, 20);
 			contentPanel.add(txtTotalDescuentos);
 			txtTotalDescuentos.setColumns(10);
+		}
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 36, 231, 292);
+			contentPanel.add(scrollPane);
+			{
+				JList list = new JList();
+				scrollPane.setViewportView(list);
+			}
 		}
 	}
 
