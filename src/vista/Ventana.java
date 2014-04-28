@@ -25,6 +25,7 @@ public class Ventana extends JFrame {
 	 * Create the frame.
 	 */
 	public Ventana() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 682, 472);
 		contentPane = new JPanel();
@@ -33,7 +34,7 @@ public class Ventana extends JFrame {
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 666, 434);
+		tabbedPane.setBounds(0, 0, 676, 444);
 		contentPane.add(tabbedPane);
 		
 		Panel panel = new Panel();

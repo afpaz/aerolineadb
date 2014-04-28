@@ -17,6 +17,8 @@ import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class DialogEditarCosto extends JDialog {
 
@@ -28,6 +30,7 @@ public class DialogEditarCosto extends JDialog {
 	private JTextField txtDestino;
 	private JTextField textField;
 	private ButtonGroup butGroup;
+	private JList listCiudades;
 	/**
 	 * Create the dialog.
 	 */
@@ -64,6 +67,7 @@ public class DialogEditarCosto extends JDialog {
 		}
 		{
 			txtOrigen = new JTextField();
+			txtOrigen.setEditable(false);
 			txtOrigen.setBounds(234, 108, 157, 20);
 			contentPanel.add(txtOrigen);
 			txtOrigen.setColumns(10);
@@ -75,6 +79,7 @@ public class DialogEditarCosto extends JDialog {
 				public void actionPerformed(ActionEvent arg0) 
 				{
 					txtOrigen.setText("");
+					listCiudades.clearSelection();
 				}
 			});
 			butEliminarOrigen.setBounds(397, 107, 34, 23);
@@ -87,6 +92,7 @@ public class DialogEditarCosto extends JDialog {
 		}
 		{
 			txtDestino = new JTextField();
+			txtDestino.setEditable(false);
 			txtDestino.setBounds(234, 170, 157, 20);
 			contentPanel.add(txtDestino);
 			txtDestino.setColumns(10);
@@ -98,6 +104,7 @@ public class DialogEditarCosto extends JDialog {
 				public void actionPerformed(ActionEvent e) 
 				{
 					txtDestino.setText("");
+					listCiudades.clearSelection();
 				}
 			});
 			butEliminarDestino.setBounds(397, 167, 34, 23);
@@ -141,7 +148,29 @@ public class DialogEditarCosto extends JDialog {
 			scrollPane.setBounds(10, 81, 214, 184);
 			contentPanel.add(scrollPane);
 			{
-				JList listCiudades = new JList();
+				String [] a = {"a","b","c"};
+				listCiudades = new JList(a);
+				listCiudades.addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent arg) 
+					{
+						if( txtOrigen.getText().equals("") )
+						{
+							txtOrigen.setText( " " );
+						}
+						else if( txtOrigen.getText().equals(" ") )
+						{
+							txtOrigen.setText( listCiudades.getSelectedValue().toString() );
+						}
+						else if( txtDestino.getText().equals("") )
+						{
+							txtDestino.setText( " " );
+						}
+						else if( txtDestino.getText().equals(" ") )
+						{
+							txtDestino.setText( listCiudades.getSelectedValue().toString() );
+						}
+					}
+				});
 				scrollPane.setViewportView(listCiudades);
 			}
 		}
