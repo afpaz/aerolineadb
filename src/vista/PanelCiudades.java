@@ -25,49 +25,49 @@ public class PanelCiudades extends JPanel {
 		setBackground(new Color(184, 207, 229));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 181, 248);
+		scrollPane.setBounds(10, 11, 267, 317);
 		add(scrollPane);
 		
 		JList listCiudades = new JList();
 		scrollPane.setViewportView(listCiudades);
 		
 		JLabel lblId = new JLabel("Id:");
-		lblId.setBounds(213, 14, 46, 14);
+		lblId.setBounds(300, 83, 46, 14);
 		add(lblId);
 		
 		txtId = new JTextField();
-		txtId.setBounds(282, 11, 158, 20);
+		txtId.setBounds(441, 77, 158, 20);
 		add(txtId);
 		txtId.setColumns(10);
 		
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n:");
-		lblDescripcin.setBounds(213, 119, 108, 14);
+		lblDescripcin.setBounds(300, 188, 108, 14);
 		add(lblDescripcin);
 		
 		textAreaDescripcion = new JTextArea();
-		textAreaDescripcion.setBounds(213, 144, 227, 77);
+		textAreaDescripcion.setBounds(300, 213, 299, 77);
 		add(textAreaDescripcion);
 		
 		JLabel lblLatitud = new JLabel("Latitud:");
-		lblLatitud.setBounds(213, 49, 46, 14);
+		lblLatitud.setBounds(300, 118, 89, 14);
 		add(lblLatitud);
 		
 		txtLatitud = new JTextField();
-		txtLatitud.setBounds(282, 46, 158, 20);
+		txtLatitud.setBounds(441, 112, 158, 20);
 		add(txtLatitud);
 		txtLatitud.setColumns(10);
 		
 		JLabel lblLongitud = new JLabel("Longitud:");
-		lblLongitud.setBounds(213, 80, 46, 14);
+		lblLongitud.setBounds(300, 149, 89, 14);
 		add(lblLongitud);
 		
 		txtLongitud = new JTextField();
-		txtLongitud.setBounds(282, 77, 158, 20);
+		txtLongitud.setBounds(441, 143, 158, 20);
 		add(txtLongitud);
 		txtLongitud.setColumns(10);
 		
 		JButton btnEditar = new JButton("Editar");
-		btnEditar.setBounds(213, 236, 89, 23);
+		btnEditar.setBounds(372, 305, 89, 23);
 		add(btnEditar);
 		
 		JButton btnCrear = new JButton("Crear");
@@ -85,7 +85,7 @@ public class PanelCiudades extends JPanel {
 				textAreaDescripcion.setText("");
 			}
 		});
-		btnCrear.setBounds(308, 236, 89, 23);
+		btnCrear.setBounds(467, 305, 89, 23);
 		add(btnCrear);
 		
 		ImageIcon image = new ImageIcon(getClass().getResource("delete.png"));
@@ -95,7 +95,7 @@ public class PanelCiudades extends JPanel {
 			{
 			}
 		});
-		butEliminar.setBounds(407, 236, 33, 23);
+		butEliminar.setBounds(566, 305, 33, 23);
 		add(butEliminar);
 	}
 }
