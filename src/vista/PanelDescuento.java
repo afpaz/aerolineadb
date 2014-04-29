@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 
 public class PanelDescuento extends JPanel{
 	
@@ -30,43 +31,42 @@ public class PanelDescuento extends JPanel{
 	
 	
 	public PanelDescuento() {
-		setBorder(new TitledBorder(null, "Descuentos", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		setLayout(null);
 		setBackground( new Color(184, 207, 229) );
 		dPInicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		dPInicio.setBounds(410, 114, 126, 23);
+		dPInicio.setBounds(481, 95, 126, 23);
 		add(dPInicio);
 		
 		JLabel lblFechaLimiteSuperior = new JLabel("Fecha Limite Superior");
-		lblFechaLimiteSuperior.setBounds(283, 114, 117, 14);
+		lblFechaLimiteSuperior.setBounds(326, 95, 142, 24);
 		add(lblFechaLimiteSuperior);
 		
 		JLabel lblFechaLimiteInferior = new JLabel("Fecha Limite inferior");
-		lblFechaLimiteInferior.setBounds(283, 160, 117, 14);
+		lblFechaLimiteInferior.setBounds(326, 142, 142, 23);
 		add(lblFechaLimiteInferior);
 		
 		dPFin = new JDatePickerImpl((new JDatePanelImpl(new UtilDateModel())));
 		dPFin.getJFormattedTextField().setSize(117, 23);
 		dPFin.getJFormattedTextField().setLocation(266, 0);
-		dPFin.setBounds(410, 161, 126, 23);
+		dPFin.setBounds(481, 142, 126, 23);
 		add(dPFin);
 		
 		JLabel lblLimiteSuperiorOcupacion = new JLabel("Limite Superior Ocupacion");
-		lblLimiteSuperiorOcupacion.setBounds(283, 202, 130, 14);
+		lblLimiteSuperiorOcupacion.setBounds(326, 184, 155, 14);
 		add(lblLimiteSuperiorOcupacion);
 		
 		JLabel lblLimiteInferiorOcupacion = new JLabel("Limite Inferior Ocupacion");
-		lblLimiteInferiorOcupacion.setBounds(283, 237, 130, 14);
+		lblLimiteInferiorOcupacion.setBounds(326, 219, 155, 14);
 		add(lblLimiteInferiorOcupacion);
 		
 		JSpinner jSocupacionSup = new JSpinner();
 		jSocupacionSup.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		jSocupacionSup.setBounds(481, 201, 55, 18);
+		jSocupacionSup.setBounds(552, 182, 55, 18);
 		add(jSocupacionSup);
 		
 		JSpinner jSOcupacionInf = new JSpinner();
 		jSOcupacionInf.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		jSOcupacionInf.setBounds(481, 236, 55, 18);
+		jSOcupacionInf.setBounds(552, 217, 55, 18);
 		add(jSOcupacionInf);
 		
 		JButton btnNewButton = new JButton("Agregar");
@@ -75,17 +75,24 @@ public class PanelDescuento extends JPanel{
 				AgregarDescuento();
 			}
 		});
-		btnNewButton.setBounds(445, 301, 91, 23);
+		btnNewButton.setBounds(516, 306, 91, 23);
 		add(btnNewButton);
-		
-		JList list = new JList();
-		list.setBounds(10, 39, 214, 285);
-		add(list);
 		
 		JSpinner sPPorcentage = new JSpinner();
 		sPPorcentage.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		sPPorcentage.setBounds(283, 272, 55, 18);
+		sPPorcentage.setBounds(552, 253, 55, 18);
 		add(sPPorcentage);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 269, 318);
+		add(scrollPane);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
+		
+		JLabel lblPorcentaje = new JLabel("Porcentaje de descuento");
+		lblPorcentaje.setBounds(326, 255, 142, 14);
+		add(lblPorcentaje);
 	}
 
 

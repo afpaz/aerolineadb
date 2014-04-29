@@ -45,5 +45,8 @@ public class PanelGerente extends JPanel
 		
 		PanelDestinos panelCiudades = new PanelDestinos();
 		tabbedPane.addTab("Destinos", null, panelCiudades, null);
+		
+		PanelDescuento panelDescuento = new PanelDescuento();
+		tabbedPane.addTab("Descuentos", null, panelDescuento, null);
 	}
 }
