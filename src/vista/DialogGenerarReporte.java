@@ -1,6 +1,8 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -28,8 +30,8 @@ public class DialogGenerarReporte extends JDialog {
 	 */
 	public DialogGenerarReporte(Ventana ventana) {
 		setResizable(false);
-		
 		principal = ventana;
+		contentPanel.setBackground( new Color(184, 207, 229) );
 		setTitle("Generar Reporte");
 		setBounds(100, 100, 554, 377);
 		getContentPane().setLayout(new BorderLayout());
@@ -43,6 +45,7 @@ public class DialogGenerarReporte extends JDialog {
 		}
 		{
 			rdbtnCantidadDineroRecaudado = new JRadioButton("Cantidad dinero recaudado", true);
+			rdbtnCantidadDineroRecaudado.setBackground( new Color(184, 207, 229) );
 			rdbtnCantidadDineroRecaudado.setBounds(262, 63, 241, 23);
 			contentPanel.add(rdbtnCantidadDineroRecaudado);
 		}
@@ -60,6 +63,7 @@ public class DialogGenerarReporte extends JDialog {
 		}
 		{
 			rdbtnCantidadViajesVendidos = new JRadioButton("Cantidad Viajes Vendidos");
+			rdbtnCantidadViajesVendidos.setBackground( new Color(184, 207, 229) );
 			rdbtnCantidadViajesVendidos.setBounds(262, 146, 241, 23);
 			contentPanel.add(rdbtnCantidadViajesVendidos);
 		}

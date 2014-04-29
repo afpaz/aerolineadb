@@ -1,8 +1,8 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Image;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -37,6 +37,7 @@ public class DialogEditarCosto extends JDialog {
 	public DialogEditarCosto(Ventana ventana) 
 	{
 		setResizable(false);
+		contentPanel.setBackground( new Color(184, 207, 229) );
 		setTitle("Editar Costo");
 		principal = ventana;
 
@@ -129,14 +130,17 @@ public class DialogEditarCosto extends JDialog {
 		}
 
 		JRadioButton rdbtnAlta = new JRadioButton("Alta", true);
+		rdbtnAlta.setBackground( new Color(184, 207, 229) );
 		rdbtnAlta.setBounds(10, 341, 54, 23);
 		contentPanel.add(rdbtnAlta);
 
 		JRadioButton rdbtnMedia = new JRadioButton("Media");
+		rdbtnMedia.setBackground( new Color(184, 207, 229) );
 		rdbtnMedia.setBounds(88, 341, 65, 23);
 		contentPanel.add(rdbtnMedia);
 
 		JRadioButton rdbtnBaja = new JRadioButton("Baja");
+		rdbtnBaja.setBackground( new Color(184, 207, 229) );
 		rdbtnBaja.setBounds(171, 341, 109, 23);
 		contentPanel.add(rdbtnBaja);
 		
@@ -178,6 +182,7 @@ public class DialogEditarCosto extends JDialog {
 
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground( new Color(184, 207, 229) );
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
