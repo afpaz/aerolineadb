@@ -1,5 +1,7 @@
 package vista;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,7 +19,7 @@ public class PanelTarifa extends JPanel {
 	 */
 	public PanelTarifa() {
 		setLayout(null);
-		
+		setBackground( new Color(184, 207, 229) );
 		JLabel lblValorDeKm = new JLabel("Valor de km");
 		lblValorDeKm.setBounds(269, 96, 68, 14);
 		add(lblValorDeKm);
@@ -52,7 +54,7 @@ public class PanelTarifa extends JPanel {
 		JList list = new JList();
 		scrollPane.setViewportView(list);
 		
-		JButton btnGuardarTarifa = new JButton("Guardar Tarifa");
+		JButton btnGuardarTarifa = new JButton("Guardar");
 		btnGuardarTarifa.setBounds(364, 242, 115, 23);
 		add(btnGuardarTarifa);
 		
