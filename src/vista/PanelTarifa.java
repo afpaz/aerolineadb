@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -21,49 +22,49 @@ public class PanelTarifa extends JPanel {
 		setLayout(null);
 		setBackground( new Color(184, 207, 229) );
 		JLabel lblValorDeKm = new JLabel("Valor de km");
-		lblValorDeKm.setBounds(269, 96, 68, 14);
+		lblValorDeKm.setBounds(342, 95, 85, 14);
 		add(lblValorDeKm);
 		
 		JLabel lblLimiteInfKm = new JLabel("Limite inf km");
-		lblLimiteInfKm.setBounds(269, 132, 68, 14);
+		lblLimiteInfKm.setBounds(342, 131, 85, 14);
 		add(lblLimiteInfKm);
 		
 		JLabel lblLimiteSupKm = new JLabel("Limite sup km");
-		lblLimiteSupKm.setBounds(269, 171, 68, 14);
+		lblLimiteSupKm.setBounds(342, 170, 85, 14);
 		add(lblLimiteSupKm);
 		
 		txtValorKm = new JTextField();
-		txtValorKm.setBounds(364, 93, 115, 20);
+		txtValorKm.setBounds(459, 92, 141, 20);
 		add(txtValorKm);
 		txtValorKm.setColumns(10);
 		
 		txtLimInfKm = new JTextField();
-		txtLimInfKm.setBounds(364, 129, 115, 20);
+		txtLimInfKm.setBounds(459, 128, 141, 20);
 		add(txtLimInfKm);
 		txtLimInfKm.setColumns(10);
 		
 		txtLimSup = new JTextField();
-		txtLimSup.setBounds(364, 168, 115, 20);
+		txtLimSup.setBounds(459, 167, 141, 20);
 		add(txtLimSup);
 		txtLimSup.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 225, 299);
+		scrollPane.setBounds(10, 11, 267, 299);
 		add(scrollPane);
 		
 		JList list = new JList();
 		scrollPane.setViewportView(list);
 		
 		JButton btnGuardarTarifa = new JButton("Guardar");
-		btnGuardarTarifa.setBounds(364, 242, 115, 23);
+		btnGuardarTarifa.setBounds(487, 213, 95, 23);
 		add(btnGuardarTarifa);
 		
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(69, 321, 91, 23);
+		JButton btnEliminar = new JButton( new ImageIcon( getClass().getResource("delete.png") ) );
+		btnEliminar.setBounds(90, 321, 41, 23);
 		add(btnEliminar);
 		
 		JButton btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBounds(364, 208, 115, 23);
+		btnLimpiar.setBounds(358, 213, 95, 23);
 		add(btnLimpiar);
 
 	}

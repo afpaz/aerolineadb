@@ -14,12 +14,12 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PanelCiudades extends JPanel {
+public class PanelDestinos extends JPanel {
 	private JTextField txtId;
 	private JTextField txtLatitud;
 	private JTextField txtLongitud;
 	private JTextArea textAreaDescripcion;
-	public PanelCiudades()
+	public PanelDestinos()
 	{
 		setLayout(null);
 		setBackground(new Color(184, 207, 229));
