@@ -5,11 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
 
 public class PanelGerente extends JPanel 
@@ -48,5 +44,8 @@ public class PanelGerente extends JPanel
 		
 		PanelDescuento panelDescuento = new PanelDescuento();
 		tabbedPane.addTab("Descuentos", null, panelDescuento, null);
+		
+		PanelClases panelClases = new PanelClases((Ventana) null);
+		tabbedPane.addTab("Clases", null, panelClases, null);
 	}
 }

@@ -3,7 +3,6 @@ package vista;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -43,10 +42,6 @@ public class PanelDestinos extends JPanel {
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n:");
 		lblDescripcin.setBounds(300, 188, 108, 14);
 		add(lblDescripcin);
-		
-		textAreaDescripcion = new JTextArea();
-		textAreaDescripcion.setBounds(300, 213, 299, 77);
-		add(textAreaDescripcion);
 		
 		JLabel lblLatitud = new JLabel("Latitud:");
 		lblLatitud.setBounds(300, 118, 89, 14);
@@ -97,5 +92,12 @@ public class PanelDestinos extends JPanel {
 		});
 		butEliminar.setBounds(566, 305, 33, 23);
 		add(butEliminar);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(300, 213, 299, 77);
+		add(scrollPane_1);
+		
+		textAreaDescripcion = new JTextArea();
+		scrollPane_1.setViewportView(textAreaDescripcion);
 	}
 }

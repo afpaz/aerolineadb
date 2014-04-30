@@ -26,41 +26,44 @@ public class PanelClases extends JPanel
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 322, 332);
+		scrollPane.setBounds(10, 11, 271, 319);
 		add(scrollPane);
 		
 		JList listClases = new JList();
 		scrollPane.setViewportView(listClases);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(373, 122, 81, 14);
+		lblNombre.setBounds(342, 92, 81, 14);
 		add(lblNombre);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion:");
-		lblDescripcion.setBounds(373, 191, 81, 14);
+		lblDescripcion.setBounds(342, 161, 81, 14);
 		add(lblDescripcion);
 		
 		JLabel lblMultiplicador = new JLabel("Multiplicador:");
-		lblMultiplicador.setBounds(373, 155, 85, 14);
+		lblMultiplicador.setBounds(342, 122, 85, 23);
 		add(lblMultiplicador);
 		
 		txtNombreClase = new JTextField();
-		txtNombreClase.setBounds(479, 119, 133, 20);
+		txtNombreClase.setBounds(461, 89, 151, 20);
 		add(txtNombreClase);
 		txtNombreClase.setColumns(10);
 		
 		txtMultiplicador = new JTextField();
-		txtMultiplicador.setBounds(479, 152, 133, 20);
+		txtMultiplicador.setBounds(461, 122, 151, 20);
 		add(txtMultiplicador);
 		txtMultiplicador.setColumns(10);
 		
 		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(523, 299, 89, 23);
+		btnGuardar.setBounds(523, 287, 89, 23);
 		add(btnGuardar);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(479, 186, 133, 92);
-		add(textArea);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(342, 186, 270, 90);
+		add(scrollPane_1);
+		
+		JTextArea txtDescripcion = new JTextArea();
+		scrollPane_1.setViewportView(txtDescripcion);
 		
 	}
 }
