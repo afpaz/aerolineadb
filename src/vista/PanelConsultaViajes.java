@@ -83,6 +83,11 @@ public class PanelConsultaViajes extends JPanel implements ActionListener {
 		return this.fin;
 	}
 	
+	public void setTable (JTable table)
+	{
+		this.table = table;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(BUSCAR)) {

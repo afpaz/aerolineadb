@@ -33,6 +33,8 @@ public class Main {
 				{
 					dateInicio = (Date) ventana.getPanelConsultaViajes().getFechaInicio().getModel().getValue();
 					dateFin = (Date) ventana.getPanelConsultaViajes().getFechaFin().getModel().getValue();
+					ventana.getPanelConsultaViajes().setTable(new ResultSetTable(ControladoraBD.consultarVuelosEntreFechas(dateInicio, dateFin)));
+					ventana.getPanelConsultaViajes().repaint();
 				}
 				catch(Exception ex)
 				{
