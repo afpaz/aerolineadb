@@ -27,6 +27,7 @@ public class PanelConsultaViajes extends JPanel implements ActionListener {
 	private final static String BUSCAR = "BUSCAR";
 	private JLabel label_2;
 	private JTable table;
+	private JButton buscar;
 	public PanelConsultaViajes() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("31px"),
@@ -48,9 +49,9 @@ public class PanelConsultaViajes extends JPanel implements ActionListener {
 		JLabel label_1 = new JLabel("Fecha de fin");
 		this.add(label_1, "2, 2, fill, fill");
 		
-		JButton button = new JButton("Buscar");
-		button.setActionCommand(BUSCAR);
-		button.addActionListener(this);
+		buscar = new JButton("Buscar");
+		buscar.setActionCommand(BUSCAR);
+		buscar.addActionListener(this);
 		
 		fin = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
 		this.add(fin, "3, 2, fill, fill");
@@ -59,21 +60,37 @@ public class PanelConsultaViajes extends JPanel implements ActionListener {
 		
 		inicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
 		this.add(inicio, "3, 3, fill, fill");
-		this.add(button, "2, 4, 2, 1, center, center");
+		this.add(buscar, "2, 4, 2, 1, center, center");
 		
 		table = new JTable();
 		add(table, "2, 5, 2, 1, fill, fill");
 		
 		
 	}
+	
+	public JButton getBuscar()
+	{
+		return this.buscar;
+	}
+	
+	public JDatePickerImpl getFechaInicio()
+	{
+		return this.inicio;
+	}
+	
+	public JDatePickerImpl getFechaFin()
+	{
+		return this.fin;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(BUSCAR)) {
 			Date dateInicio, dateFin;
 			try
 			{
-			dateInicio = (Date) inicio.getModel().getValue();
-			dateFin = (Date) fin.getModel().getValue();
+				dateInicio = (Date) inicio.getModel().getValue();
+				dateFin = (Date) fin.getModel().getValue();
 			}
 			catch(Exception ex)
 			{

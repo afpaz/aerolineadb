@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 public class Ventana extends JFrame {
 
 	private JPanel contentPane;
+	PanelConsultaViajes panelConsultaViajes;
 
 	/**
 	 * Create the frame.
@@ -30,7 +31,12 @@ public class Ventana extends JFrame {
 		tabbedPane.addTab("Gerente", null, panelGerente, null);
 		
 		
-		PanelConsultaViajes panelConsultaViajes = new PanelConsultaViajes();
+		panelConsultaViajes = new PanelConsultaViajes();
 		tabbedPane.addTab("Panel Consuta", null, panelConsultaViajes, null);
+	}
+	
+	public PanelConsultaViajes getPanelConsultaViajes()
+	{
+		return this.panelConsultaViajes;
 	}
 }
