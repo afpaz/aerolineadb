@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 public class PanelGerente extends JPanel 
 {
 	private Ventana principal;
+	private PanelClases panelClases;
 	
 	/**
 	 * Create the panel.
@@ -45,7 +46,13 @@ public class PanelGerente extends JPanel
 		PanelDescuento panelDescuento = new PanelDescuento();
 		tabbedPane.addTab("Descuentos", null, panelDescuento, null);
 		
-		PanelClases panelClases = new PanelClases((Ventana) null);
+		panelClases = new PanelClases();
 		tabbedPane.addTab("Clases", null, panelClases, null);
 	}
+
+	public PanelClases getPanelClases( )
+	{
+		return panelClases;
+	}
+	
 }

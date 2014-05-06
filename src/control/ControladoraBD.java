@@ -15,11 +15,11 @@ public class ControladoraBD {
 	{
 		Connection connection = null;
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String servidor = "172.16.0.103";
+		String servidor = "200.3.193.24";
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "P09551_1_6";
-		String pass = "RtL2ZhnY";			
+		String usr = "";
+		String pass = "";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
@@ -47,5 +47,43 @@ public class ControladoraBD {
         ResultSet rs = stat.executeQuery();
         
 		return rs;
+	}
+	
+	public ResultSet consultarClases() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "SELECT * FROM CLASES";
+		return con.prepareStatement( sql ).executeQuery( );
+	}
+	
+	public boolean actualizarClase(String nombreV, String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "UPDATE CLASES SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', multiplicador = '" + multiplicador + "' WHERE nombre = '" + nombreV +"'" ;
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );		
+	}
+	
+	public boolean crearClase(String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "INSERT INTO CLASES VALUES( '" + nombre + "', '" + descripcion + "', '" + multiplicador + "')";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );		
+	}
+	
+	public boolean eliminarClase(String nombre) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "DELETE FROM CLASES c WHERE c.nombre = '" + nombre + "'";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );		
+	}
+
+	public ResultSet consultarClase( String nombre ) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "SELECT * FROM CLASES c WHERE c.nombre = '" + nombre + "'";
+		return con.prepareStatement( sql ).executeQuery( );
 	}
 }

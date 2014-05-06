@@ -60,7 +60,7 @@ public class PanelTarifa extends JPanel {
 		add(btnGuardarTarifa);
 		
 		JButton btnEliminar = new JButton( new ImageIcon( getClass().getResource("delete.png") ) );
-		btnEliminar.setBounds(90, 321, 41, 23);
+		btnEliminar.setBounds(118, 321, 41, 23);
 		add(btnEliminar);
 		
 		JButton btnLimpiar = new JButton("Limpiar");

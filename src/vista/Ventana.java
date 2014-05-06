@@ -1,15 +1,20 @@
 package vista;
 
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Clase;
+
 public class Ventana extends JFrame {
 
 	private JPanel contentPane;
 	PanelConsultaViajes panelConsultaViajes;
-
+	private PanelGerente panelGerente;
 	/**
 	 * Create the frame.
 	 */
@@ -27,7 +32,7 @@ public class Ventana extends JFrame {
 		tabbedPane.setBounds(0, 0, 676, 444);
 		contentPane.add(tabbedPane);
 		
-		PanelGerente panelGerente = new PanelGerente(this);
+		panelGerente = new PanelGerente(this);
 		tabbedPane.addTab("Gerente", null, panelGerente, null);
 		
 		
@@ -38,5 +43,18 @@ public class Ventana extends JFrame {
 	public PanelConsultaViajes getPanelConsultaViajes()
 	{
 		return this.panelConsultaViajes;
+	}
+
+	public PanelGerente getPanelGerente( )
+	{
+		return panelGerente;
+	}	
+	
+	public void actualizarPanelClases(ArrayList< Clase > clases)
+	{
+		PanelClases panelClases = getPanelGerente( ).getPanelClases( );
+		DefaultListModel dlm = panelClases.getListModel( );
+		for( Clase c : clases )
+			dlm.addElement( c );
 	}
 }
