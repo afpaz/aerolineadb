@@ -9,11 +9,8 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
-import javax.swing.JFormattedTextField;
 import javax.swing.JList;
-import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
