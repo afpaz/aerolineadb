@@ -11,11 +11,14 @@ import java.util.Date;
 
 public class ControladoraBD {
 	
+	public final static String IP_EXTERNA = "200.3.193.24";
+	public final static String IP_INTERNA = "172.16.0.103";
+	
 	private static Connection getConection() throws ClassNotFoundException, SQLException
 	{
 		Connection connection = null;
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String servidor = "200.3.193.24";
+		String servidor = IP_INTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
 		String usr = "";
