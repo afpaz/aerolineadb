@@ -208,7 +208,6 @@ public class Main {
 	
 	private static void eventosPanelDestinos() 
 	{
-		
 		final PanelDestinos panelDestinos = ventana.getPanelGerente().getPanelDestinos();
 		
 		// Listener de la Lista destinos
@@ -269,11 +268,33 @@ public class Main {
 				
 				if(panelDestinos.getCrear())
 				{
-					controladoraBD.crearDestino(id, latitud, longitud, descripcion);
+					try 
+					{
+						controladoraBD.crearDestino(id, latitud, longitud, descripcion);
+					} 
+					catch (ClassNotFoundException e1) 
+					{
+						e1.printStackTrace();
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
 				}
 				else
 				{
-					controladoraBD.actualizarDestino(id, latitud, longitud, descripcion);
+					try 
+					{
+						controladoraBD.actualizarDestino(id, latitud, longitud, descripcion);
+					} 
+					catch (ClassNotFoundException e1)
+					{
+						e1.printStackTrace();
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -287,7 +308,18 @@ public class Main {
 				String id = panelDestinos.getTxtId().getText();
 				if( !panelDestinos.getListDestinos().isSelectionEmpty( ) )
 				{
-					controladoraBD.eliminarDestino(id);
+					try 
+					{
+						controladoraBD.eliminarDestino(id);
+					}
+					catch (ClassNotFoundException e1) 
+					{
+						e1.printStackTrace();
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

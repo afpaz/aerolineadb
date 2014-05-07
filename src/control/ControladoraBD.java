@@ -90,19 +90,28 @@ public class ControladoraBD {
 		return con.prepareStatement( sql ).executeQuery( );
 	}
 
-	public void crearDestino(String id, double latitud, double longitud, String descripcion) 
+	public boolean crearDestino(String id, double latitud, double longitud, String descripcion) throws SQLException, ClassNotFoundException
 	{		
-
+		Connection con = getConection();
+		String sql = "INSERT INTO LUGARES VALUES( '" + id + "', " + latitud + ", " + longitud + ", '"+ descripcion + "')";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );	
 	}
 
-	public void actualizarDestino(String id, double latitud, double longitud, String descripcion) 
+	public boolean actualizarDestino(String id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException 
 	{
-		
+		Connection conect = getConection();
+		String sql = "UPDATE LUGARES SET latitud = '" + latitud + "', longitud = '" + longitud + "', descripcion = '" + descripcion + "' WHERE id = '" + id + "'";
+		Statement statement = conect.createStatement();
+		return statement.execute(sql);
 	}
 
-	public void eliminarDestino(String id) 
+	public boolean eliminarDestino(String id) throws SQLException, ClassNotFoundException 
 	{
-		
+		Connection conect = getConection();
+		String sql = "DELETE FROM LUGARES WHERE id = '" + id + "'" ;
+		Statement statement = conect.createStatement();
+		return statement.execute(sql);
 	}
 		
 	
