@@ -14,8 +14,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modelo.Clase;
+import modelo.Destino;
 
 import vista.PanelClases;
+import vista.PanelDestinos;
 import vista.Ventana;
 
 public class Main {
@@ -63,8 +65,9 @@ public class Main {
 	private static void eventosPanelGerente()
 	{
 		eventosPanelClases( );
+		eventosPanelDestinos( );
 	}
-	
+
 	private static void actualizarPanelGerente( )
 	{
 		try
@@ -202,4 +205,92 @@ public class Main {
 		}
 		return clases;
 	}
+	
+	private static void eventosPanelDestinos() 
+	{
+		
+		final PanelDestinos panelDestinos = ventana.getPanelGerente().getPanelDestinos();
+		
+		// Listener de la Lista destinos
+		final JList listDestinos = panelDestinos.getListDestinos();
+		listDestinos.addListSelectionListener(new ListSelectionListener() 
+		{
+			public void valueChanged(ListSelectionEvent e) 
+			{
+				if( !listDestinos.isSelectionEmpty( ) )
+				{
+					Destino destino = (Destino) listDestinos.getSelectedValue( );
+					panelDestinos.getTxtId().setText( destino.getId());
+					panelDestinos.getTxtLatitud().setText(destino.getLatitud()+"");
+					panelDestinos.getTxtLongitud().setText(destino.getLongitud()+"");
+					panelDestinos.getTextAreaDescripcion().setText(destino.getDescripcion());
+					
+					panelDestinos.deshabilitarBut();
+					panelDestinos.deshabilitarCampos();
+				}
+			}
+		});
+		
+		// evento para el boton editar
+		panelDestinos.getBtnEditar().addActionListener(new ActionListener() 
+		{			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				panelDestinos.habilitarCampos();
+				panelDestinos.habilitarBut();
+				panelDestinos.setCrear(false);
+			}
+		});
+		
+		//evento para el boton crear
+		panelDestinos.getBtnCrear().addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				panelDestinos.habilitarCampos();
+				panelDestinos.limpiarCampos();
+				panelDestinos.habilitarBut();
+				panelDestinos.setCrear(true);
+			}
+		});
+		
+		//evetno para el boton listo
+		panelDestinos.getBtnListo().addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				String id = panelDestinos.getTxtId().getText();
+				double latitud = Double.parseDouble(panelDestinos.getTxtLatitud().getText());
+				double longitud = Double.parseDouble(panelDestinos.getTxtLongitud().getText());
+				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
+				
+				if(panelDestinos.getCrear())
+				{
+					controladoraBD.crearDestino(id, latitud, longitud, descripcion);
+				}
+				else
+				{
+					controladoraBD.actualizarDestino(id, latitud, longitud, descripcion);
+				}
+			}
+		});
+		
+		//evento para el boton eliminar
+		panelDestinos.getButEliminar().addActionListener(new ActionListener() 
+		{			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				String id = panelDestinos.getTxtId().getText();
+				if( !panelDestinos.getListDestinos().isSelectionEmpty( ) )
+				{
+					controladoraBD.eliminarDestino(id);
+				}
+			}
+		});
+	}
+
 }

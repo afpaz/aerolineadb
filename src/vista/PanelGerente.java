@@ -12,6 +12,7 @@ public class PanelGerente extends JPanel
 {
 	private Ventana principal;
 	private PanelClases panelClases;
+	private PanelDestinos panelDestinos;
 	
 	/**
 	 * Create the panel.
@@ -40,8 +41,8 @@ public class PanelGerente extends JPanel
 		PanelTarifa panelTarifa = new PanelTarifa();
 		tabbedPane.addTab("Tarifas", null, panelTarifa, null);
 		
-		PanelDestinos panelCiudades = new PanelDestinos();
-		tabbedPane.addTab("Destinos", null, panelCiudades, null);
+		panelDestinos = new PanelDestinos();
+		tabbedPane.addTab("Destinos", null, panelDestinos, null);
 		
 		PanelDescuento panelDescuento = new PanelDescuento();
 		tabbedPane.addTab("Descuentos", null, panelDescuento, null);
@@ -53,6 +54,11 @@ public class PanelGerente extends JPanel
 	public PanelClases getPanelClases( )
 	{
 		return panelClases;
+	}
+	
+	public PanelDestinos getPanelDestinos()
+	{
+		return panelDestinos;
 	}
 	
 }

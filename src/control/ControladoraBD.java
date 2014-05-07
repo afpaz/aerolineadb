@@ -86,4 +86,21 @@ public class ControladoraBD {
 		String sql = "SELECT * FROM CLASES c WHERE c.nombre = '" + nombre + "'";
 		return con.prepareStatement( sql ).executeQuery( );
 	}
+
+	public void crearDestino(String id, double latitud, double longitud, String descripcion) 
+	{		
+
+	}
+
+	public void actualizarDestino(String id, double latitud, double longitud, String descripcion) 
+	{
+		
+	}
+
+	public void eliminarDestino(String id) 
+	{
+		
+	}
+		
+	
 }

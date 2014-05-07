@@ -18,8 +18,16 @@ public class PanelDestinos extends JPanel {
 	private JTextField txtLatitud;
 	private JTextField txtLongitud;
 	private JTextArea textAreaDescripcion;
+	private JButton btnCrear;
+	private JButton butEliminar;
+	private JButton btnEditar;
+	private JList listDestinos;
+	private JButton btnListo;
+	
+	private boolean crear;
 	public PanelDestinos()
 	{
+		crear = false;
 		setLayout(null);
 		setBackground(new Color(184, 207, 229));
 		
@@ -27,8 +35,8 @@ public class PanelDestinos extends JPanel {
 		scrollPane.setBounds(10, 11, 267, 317);
 		add(scrollPane);
 		
-		JList listCiudades = new JList();
-		scrollPane.setViewportView(listCiudades);
+		listDestinos = new JList();
+		scrollPane.setViewportView(listDestinos);
 		
 		JLabel lblId = new JLabel("Id:");
 		lblId.setBounds(300, 83, 46, 14);
@@ -61,35 +69,16 @@ public class PanelDestinos extends JPanel {
 		add(txtLongitud);
 		txtLongitud.setColumns(10);
 		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.setBounds(372, 305, 89, 23);
+		btnEditar = new JButton("Editar");
+		btnEditar.setBounds(332, 305, 89, 23);
 		add(btnEditar);
 		
-		JButton btnCrear = new JButton("Crear");
-		btnCrear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				limpiarCampos();
-			}
-
-			private void limpiarCampos() 
-			{
-				txtId.setText("");
-				txtLatitud.setText("");
-				txtLongitud.setText("");
-				textAreaDescripcion.setText("");
-			}
-		});
-		btnCrear.setBounds(467, 305, 89, 23);
+		btnCrear = new JButton("Crear");
+		btnCrear.setBounds(427, 305, 89, 23);
 		add(btnCrear);
 		
 		ImageIcon image = new ImageIcon(getClass().getResource("delete.png"));
-		JButton butEliminar = new JButton(image);
-		butEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-			}
-		});
+		butEliminar = new JButton(image);
 		butEliminar.setBounds(566, 305, 33, 23);
 		add(butEliminar);
 		
@@ -99,5 +88,81 @@ public class PanelDestinos extends JPanel {
 		
 		textAreaDescripcion = new JTextArea();
 		scrollPane_1.setViewportView(textAreaDescripcion);
+		
+		btnListo = new JButton("");
+		btnListo.setBounds(526, 305, 33, 23);
+		btnListo.setEnabled(false);
+		add(btnListo);
+		
+		deshabilitarCampos();
+	}
+	public JTextField getTxtId() {
+		return txtId;
+	}
+	public JTextField getTxtLatitud() {
+		return txtLatitud;
+	}
+	public JTextField getTxtLongitud() {
+		return txtLongitud;
+	}
+	public JTextArea getTextAreaDescripcion() {
+		return textAreaDescripcion;
+	}
+	public JButton getBtnCrear() {
+		return btnCrear;
+	}
+	public JButton getButEliminar() {
+		return butEliminar;
+	}
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
+	public JButton getBtnListo() {
+		return btnListo;
+	}
+	public JList getListDestinos() {
+		return listDestinos;
+	}
+	
+	public void habilitarBut()
+	{
+		btnListo.setEnabled(true);
+	}
+	
+	public void deshabilitarBut()
+	{
+		btnListo.setEnabled(false);
+	}
+	
+	public void habilitarCampos()
+	{
+		txtId.setEditable(true);
+		txtLatitud.setEditable(true);
+		txtLongitud.setEditable(true);
+		textAreaDescripcion.setEditable(true);
+	}
+	public void deshabilitarCampos()
+	{
+		txtId.setEditable(false);
+		txtLatitud.setEditable(false);
+		txtLongitud.setEditable(false);
+		textAreaDescripcion.setEditable(false);
+	}
+	
+	public void limpiarCampos() 
+	{
+		txtId.setText("");
+		txtLatitud.setText("");
+		txtLongitud.setText("");
+		textAreaDescripcion.setText("");
+	}
+	
+	public boolean getCrear()
+	{
+		return crear;
+	}
+	public void setCrear (boolean estado)
+	{
+		crear = estado;
 	}
 }
