@@ -70,20 +70,21 @@ public class Main {
 
 	private static void actualizarPanelGerente( )
 	{
-		try
-		{
-			ventana.actualizarPanelClases( consultarClases( ) );
-		}
-		catch ( ClassNotFoundException e )
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch ( SQLException e )
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ventana.actualizarLista(getDestinos());
+//		try
+//		{
+//			ventana.actualizarPanelClases( consultarClases( ) );
+//		}
+//		catch ( ClassNotFoundException e )
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		catch ( SQLException e )
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	private static void eventosPanelClases()
@@ -296,6 +297,7 @@ public class Main {
 						e1.printStackTrace();
 					}
 				}
+				actualizarPanelGerente();
 			}
 		});
 		
@@ -321,8 +323,40 @@ public class Main {
 						e1.printStackTrace();
 					}
 				}
+				actualizarPanelGerente();
 			}
 		});
+	}
+	
+	public static ArrayList<Destino> getDestinos()
+	{
+		ArrayList<Destino> destinos = new ArrayList<Destino>();
+		try 
+		{
+			ResultSet resultado = controladoraBD.consultarDestinos();
+			while(resultado.next())
+			{
+				String id = resultado.getString(1);
+				double latitud = resultado.getInt(2);
+				double longitud = resultado.getInt(3);
+				String descripcion = resultado.getString(4);
+				
+				Destino destino = new Destino(id, latitud, longitud, descripcion);
+				destinos.add(destino);
+			}
+			
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+		
+			e.printStackTrace();
+		}
+		return destinos;
 	}
 
 }

@@ -9,9 +9,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
+import modelo.Destino;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class PanelDestinos extends JPanel {
 	private JTextField txtId;
@@ -165,4 +168,5 @@ public class PanelDestinos extends JPanel {
 	{
 		crear = estado;
 	}
+
 }

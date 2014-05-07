@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Clase;
+import modelo.Destino;
 
 public class Ventana extends JFrame {
 
@@ -54,7 +55,16 @@ public class Ventana extends JFrame {
 	{
 		PanelClases panelClases = getPanelGerente( ).getPanelClases( );
 		DefaultListModel dlm = panelClases.getListModel( );
+		
+		dlm.clear();
+		
 		for( Clase c : clases )
 			dlm.addElement( c );
+	}
+	
+	
+	public void actualizarLista (ArrayList<Destino> destinos)
+	{
+		panelGerente.getPanelDestinos().getListDestinos().setListData(destinos.toArray());
 	}
 }

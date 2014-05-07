@@ -100,8 +100,12 @@ public class ControladoraBD {
 
 	public boolean actualizarDestino(String id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException 
 	{
+		int latitudA = (int) latitud;
+		int longitudA = (int) longitud;
+		
+		
 		Connection conect = getConection();
-		String sql = "UPDATE LUGARES SET latitud = '" + latitud + "', longitud = '" + longitud + "', descripcion = '" + descripcion + "' WHERE id = '" + id + "'";
+		String sql = "UPDATE LUGARES SET latitud = '" + latitudA + "', longitud = '" + longitudA + "', descripcion = '" + descripcion + "' WHERE id = '" + id + "'";
 		Statement statement = conect.createStatement();
 		return statement.execute(sql);
 	}
@@ -113,6 +117,12 @@ public class ControladoraBD {
 		Statement statement = conect.createStatement();
 		return statement.execute(sql);
 	}
-		
+	
+	public ResultSet consultarDestinos() throws ClassNotFoundException, SQLException
+	{
+		Connection conect = getConection();
+		String sql = "SELECT * FROM LUGARES";
+		return conect.prepareStatement(sql).executeQuery();
+	}
 	
 }
