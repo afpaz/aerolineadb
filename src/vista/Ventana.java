@@ -34,7 +34,7 @@ public class Ventana extends JFrame {
 		tabbedPane.setBounds(0, 0, 676, 444);
 		contentPane.add(tabbedPane);
 		
-		panelGerente = new PanelGerente(this);
+		panelGerente = new PanelGerente();
 		tabbedPane.addTab("Gerente", null, panelGerente, null);
 		
 		

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -16,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Clase;
 import modelo.Destino;
 
+import vista.DialogGenerarReporte;
 import vista.PanelClases;
 import vista.PanelDestinos;
 import vista.Ventana;
@@ -64,6 +64,15 @@ public class Main {
 	
 	private static void eventosPanelGerente()
 	{
+		ventana.getPanelGerente( ).getBtnGenerarReporte( ).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				DialogGenerarReporte dialog = new DialogGenerarReporte( );
+				dialog.setVisible(true);
+			}
+		});
+		
+		
 		eventosPanelClases( );
 		eventosPanelDestinos( );
 	}

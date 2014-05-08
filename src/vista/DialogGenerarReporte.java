@@ -21,16 +21,15 @@ public class DialogGenerarReporte extends JDialog {
 	private JTextField txtTotalDescuentos;
 	private ButtonGroup butGroup;
 	
-	private Ventana principal;
 	private JRadioButton rdbtnCantidadDineroRecaudado;
 	private JRadioButton rdbtnCantidadViajesVendidos;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DialogGenerarReporte(Ventana ventana) {
+	public DialogGenerarReporte() 
+	{
 		setResizable(false);
-		principal = ventana;
 		contentPanel.setBackground( new Color(184, 207, 229) );
 		setTitle("Generar Reporte");
 		setBounds(100, 100, 554, 377);

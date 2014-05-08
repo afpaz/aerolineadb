@@ -10,27 +10,21 @@ import javax.swing.JTabbedPane;
 
 public class PanelGerente extends JPanel 
 {
-	private Ventana principal;
 	private PanelClases panelClases;
 	private PanelDestinos panelDestinos;
+	private JButton btnGenerarReporte;
+	private PanelTarifa panelTarifa;
+	private PanelDescuento panelDescuento;
 	
 	/**
 	 * Create the panel.
 	 */
-	public PanelGerente( Ventana principal ) 
+	public PanelGerente( ) 
 	{
-		this.principal = principal;
 		setBackground( new Color(184, 207, 229) );
 		setLayout(null);
 		
-		JButton btnGenerarReporte = new JButton("Generar Reporte");
-		btnGenerarReporte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				DialogGenerarReporte dialog = new DialogGenerarReporte(PanelGerente.this.principal);
-				dialog.setVisible(true);
-			}
-		});
+		btnGenerarReporte = new JButton("Generar Reporte");
 		btnGenerarReporte.setBounds(536, 382, 134, 23);
 		add(btnGenerarReporte);
 		
@@ -38,13 +32,13 @@ public class PanelGerente extends JPanel
 		tabbedPane.setBounds(0, 0, 680, 383);
 		add(tabbedPane);
 		
-		PanelTarifa panelTarifa = new PanelTarifa();
+		panelTarifa = new PanelTarifa();
 		tabbedPane.addTab("Tarifas", null, panelTarifa, null);
 		
 		panelDestinos = new PanelDestinos();
 		tabbedPane.addTab("Destinos", null, panelDestinos, null);
 		
-		PanelDescuento panelDescuento = new PanelDescuento();
+		panelDescuento = new PanelDescuento();
 		tabbedPane.addTab("Descuentos", null, panelDescuento, null);
 		
 		panelClases = new PanelClases();
@@ -60,5 +54,19 @@ public class PanelGerente extends JPanel
 	{
 		return panelDestinos;
 	}
-	
+
+	public JButton getBtnGenerarReporte( )
+	{
+		return btnGenerarReporte;
+	}
+
+	public PanelTarifa getPanelTarifa( )
+	{
+		return panelTarifa;
+	}
+
+	public PanelDescuento getPanelDescuento( )
+	{
+		return panelDescuento;
+	}	
 }
