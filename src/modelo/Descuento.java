@@ -7,10 +7,10 @@ public class Descuento
 	private String fechaLimiteSuperior;
 	private String ocupacionLimiteInferior;
 	private String ocupacionLimiteSuperior;
-	private double porcentajeDescuento;
+	private int porcentajeDescuento;
 	
 	public Descuento( int id, String fechaLimiteInferior, String fechaLimiteSuperior, String ocupacionLimiteInferior, 
-			String ocupacionLimiteSuperior, double porcentajeDescuento )
+			String ocupacionLimiteSuperior, int porcentajeDescuento )
 	{
 		this.id = id;
 		this.fechaLimiteInferior = fechaLimiteInferior;
@@ -60,12 +60,12 @@ public class Descuento
 		this.ocupacionLimiteSuperior = ocupacionLimiteSuperior;
 	}
 
-	public double getPorcentajeDescuento( )
+	public int getPorcentajeDescuento( )
 	{
 		return porcentajeDescuento;
 	}
 
-	public void setPorcentajeDescuento( double porcentajeDescuento )
+	public void setPorcentajeDescuento( int porcentajeDescuento )
 	{
 		this.porcentajeDescuento = porcentajeDescuento;
 	}

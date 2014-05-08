@@ -17,6 +17,7 @@ import modelo.Destino;
 
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
+import vista.PanelDescuento;
 import vista.PanelDestinos;
 import vista.Ventana;
 
@@ -72,7 +73,7 @@ public class Main {
 			}
 		});
 		
-		
+		eventosPanelDescuentos();
 		eventosPanelClases( );
 		eventosPanelDestinos( );
 	}
@@ -92,6 +93,36 @@ public class Main {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private static void eventosPanelDescuentos( )
+	{
+		final PanelDescuento panelDescuento = ventana.getPanelGerente( ).getPanelDescuento( );
+	
+		//evento lista
+		final JList listDescuentos = panelDescuento.getList( );
+		listDescuentos.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) 
+			{
+				if( !listDescuentos.isSelectionEmpty( ) )
+				{
+					//TODO
+				}
+			}
+		});
+		
+		// evento bnt limpiar
+		panelDescuento.getBtnLimpiar( ).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
+				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
+				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
+				panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
+				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
+				panelDescuento.getList( ).clearSelection( );
+			}
+		});	
 	}
 	
 	private static void eventosPanelClases()
