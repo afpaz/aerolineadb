@@ -70,21 +70,19 @@ public class Main {
 
 	private static void actualizarPanelGerente( )
 	{
-		ventana.actualizarLista(getDestinos());
-//		try
-//		{
-//			ventana.actualizarPanelClases( consultarClases( ) );
-//		}
-//		catch ( ClassNotFoundException e )
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		catch ( SQLException e )
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//		ventana.actualizarLista(getDestinos());
+		try
+		{
+			ventana.actualizarPanelClases( consultarClases( ) );
+		}
+		catch ( ClassNotFoundException e )
+		{
+			e.printStackTrace();
+		}
+		catch ( SQLException e )
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private static void eventosPanelClases()
@@ -129,16 +127,15 @@ public class Main {
 					if( panelClases.getListClases( ).isSelectionEmpty( ) )
 						controladoraBD.crearClase( nom, des, mul );
 					else
-						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul );				
+						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul );
+					ventana.actualizarPanelClases( consultarClases( ) );
 				}
 				catch ( ClassNotFoundException e1 )
 				{
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				catch ( SQLException e1 )
 				{
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -146,6 +143,7 @@ public class Main {
 				panelClases.getTxtMultiplicador().setText( "" );
 				panelClases.getTxtDescripcion().setText( "" );
 				panelClases.getListClases( ).clearSelection( );
+				
 			}
 		});	
 		
@@ -158,23 +156,21 @@ public class Main {
 					try
 					{
 						controladoraBD.eliminarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ));
+						ventana.actualizarPanelClases( consultarClases( ) );
 						panelClases.getListClases( ).clearSelection( );
 					}
 					catch ( ClassNotFoundException e1 )
 					{
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					catch ( SQLException e1 )
 					{
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			}
 		});	
 		
-		//TODO actualizar lista con nuevos datos
 	}
 	
 	public static Clase consultarClase(String nombre) throws SQLException, ClassNotFoundException

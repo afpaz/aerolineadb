@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
@@ -53,13 +54,7 @@ public class Ventana extends JFrame {
 	
 	public void actualizarPanelClases(ArrayList< Clase > clases)
 	{
-		PanelClases panelClases = getPanelGerente( ).getPanelClases( );
-		DefaultListModel dlm = panelClases.getListModel( );
-		
-		dlm.clear();
-		
-		for( Clase c : clases )
-			dlm.addElement( c );
+		getPanelGerente( ).getPanelClases( ).getListClases( ).setListData( clases.toArray( ) );
 	}
 	
 	

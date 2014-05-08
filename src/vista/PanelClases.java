@@ -11,10 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-
-import modelo.Clase;
 
 public class PanelClases extends JPanel 
 {
@@ -23,7 +19,6 @@ public class PanelClases extends JPanel
 	private JTextArea txtDescripcion;
 	private JButton btnGuardar;
 	private JList listClases;
-	private DefaultListModel listModel;
 	private JButton btnLimpiar;
 	private JButton btnEliminar;
 	/**
@@ -37,9 +32,8 @@ public class PanelClases extends JPanel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 271, 298);
 		add(scrollPane);
-				
-		listModel = new DefaultListModel();		
-		listClases = new JList(listModel);
+					
+		listClases = new JList();
 		scrollPane.setViewportView(listClases);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -107,10 +101,6 @@ public class PanelClases extends JPanel
 	public JButton getBtnLimpiar( )
 	{
 		return btnLimpiar;
-	}
-	public DefaultListModel getListModel( )
-	{
-		return listModel;
 	}
 	public JButton getBtnEliminar( )
 	{
