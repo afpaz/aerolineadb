@@ -86,7 +86,7 @@ public class PanelDescuento extends JPanel
 		lblPorcentaje.setBounds(325, 234, 142, 14);
 		add(lblPorcentaje);
 		
-		ImageIcon image = new ImageIcon(getClass().getResource("delete.png"));
+		ImageIcon image = new ImageIcon("./imagenes/delete.png");
 		btnEliminar = new JButton(image);
 		btnEliminar.setBounds(125, 320, 30, 23);
 		add(btnEliminar);

@@ -73,7 +73,7 @@ public class PanelClases extends JPanel
 		btnLimpiar.setBounds(362, 287, 89, 23);
 		add(btnLimpiar);
 		
-		btnEliminar = new JButton( new ImageIcon( getClass().getResource("delete.png") ) );
+		btnEliminar = new JButton( new ImageIcon("./imagenes/delete.png" ) );
 		btnEliminar.setBounds(119, 320, 38, 23);
 		add(btnEliminar);
 		

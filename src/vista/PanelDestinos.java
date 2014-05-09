@@ -80,7 +80,7 @@ public class PanelDestinos extends JPanel {
 		btnCrear.setBounds(427, 305, 89, 23);
 		add(btnCrear);
 		
-		ImageIcon image = new ImageIcon(getClass().getResource("delete.png"));
+		ImageIcon image = new ImageIcon("./imagenes/delete.png");
 		butEliminar = new JButton(image);
 		butEliminar.setBounds(566, 305, 33, 23);
 		add(butEliminar);
