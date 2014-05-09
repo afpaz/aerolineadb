@@ -121,5 +121,22 @@ public class ControladoraBD {
 		String sql = "SELECT * FROM LUGARES";
 		return conect.prepareStatement(sql).executeQuery();
 	}
-	
+
+	public void actualizarDescuento(int id, String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento ) throws ClassNotFoundException, SQLException 
+	{
+		Connection con = getConection();
+		String sql = "UPDATE DESCUENTOS SET  '" + fechaInf + ", " + fechaSup + ", '"+ ocupacionInf + ", '"+ ocupacionSup + ", '"+ descuento +"')";
+		Statement statement = con.createStatement( );
+		statement.execute( sql );
+		//TODO revizar 
+	}
+
+	public void crearDescuento(String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException 
+	{
+		Connection con = getConection();
+		String sql = "INSERT INTO DESCUENTOS VALUES( '" + fechaInf + ", " + fechaSup + ", '"+ ocupacionInf + ", '"+ ocupacionSup + ", '"+ descuento +"')";
+		Statement statement = con.createStatement( );
+		statement.execute( sql );
+		//TODO revizar estructura de la tabla
+	}	
 }

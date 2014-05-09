@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modelo.Clase;
+import modelo.Descuento;
 import modelo.Destino;
 
 import vista.DialogGenerarReporte;
@@ -25,25 +26,25 @@ public class Main {
 
 	public static Ventana ventana;
 	public static ControladoraBD controladoraBD;
-	
+
 	public static void main(String[] args) {
 		ventana = new Ventana();
 		ventana.setVisible(true);
 		controladoraBD = new ControladoraBD();
-		
+
 		eventosPanelConsultaViajes();
 		eventosPanelGerente( );
-		
+
 		actualizarPanelGerente();
 	}
 
 	private static void eventosPanelConsultaViajes() {
-		
+
 		ventana.getPanelConsultaViajes().getBuscar().addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Date dateInicio, dateFin;
 				try
 				{
@@ -55,14 +56,14 @@ public class Main {
 				catch(Exception ex)
 				{
 					JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+ex.getMessage());
-					
+
 				}				
 			}			
-			
+
 		});
-		
+
 	}
-	
+
 	private static void eventosPanelGerente()
 	{
 		ventana.getPanelGerente( ).getBtnGenerarReporte( ).addActionListener(new ActionListener() {
@@ -72,7 +73,7 @@ public class Main {
 				dialog.setVisible(true);
 			}
 		});
-		
+
 		eventosPanelDescuentos();
 		eventosPanelClases( );
 		eventosPanelDestinos( );
@@ -94,11 +95,11 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void eventosPanelDescuentos( )
 	{
 		final PanelDescuento panelDescuento = ventana.getPanelGerente( ).getPanelDescuento( );
-	
+
 		//evento lista
 		final JList listDescuentos = panelDescuento.getList( );
 		listDescuentos.addListSelectionListener(new ListSelectionListener() {
@@ -106,11 +107,11 @@ public class Main {
 			{
 				if( !listDescuentos.isSelectionEmpty( ) )
 				{
-					//TODO
+					
 				}
 			}
 		});
-		
+
 		// evento bnt limpiar
 		panelDescuento.getBtnLimpiar( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -123,8 +124,58 @@ public class Main {
 				panelDescuento.getList( ).clearSelection( );
 			}
 		});	
+
+
+		//evento bnt Agregar
+		panelDescuento.getBtnAgregar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+
+				if( !panelDescuento.getList( ).isSelectionEmpty() )
+				{
+					Descuento d = (Descuento) panelDescuento.getList( ).getSelectedValue();
+					try 
+					{
+						controladoraBD.actualizarDescuento(0, null, null, 0, 0, 0);
+					} 
+					catch (ClassNotFoundException e1) 
+					{
+						e1.printStackTrace();
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
+				}
+				else
+				{
+					String fechaInf = panelDescuento.getdPInicio().getJFormattedTextField().getText();
+					String fechaSup = panelDescuento.getdPFin().getJFormattedTextField().getText();
+					Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
+					Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
+					Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
+					
+					try {
+						controladoraBD.crearDescuento( fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
+					} catch (ClassNotFoundException e1) 
+					{
+						e1.printStackTrace();
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
+					
+					System.out.println(fechaInf);
+					System.out.println(fechaSup);
+					System.out.println(ocupacionInf);
+					System.out.println(ocupacionSup);
+					System.out.println(descuento); 
+				}
+			}
+		});	
 	}
-	
+
 	private static void eventosPanelClases()
 	{		
 		final PanelClases panelClases = ventana.getPanelGerente( ).getPanelClases( );
@@ -142,7 +193,7 @@ public class Main {
 				}
 			}
 		});
-		
+
 		// evento btnlimpiar
 		panelClases.getBtnLimpiar( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -153,7 +204,7 @@ public class Main {
 				panelClases.getListClases( ).clearSelection( );
 			}
 		});	
-		
+
 		// evento btnguardar
 		panelClases.getBtnGuardar( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -161,7 +212,7 @@ public class Main {
 				String nom = panelClases.getTxtNombreClase().getText(  );
 				String des = panelClases.getTxtDescripcion( ).getText(  );
 				int mul = Integer.parseInt( panelClases.getTxtMultiplicador( ).getText( ) );
-				
+
 				try
 				{
 					if( panelClases.getListClases( ).isSelectionEmpty( ) )
@@ -178,15 +229,15 @@ public class Main {
 				{
 					e1.printStackTrace();
 				}
-				
+
 				panelClases.getTxtNombreClase().setText( "" );
 				panelClases.getTxtMultiplicador().setText( "" );
 				panelClases.getTxtDescripcion().setText( "" );
 				panelClases.getListClases( ).clearSelection( );
-				
+
 			}
 		});	
-		
+
 		// evento btn eliminar
 		panelClases.getBtnEliminar( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -210,9 +261,9 @@ public class Main {
 				}
 			}
 		});	
-		
+
 	}
-	
+
 	public static Clase consultarClase(String nombre) throws SQLException, ClassNotFoundException
 	{
 		Clase clase = null;
@@ -227,7 +278,7 @@ public class Main {
 		resultSet.close( );
 		return clase;
 	}
-	
+
 	public static ArrayList< Clase > consultarClases() throws SQLException, ClassNotFoundException
 	{
 		ArrayList< Clase > clases = new ArrayList< Clase >( );
@@ -242,7 +293,7 @@ public class Main {
 		}
 		return clases;
 	}
-	
+
 	private static void eventosPanelDestinos() 
 	{
 		final PanelDestinos panelDestinos = ventana.getPanelGerente().getPanelDestinos();
@@ -260,13 +311,13 @@ public class Main {
 					panelDestinos.getTxtLatitud().setText(destino.getLatitud()+"");
 					panelDestinos.getTxtLongitud().setText(destino.getLongitud()+"");
 					panelDestinos.getTextAreaDescripcion().setText(destino.getDescripcion());
-					
+
 					panelDestinos.deshabilitarBut();
 					panelDestinos.deshabilitarCampos();
 				}
 			}
 		});
-		
+
 		// evento para el boton editar
 		panelDestinos.getBtnEditar().addActionListener(new ActionListener() 
 		{			
@@ -278,7 +329,7 @@ public class Main {
 				panelDestinos.setCrear(false);
 			}
 		});
-		
+
 		//evento para el boton crear
 		panelDestinos.getBtnCrear().addActionListener(new ActionListener() 
 		{
@@ -291,7 +342,7 @@ public class Main {
 				panelDestinos.setCrear(true);
 			}
 		});
-		
+
 		//evetno para el boton listo
 		panelDestinos.getBtnListo().addActionListener(new ActionListener() 
 		{
@@ -303,7 +354,7 @@ public class Main {
 				
 				double longitud = Double.parseDouble(panelDestinos.getTxtLongitud().getText());
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
-				
+
 				if(panelDestinos.getCrear())
 				{
 					try 
@@ -337,7 +388,7 @@ public class Main {
 				actualizarPanelGerente();
 			}
 		});
-		
+
 		//evento para el boton eliminar
 		panelDestinos.getButEliminar().addActionListener(new ActionListener() 
 		{			
@@ -364,7 +415,7 @@ public class Main {
 			}
 		});
 	}
-	
+
 	public static ArrayList<Destino> getDestinos()
 	{
 		ArrayList<Destino> destinos = new ArrayList<Destino>();
@@ -377,20 +428,20 @@ public class Main {
 				String descripcion = resultado.getString(2);
 				double latitud = resultado.getInt(3);
 				double longitud = resultado.getInt(4);
-				
+
 				Destino destino = new Destino(id, latitud, longitud, descripcion);
 				destinos.add(destino);
 			}
-			
+
 		} 
 		catch (ClassNotFoundException e) 
 		{
-			
+
 			e.printStackTrace();
 		} 
 		catch (SQLException e) 
 		{
-		
+
 			e.printStackTrace();
 		}
 		return destinos;
