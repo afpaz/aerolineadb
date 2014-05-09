@@ -256,7 +256,7 @@ public class Main {
 				if( !listDestinos.isSelectionEmpty( ) )
 				{
 					Destino destino = (Destino) listDestinos.getSelectedValue( );
-					panelDestinos.getTxtId().setText( destino.getId());
+					panelDestinos.getTxtId().setText( destino.getId()+"");
 					panelDestinos.getTxtLatitud().setText(destino.getLatitud()+"");
 					panelDestinos.getTxtLongitud().setText(destino.getLongitud()+"");
 					panelDestinos.getTextAreaDescripcion().setText(destino.getDescripcion());
@@ -298,8 +298,9 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				String id = panelDestinos.getTxtId().getText();
+				int id = Integer.parseInt(panelDestinos.getTxtId().getText());
 				double latitud = Double.parseDouble(panelDestinos.getTxtLatitud().getText());
+				
 				double longitud = Double.parseDouble(panelDestinos.getTxtLongitud().getText());
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
 				
@@ -372,10 +373,10 @@ public class Main {
 			ResultSet resultado = controladoraBD.consultarDestinos();
 			while(resultado.next())
 			{
-				String id = resultado.getString(1);
-				double latitud = resultado.getInt(2);
-				double longitud = resultado.getInt(3);
-				String descripcion = resultado.getString(4);
+				int id = resultado.getInt(1);
+				String descripcion = resultado.getString(2);
+				double latitud = resultado.getInt(3);
+				double longitud = resultado.getInt(4);
 				
 				Destino destino = new Destino(id, latitud, longitud, descripcion);
 				destinos.add(destino);
