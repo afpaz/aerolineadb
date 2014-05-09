@@ -1,6 +1,6 @@
 /*
 Created: 04;05;2014
-Modified: 07;05;2014
+Modified: 09;05;2014
 Model: Oracle 12c
 Database: Oracle 12c
 */
@@ -184,10 +184,12 @@ ALTER TABLE Tarifas ADD CONSTRAINT KeyTarifas PRIMARY KEY (tarifa_id)
 
 CREATE TABLE Descuentos(
   descuento_id Number(3,0) NOT NULL,
-  rango_dias Number(10,0),
-  rango_ocupacion Varchar2(30 ),
-  porcentaje_desc Number(2,6),
-  viaje_id Number(3,0) NOT NULL
+  porcentaje_desc Number(2,6) NOT NULL,
+  viaje_id Number(3,0) NOT NULL,
+  limiteInfDias Number(10,0) NOT NULL,
+  limiteSupDias Number(10,0) NOT NULL,
+  limiteSupOcup Number(10,0) NOT NULL,
+  limiteInfOcup Number(10,0) NOT NULL
 )
 ;
 
@@ -337,3 +339,6 @@ ALTER TABLE Viajes ADD CONSTRAINT destino FOREIGN KEY (destino) REFERENCES Lugar
 
 ALTER TABLE Viajes ADD CONSTRAINT origen FOREIGN KEY (origen) REFERENCES Lugares (lugar_id)
 ;
+
+
+
