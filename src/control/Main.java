@@ -80,7 +80,7 @@ public class Main {
 
 	private static void actualizarPanelGerente( )
 	{
-//		ventana.actualizarLista(getDestinos());
+		ventana.actualizarLista(getDestinos());
 		try
 		{
 			ventana.actualizarPanelClases( consultarClases( ) );
