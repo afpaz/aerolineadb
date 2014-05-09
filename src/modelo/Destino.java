@@ -2,11 +2,11 @@ package modelo;
 
 public class Destino
 {
-	private String id;
+	private int id;
 	private double latitud;
 	private double longitud;
 	private String descripcion;
-	public Destino(String id, double latitud, double longitud,
+	public Destino(int id, double latitud, double longitud,
 			String descripcion) {
 		super();
 		this.id = id;
@@ -14,10 +14,10 @@ public class Destino
 		this.longitud = longitud;
 		this.descripcion = descripcion;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public double getLatitud() {
@@ -39,6 +39,9 @@ public class Destino
 		this.descripcion = descripcion;
 	}
 	
-	
+	public String toString()
+	{
+		return id+"";
+	}
 
 }
