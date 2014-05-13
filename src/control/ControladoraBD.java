@@ -21,8 +21,8 @@ public class ControladoraBD {
 		String servidor = IP_INTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "";
-		String pass = "";
+		String usr = "P09551_1_1";
+		String pass = "jjSdwF0b";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
@@ -138,5 +138,38 @@ public class ControladoraBD {
 		Statement statement = con.createStatement( );
 		statement.execute( sql );
 		//TODO revizar estructura de la tabla
+	}
+
+	public void crearTarifa(int id, int valor, int inferior, int superior) throws ClassNotFoundException, SQLException 
+	{
+		Connection conect = getConection();
+		String sql = "INSERT INTO TARIFAS VALUES("+ id + ", " + valor + ", " + inferior + ", " + superior + ")";
+		Statement statement = conect.createStatement();
+		statement.execute(sql);
+	}
+
+	public void actualizarTarifa(int id, int valor, int inferior, int superior) throws SQLException, ClassNotFoundException 
+	{
+		Connection conect = getConection();
+		String sql= "UPDATE TARIFAS SET valorKM =" + valor + ", limiteInfKM = " + inferior + ", limiteSupKM = " + superior + " where tarifa_id = " + id +"";
+		Statement statement = conect.createStatement();
+		statement.execute(sql);
+	}
+
+	public void eliminarTarifa(int id) throws ClassNotFoundException, SQLException 
+	{
+		Connection conect = getConection();
+		String sql= "DELETE FROM TARIFAS where tarifa_id = " + id + "";
+		Statement statement = conect.createStatement();
+		statement.execute(sql);		
+	}
+
+	public ResultSet consultarTarifas() throws ClassNotFoundException, SQLException 
+	{
+		Connection conect = getConection();
+		String sql = "SELECT * FROM TARIFAS";
+		return conect.prepareStatement(sql).executeQuery();
 	}	
+	
+	
 }

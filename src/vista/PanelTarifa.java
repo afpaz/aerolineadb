@@ -14,6 +14,11 @@ public class PanelTarifa extends JPanel {
 	private JTextField txtValorKm;
 	private JTextField txtLimInfKm;
 	private JTextField txtLimSup;
+	private JButton btnGuardarTarifa;
+	private JButton btnEliminar;
+	private JButton btnLimpiar;
+	private JList listTarifas;
+	private JTextField txtId;
 
 	/**
 	 * Create the panel.
@@ -52,20 +57,90 @@ public class PanelTarifa extends JPanel {
 		scrollPane.setBounds(10, 11, 267, 299);
 		add(scrollPane);
 		
-		JList list = new JList();
-		scrollPane.setViewportView(list);
+		listTarifas = new JList();
+		scrollPane.setViewportView(listTarifas);
 		
-		JButton btnGuardarTarifa = new JButton("Guardar");
+		btnGuardarTarifa = new JButton("Guardar");
 		btnGuardarTarifa.setBounds(487, 213, 95, 23);
 		add(btnGuardarTarifa);
 		
-		JButton btnEliminar = new JButton( new ImageIcon("./imagenes/delete.png") );
+		btnEliminar = new JButton( new ImageIcon("./imagenes/delete.png") );
 		btnEliminar.setBounds(118, 321, 41, 23);
 		add(btnEliminar);
 		
-		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.setBounds(358, 213, 95, 23);
 		add(btnLimpiar);
+		
+		JLabel lblId = new JLabel("Id:");
+		lblId.setBounds(343, 63, 46, 14);
+		add(lblId);
+		
+		txtId = new JTextField();
+		txtId.setBounds(459, 60, 141, 20);
+		add(txtId);
+		txtId.setColumns(10);
 
 	}
+
+	public JTextField getTxtValorKm() {
+		return txtValorKm;
+	}
+
+	public void setTxtValorKm(JTextField txtValorKm) {
+		this.txtValorKm = txtValorKm;
+	}
+
+	public JTextField getTxtLimInfKm() {
+		return txtLimInfKm;
+	}
+
+	public void setTxtLimInfKm(JTextField txtLimInfKm) {
+		this.txtLimInfKm = txtLimInfKm;
+	}
+
+	public JTextField getTxtLimSup() {
+		return txtLimSup;
+	}
+
+	public void setTxtLimSup(JTextField txtLimSup) {
+		this.txtLimSup = txtLimSup;
+	}
+
+	public JTextField getTxtId() {
+		return txtId;
+	}
+
+	public void setTxtId(JTextField txtId) {
+		this.txtId = txtId;
+	}
+	
+	public JList getListTarifas() {
+		return listTarifas;
+	}
+
+	public void setListTarifas(JList listTarifas) {
+		this.listTarifas = listTarifas;
+	}
+
+	public JButton getBtnGuardarTarifa() {
+		return btnGuardarTarifa;
+	}
+
+	public JButton getBtnEliminar() {
+		return btnEliminar;
+	}
+
+	public JButton getBtnLimpiar() {
+		return btnLimpiar;
+	}
+	
+	public void limpiarCampos() 
+	{
+		txtId.setText("");
+		txtLimInfKm.setText("");
+		txtLimSup.setText("");
+		txtValorKm.setText("");
+	}
+	
 }

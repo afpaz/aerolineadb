@@ -169,9 +169,9 @@ ALTER TABLE Lugares ADD CONSTRAINT KeyLugar PRIMARY KEY (lugar_id)
 
 CREATE TABLE Tarifas(
   tarifa_id Number(3,0) NOT NULL,
-  valorKM Number(10,10) NOT NULL,
-  limiteInfKM Number(10,10) NOT NULL,
-  limiteSupKM Number(10,10) NOT NULL
+  valorKM Number(10,0) NOT NULL,
+  limiteInfKM Number(10,0) NOT NULL,
+  limiteSupKM Number(10,0) NOT NULL
 )
 ;
 

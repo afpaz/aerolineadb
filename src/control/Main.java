@@ -15,11 +15,13 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Clase;
 import modelo.Descuento;
 import modelo.Destino;
+import modelo.Tarifa;
 
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
 import vista.PanelDescuento;
 import vista.PanelDestinos;
+import vista.PanelTarifa;
 import vista.Ventana;
 
 public class Main {
@@ -34,6 +36,7 @@ public class Main {
 
 		eventosPanelConsultaViajes();
 		eventosPanelGerente( );
+		eventosPanelTarifa();
 
 		actualizarPanelGerente();
 	}
@@ -81,10 +84,12 @@ public class Main {
 
 	private static void actualizarPanelGerente( )
 	{
-		ventana.actualizarLista(getDestinos());
+		ventana.actualizarListaDestinos(getDestinos());
+		ventana.actualizarListaTarifas(getTarifas());
 		try
 		{
 			ventana.actualizarPanelClases( consultarClases( ) );
+						
 		}
 		catch ( ClassNotFoundException e )
 		{
@@ -107,7 +112,7 @@ public class Main {
 			{
 				if( !listDescuentos.isSelectionEmpty( ) )
 				{
-					
+
 				}
 			}
 		});
@@ -154,7 +159,7 @@ public class Main {
 					Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
 					Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
 					Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
-					
+
 					try {
 						controladoraBD.crearDescuento( fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
 					} catch (ClassNotFoundException e1) 
@@ -165,7 +170,7 @@ public class Main {
 					{
 						e1.printStackTrace();
 					}
-					
+
 					System.out.println(fechaInf);
 					System.out.println(fechaSup);
 					System.out.println(ocupacionInf);
@@ -297,7 +302,7 @@ public class Main {
 	private static void eventosPanelDestinos() 
 	{
 		final PanelDestinos panelDestinos = ventana.getPanelGerente().getPanelDestinos();
-		
+
 		// Listener de la Lista destinos
 		final JList listDestinos = panelDestinos.getListDestinos();
 		listDestinos.addListSelectionListener(new ListSelectionListener() 
@@ -351,7 +356,7 @@ public class Main {
 			{
 				int id = Integer.parseInt(panelDestinos.getTxtId().getText());
 				String latitud = panelDestinos.getTxtLatitud().getText();
-				
+
 				String longitud = panelDestinos.getTxtLongitud().getText();
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
 
@@ -431,6 +436,117 @@ public class Main {
 
 				Destino destino = new Destino(id, latitud, longitud, descripcion);
 				destinos.add(destino);
+			}
+
+		} 
+		catch (ClassNotFoundException e) 
+		{
+
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return destinos;
+	}
+
+	private static void eventosPanelTarifa() 
+	{
+		final PanelTarifa panelTarifa = ventana.getPanelGerente().getPanelTarifa();
+
+		final JList listaTarifas = panelTarifa.getListTarifas();
+		listaTarifas.addListSelectionListener(new ListSelectionListener() 
+		{
+			@Override
+			public void valueChanged(ListSelectionEvent e) 
+			{
+				if(!listaTarifas.isSelectionEmpty())
+				{
+					Tarifa tarifa = (Tarifa)listaTarifas.getSelectedValue();
+					panelTarifa.getTxtValorKm().setText(tarifa.getValorKm()+"");
+					panelTarifa.getTxtLimInfKm().setText(tarifa.getLimInfKm()+"");
+					panelTarifa.getTxtLimSup().setText(tarifa.getLimSupKm()+"");					
+				}
+			}
+		});
+
+		panelTarifa.getBtnLimpiar().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				panelTarifa.limpiarCampos();	
+				listaTarifas.clearSelection();	
+			}
+		});
+
+		panelTarifa.getBtnGuardarTarifa().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				int id = Integer.parseInt(panelTarifa.getTxtId().getText());
+				int valor = Integer.parseInt(panelTarifa.getTxtValorKm().getText());
+				int inferior = Integer.parseInt(panelTarifa.getTxtLimInfKm().getText());
+				int superior = Integer.parseInt(panelTarifa.getTxtLimSup().getText());
+
+				try
+				{
+					if(listaTarifas.isSelectionEmpty())
+					{
+						controladoraBD.crearTarifa(id, valor, inferior, superior);
+					}
+					else
+					{
+						controladoraBD.actualizarTarifa(id, valor, inferior, superior);
+					}
+				}
+				catch (ClassNotFoundException | SQLException e2)
+				{
+					e2.printStackTrace();
+				}
+
+				actualizarPanelGerente();
+			}
+		});
+
+		panelTarifa.getBtnEliminar().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					int id = Integer.parseInt(panelTarifa.getTxtId().getText());
+					controladoraBD.eliminarTarifa(id);
+				}
+				catch (ClassNotFoundException | SQLException e2)
+				{
+					e2.printStackTrace();
+				}
+				actualizarPanelGerente();
+			}
+		});
+
+	}
+	
+	public static ArrayList<Tarifa> getTarifas()
+	{
+		ArrayList<Tarifa> destinos = new ArrayList<Tarifa>();
+		try 
+		{
+			ResultSet resultado = controladoraBD.consultarTarifas();
+			while(resultado.next())
+			{
+				int id = resultado.getInt(1);
+				int valor = resultado.getInt(2);
+				int inferior = resultado.getInt(3);
+				int superior = resultado.getInt(4);
+
+				Tarifa tarifa = new Tarifa(id, valor, inferior, superior);
+				destinos.add(tarifa);
 			}
 
 		} 
