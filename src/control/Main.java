@@ -426,8 +426,8 @@ public class Main {
 			{
 				int id = resultado.getInt(1);
 				String descripcion = resultado.getString(2);
-				double latitud = resultado.getInt(3);
-				double longitud = resultado.getInt(4);
+				String latitud = resultado.getString(3);
+				String longitud = resultado.getString(4);
 
 				Destino destino = new Destino(id, latitud, longitud, descripcion);
 				destinos.add(destino);
