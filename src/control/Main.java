@@ -350,9 +350,9 @@ public class Main {
 			public void actionPerformed(ActionEvent e) 
 			{
 				int id = Integer.parseInt(panelDestinos.getTxtId().getText());
-				double latitud = Double.parseDouble(panelDestinos.getTxtLatitud().getText());
+				String latitud = panelDestinos.getTxtLatitud().getText();
 				
-				double longitud = Double.parseDouble(panelDestinos.getTxtLongitud().getText());
+				String longitud = panelDestinos.getTxtLongitud().getText();
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
 
 				if(panelDestinos.getCrear())
