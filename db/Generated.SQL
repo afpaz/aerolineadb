@@ -155,8 +155,8 @@ ALTER TABLE Vuelos ADD CONSTRAINT KeyVuelo PRIMARY KEY (vuelo_id)
 CREATE TABLE Lugares(
   lugar_id Number(3,0) NOT NULL,
   descripcion Varchar2(500 ) NOT NULL,
-  latitud Number(10,10) NOT NULL,
-  longitud Number(10,10) NOT NULL
+  latitud varchar(30) NOT NULL,
+  longitud varchar(30) NOT NULL
 )
 ;
 
