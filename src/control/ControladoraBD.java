@@ -21,8 +21,8 @@ public class ControladoraBD {
 		String servidor = IP_INTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "P09551_1_1";
-		String pass = "jjSdwF0b";
+		String usr = "";
+		String pass = "";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
