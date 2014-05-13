@@ -21,8 +21,8 @@ public class ControladoraBD {
 		String servidor = IP_INTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "";
-		String pass = "";
+		String usr = "P09551_1_1";
+		String pass = "jjSdwF0b";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
@@ -90,15 +90,15 @@ public class ControladoraBD {
 		return con.prepareStatement( sql ).executeQuery( );
 	}
 
-	public boolean crearDestino(int id, double latitud, double longitud, String descripcion) throws SQLException, ClassNotFoundException
+	public boolean crearDestino(int id, String latitud, String longitud, String descripcion) throws SQLException, ClassNotFoundException
 	{		
 		Connection con = getConection();
-		String sql = "INSERT INTO LUGARES VALUES( " + id + ", '"+ descripcion + "', " + latitud + ", " + longitud +")";
+		String sql = "INSERT INTO LUGARES VALUES( " + id + ", '"+ descripcion + "', '" + latitud + "', '" + longitud +"')";
 		Statement statement = con.createStatement( );
 		return statement.execute( sql );	
 	}
 
-	public boolean actualizarDestino(int id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException 
+	public boolean actualizarDestino(int id, String latitud, String longitud, String descripcion) throws ClassNotFoundException, SQLException 
 	{		
 		
 		Connection conect = getConection();
