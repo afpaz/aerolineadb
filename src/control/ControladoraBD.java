@@ -18,7 +18,7 @@ public class ControladoraBD {
 	{
 		Connection connection = null;
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String servidor = IP_INTERNA;
+		String servidor = IP_EXTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
 		String usr = "";

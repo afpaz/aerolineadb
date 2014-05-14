@@ -503,7 +503,11 @@ public class Main {
 						controladoraBD.actualizarTarifa(id, valor, inferior, superior);
 					}
 				}
-				catch (ClassNotFoundException | SQLException e2)
+				catch (ClassNotFoundException e1)
+				{
+					e1.printStackTrace();
+				}
+				catch (SQLException e2)
 				{
 					e2.printStackTrace();
 				}
@@ -522,7 +526,11 @@ public class Main {
 					int id = Integer.parseInt(panelTarifa.getTxtId().getText());
 					controladoraBD.eliminarTarifa(id);
 				}
-				catch (ClassNotFoundException | SQLException e2)
+				catch (ClassNotFoundException e1)
+				{
+					e1.printStackTrace();
+				}
+				catch (SQLException e2)
 				{
 					e2.printStackTrace();
 				}
