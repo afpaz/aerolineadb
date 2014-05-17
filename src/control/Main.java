@@ -30,18 +30,6 @@ public class Main {
 	public static Ventana ventana;
 	public static ControladoraBD controladoraBD;
 
-	public static void main(String[] args) {
-		ventana = new Ventana();
-		ventana.setVisible(true);
-		controladoraBD = new ControladoraBD();
-
-		eventosPanelConsultaViajes();
-		eventosPanelGerente( );
-		eventosPanelTarifa();
-
-		actualizarPanelGerente();
-	}
-
 	private static void eventosPanelConsultaViajes() {
 
 		ventana.getPanelConsultaViajes().getBuscar().addActionListener(new ActionListener(){
@@ -81,14 +69,6 @@ public class Main {
 		eventosPanelDescuentos();
 		eventosPanelClases( );
 		eventosPanelDestinos( );
-	}
-
-	private static void actualizarPanelGerente( )
-	{
-		ventana.actualizarListaDestinos(getDestinos());
-		ventana.actualizarListaTarifas(getTarifas());
-		ventana.actualizarPanelClases( consultarClases( ) );
-		ventana.actualizarListaDescuentos(getDescuentos( ));
 	}
 
 	private static void eventosPanelDescuentos( )
@@ -171,6 +151,32 @@ public class Main {
 				}
 			}
 		});	
+		
+		//evento eliminar
+		panelDescuento.getBtnEliminar( ).addActionListener( new ActionListener( )
+		{			
+			@Override
+			public void actionPerformed( ActionEvent e )
+			{
+				if( !panelDescuento.getList( ).isSelectionEmpty( ) )
+				{
+					try
+					{
+						controladoraBD.eliminarDescuento( ((Descuento)panelDescuento.getList( ).getSelectedValue( )).getId( ) );
+						ventana.actualizarListaDescuentos( consultarDescuentos( ) );
+						panelDescuento.getList( ).clearSelection( );
+					}
+					catch ( ClassNotFoundException e1 )
+					{
+						e1.printStackTrace();
+					}
+					catch ( SQLException e1 )
+					{
+						e1.printStackTrace();
+					}	
+				}				
+			}
+		} );
 	}
 
 	private static void eventosPanelClases()
@@ -264,47 +270,6 @@ public class Main {
 			}
 		});	
 
-	}
-
-	public static Clase consultarClase(String nombre) throws SQLException, ClassNotFoundException
-	{
-		Clase clase = null;
-		ResultSet resultSet = controladoraBD.consultarClase( nombre );
-		if( resultSet.next( ) )
-		{
-			String nom = resultSet.getString( 1 );
-			String des = resultSet.getString( 2 );
-			int mul = resultSet.getInt( 3 );
-			clase = new Clase( nom, des, mul );
-		}
-		resultSet.close( );
-		return clase;
-	}
-
-	public static ArrayList< Clase > consultarClases()
-	{
-		ArrayList< Clase > clases = new ArrayList< Clase >( );
-		try
-		{
-			ResultSet resultSet = controladoraBD.consultarClases( );
-			while ( resultSet.next( ) )
-			{
-				String nom = resultSet.getString( 1 );
-				String des = resultSet.getString( 2 );
-				int mul = resultSet.getInt( 3 );
-				Clase c = new Clase( nom, des, mul );
-				clases.add( c );
-			}
-		}
-		catch (ClassNotFoundException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}
-		return clases;
 	}
 
 	private static void eventosPanelDestinos() 
@@ -456,37 +421,6 @@ public class Main {
 		});
 	}
 
-	public static ArrayList<Destino> getDestinos()
-	{
-		ArrayList<Destino> destinos = new ArrayList<Destino>();
-		try 
-		{
-			ResultSet resultado = controladoraBD.consultarDestinos();
-			while(resultado.next())
-			{
-				int id = resultado.getInt(1);
-				String descripcion = resultado.getString(2);
-				String latitud = resultado.getString(3);
-				String longitud = resultado.getString(4);
-
-				Destino destino = new Destino(id, latitud, longitud, descripcion);
-				destinos.add(destino);
-			}
-
-		} 
-		catch (ClassNotFoundException e) 
-		{
-
-			e.printStackTrace();
-		} 
-		catch (SQLException e) 
-		{
-
-			e.printStackTrace();
-		}
-		return destinos;
-	}
-
 	private static void eventosPanelTarifa() 
 	{
 		final PanelTarifa panelTarifa = ventana.getPanelGerente().getPanelTarifa();
@@ -616,7 +550,15 @@ public class Main {
 
 	}
 
-	public static ArrayList<Tarifa> getTarifas()
+	private static void actualizarPanelGerente( )
+	{
+		ventana.actualizarListaDestinos(consultarDestinos());
+		ventana.actualizarListaTarifas(consultarTarifas());
+		ventana.actualizarPanelClases( consultarClases( ) );
+		ventana.actualizarListaDescuentos(consultarDescuentos( ));
+	}
+
+	public static ArrayList<Tarifa> consultarTarifas()
 	{
 		ArrayList<Tarifa> tarifas = new ArrayList<Tarifa>();
 		try 
@@ -647,7 +589,79 @@ public class Main {
 		return tarifas;
 	}
 
-	public static ArrayList<Descuento> getDescuentos()
+	public static ArrayList< Clase > consultarClases()
+	{
+		ArrayList< Clase > clases = new ArrayList< Clase >( );
+		try
+		{
+			ResultSet resultSet = controladoraBD.consultarClases( );
+			while ( resultSet.next( ) )
+			{
+				String nom = resultSet.getString( 1 );
+				String des = resultSet.getString( 2 );
+				int mul = resultSet.getInt( 3 );
+				Clase c = new Clase( nom, des, mul );
+				clases.add( c );
+			}
+		}
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return clases;
+	}
+
+	public static ArrayList<Destino> consultarDestinos()
+	{
+		ArrayList<Destino> destinos = new ArrayList<Destino>();
+		try 
+		{
+			ResultSet resultado = controladoraBD.consultarDestinos();
+			while(resultado.next())
+			{
+				int id = resultado.getInt(1);
+				String descripcion = resultado.getString(2);
+				String latitud = resultado.getString(3);
+				String longitud = resultado.getString(4);
+	
+				Destino destino = new Destino(id, latitud, longitud, descripcion);
+				destinos.add(destino);
+			}
+	
+		} 
+		catch (ClassNotFoundException e) 
+		{
+	
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+	
+			e.printStackTrace();
+		}
+		return destinos;
+	}
+
+	public static Clase consultarClase(String nombre) throws SQLException, ClassNotFoundException
+	{
+		Clase clase = null;
+		ResultSet resultSet = controladoraBD.consultarClase( nombre );
+		if( resultSet.next( ) )
+		{
+			String nom = resultSet.getString( 1 );
+			String des = resultSet.getString( 2 );
+			int mul = resultSet.getInt( 3 );
+			clase = new Clase( nom, des, mul );
+		}
+		resultSet.close( );
+		return clase;
+	}
+
+	public static ArrayList<Descuento> consultarDescuentos()
 	{
 		ArrayList<Descuento> descuentos = new ArrayList<Descuento>();
 		try 
@@ -680,6 +694,18 @@ public class Main {
 			e.printStackTrace();
 		}
 		return descuentos;
+	}
+
+	public static void main(String[] args) {
+		ventana = new Ventana();
+		ventana.setVisible(true);
+		controladoraBD = new ControladoraBD();
+	
+		eventosPanelConsultaViajes();
+		eventosPanelGerente( );
+		eventosPanelTarifa();
+	
+		actualizarPanelGerente();
 	}
 
 }

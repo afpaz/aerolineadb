@@ -52,13 +52,6 @@ public class ControladoraBD {
 		return rs;
 	}
 	
-	public ResultSet consultarClases() throws ClassNotFoundException, SQLException
-	{
-		Connection con = getConection();
-		String sql = "SELECT * FROM CLASES";
-		return con.prepareStatement( sql ).executeQuery( );
-	}
-	
 	public boolean actualizarClase(String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConection();
@@ -67,37 +60,6 @@ public class ControladoraBD {
 		return statement.execute( sql );		
 	}
 	
-	public boolean crearClase(String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
-	{
-		Connection con = getConection();
-		String sql = "INSERT INTO CLASES VALUES( '" + nombre + "', '" + descripcion + "', '" + multiplicador + "')";
-		Statement statement = con.createStatement( );
-		return statement.execute( sql );
-	}
-	
-	public boolean eliminarClase(String nombre) throws ClassNotFoundException, SQLException
-	{
-		Connection con = getConection();
-		String sql = "DELETE FROM CLASES c WHERE c.nombre = '" + nombre + "'";
-		Statement statement = con.createStatement( );
-		return statement.execute( sql );		
-	}
-
-	public ResultSet consultarClase( String nombre ) throws ClassNotFoundException, SQLException
-	{
-		Connection con = getConection();
-		String sql = "SELECT * FROM CLASES c WHERE c.nombre = '" + nombre + "'";
-		return con.prepareStatement( sql ).executeQuery( );
-	}
-
-	public boolean crearDestino(int id, String latitud, String longitud, String descripcion) throws SQLException, ClassNotFoundException
-	{		
-		Connection con = getConection();
-		String sql = "INSERT INTO LUGARES VALUES( " + id + ", '"+ descripcion + "', '" + latitud + "', '" + longitud +"')";
-		Statement statement = con.createStatement( );
-		return statement.execute( sql );	
-	}
-
 	public boolean actualizarDestino(int id, String latitud, String longitud, String descripcion) throws ClassNotFoundException, SQLException 
 	{		
 		
@@ -107,21 +69,6 @@ public class ControladoraBD {
 		return statement.execute(sql);
 	}
 
-	public boolean eliminarDestino(String id) throws SQLException, ClassNotFoundException 
-	{
-		Connection conect = getConection();
-		String sql = "DELETE FROM LUGARES WHERE lugar_id = '" + id + "'" ;
-		Statement statement = conect.createStatement();
-		return statement.execute(sql);
-	}
-	
-	public ResultSet consultarDestinos() throws ClassNotFoundException, SQLException
-	{
-		Connection conect = getConection();
-		String sql = "SELECT * FROM LUGARES";
-		return conect.prepareStatement(sql).executeQuery();
-	}
-
 	public void actualizarDescuento(int id, String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento ) throws ClassNotFoundException, SQLException 
 	{
 		Connection con = getConection();
@@ -129,6 +76,30 @@ public class ControladoraBD {
 		Statement statement = con.createStatement( );
 		statement.execute( sql );
 		//TODO revizar 
+	}
+
+	public void actualizarTarifa(int id, int valor, int inferior, int superior) throws SQLException, ClassNotFoundException 
+	{
+		Connection conect = getConection();
+		String sql= "UPDATE TARIFAS SET valorKM =" + valor + ", limiteInfKM = " + inferior + ", limiteSupKM = " + superior + " where tarifa_id = " + id +"";
+		Statement statement = conect.createStatement();
+		statement.execute(sql);
+	}
+
+	public boolean crearClase(String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "INSERT INTO CLASES VALUES( '" + nombre + "', '" + descripcion + "', '" + multiplicador + "')";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );
+	}
+	
+	public boolean crearDestino(int id, String latitud, String longitud, String descripcion) throws SQLException, ClassNotFoundException
+	{		
+		Connection con = getConection();
+		String sql = "INSERT INTO LUGARES VALUES( " + id + ", '"+ descripcion + "', '" + latitud + "', '" + longitud +"')";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );	
 	}
 
 	public void crearDescuento(String id, String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException 
@@ -148,14 +119,6 @@ public class ControladoraBD {
 		statement.execute(sql);
 	}
 
-	public void actualizarTarifa(int id, int valor, int inferior, int superior) throws SQLException, ClassNotFoundException 
-	{
-		Connection conect = getConection();
-		String sql= "UPDATE TARIFAS SET valorKM =" + valor + ", limiteInfKM = " + inferior + ", limiteSupKM = " + superior + " where tarifa_id = " + id +"";
-		Statement statement = conect.createStatement();
-		statement.execute(sql);
-	}
-
 	public void eliminarTarifa(int id) throws ClassNotFoundException, SQLException 
 	{
 		Connection conect = getConection();
@@ -164,6 +127,30 @@ public class ControladoraBD {
 		statement.execute(sql);		
 	}
 
+	public boolean eliminarDestino(String id) throws SQLException, ClassNotFoundException 
+	{
+		Connection conect = getConection();
+		String sql = "DELETE FROM LUGARES WHERE lugar_id = '" + id + "'" ;
+		Statement statement = conect.createStatement();
+		return statement.execute(sql);
+	}
+
+	public boolean eliminarClase(String nombre) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "DELETE FROM CLASES c WHERE c.nombre = '" + nombre + "'";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );		
+	}
+
+	public boolean eliminarDescuento(String id) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "DELETE FROM DESCUENTOS d WHERE d.descuento_id = '" + id + "'";
+		Statement statement = con.createStatement( );
+		return statement.execute( sql );
+	}
+	
 	public ResultSet consultarTarifas() throws ClassNotFoundException, SQLException 
 	{
 		Connection conect = getConection();
@@ -176,6 +163,27 @@ public class ControladoraBD {
 		Connection conect = getConection();
 		String sql = "SELECT * FROM DESCUENTOS";
 		return conect.prepareStatement(sql).executeQuery();
+	}
+
+	public ResultSet consultarDestinos() throws ClassNotFoundException, SQLException
+	{
+		Connection conect = getConection();
+		String sql = "SELECT * FROM LUGARES";
+		return conect.prepareStatement(sql).executeQuery();
+	}
+
+	public ResultSet consultarClases() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "SELECT * FROM CLASES";
+		return con.prepareStatement( sql ).executeQuery( );
+	}
+
+	public ResultSet consultarClase( String nombre ) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String sql = "SELECT * FROM CLASES c WHERE c.nombre = '" + nombre + "'";
+		return con.prepareStatement( sql ).executeQuery( );
 	}	
 	
 	
