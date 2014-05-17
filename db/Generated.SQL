@@ -1,19 +1,3 @@
-drop table Roles cascade constraints;
-drop table Rol_Pantalla cascade constraints;
-drop table Usuarios cascade constraints;
-drop table Ventas cascade constraints;
-drop table Tiquetes cascade constraints;
-drop table Rutas cascade constraints;
-drop table Viajes cascade constraints;
-drop table Vuelos cascade constraints;
-drop table Lugares cascade constraints;
-drop table Descuentos cascade constraints;
-drop table Clases cascade constraints;
-drop table Usuario_Rol cascade constraints;
-drop table Pantallas cascade constraints;
-drop table Ruta_Vuelo cascade constraints;
-drop table Tarifas cascade constraints;
-
 /*
 Created: 04/05/2014
 Modified: 17/05/2014
@@ -100,7 +84,7 @@ ALTER TABLE Ventas ADD CONSTRAINT Key_Venta PRIMARY KEY (venta_id)
 
 CREATE TABLE Tiquetes(
   tiquete_id Number(3,0) NOT NULL,
-  valor Number(10,10) NOT NULL,
+  valor Number(10,2) NOT NULL,
   venta_id Number(3,0) NOT NULL,
   viaje_id Varchar2(30 ) NOT NULL
 )
@@ -179,8 +163,8 @@ ALTER TABLE Lugares ADD CONSTRAINT KeyLugar PRIMARY KEY (nombre_lugar)
 CREATE TABLE Descuentos(
   descuento_id Varchar2(12 ) NOT NULL,
   porcentaje_desc Number(2,0) NOT NULL,
-  limInfDias Number(3,0) NOT NULL,
-  limSupDias Number(3,0) NOT NULL,
+  limInfDias Date NOT NULL,
+  limSupDias Date NOT NULL,
   limInfCupos Number(3,0) NOT NULL,
   limSupCupos Number(3,0) NOT NULL
 )
@@ -196,7 +180,7 @@ ALTER TABLE Descuentos ADD CONSTRAINT KeyDescuento PRIMARY KEY (descuento_id)
 CREATE TABLE Clases(
   clase_id Varchar2(12 ) NOT NULL,
   descripcion Varchar2(500 ) NOT NULL,
-  multiplicador Varchar2(30 )
+  multiplicador Number(2,0) NOT NULL
 )
 ;
 
