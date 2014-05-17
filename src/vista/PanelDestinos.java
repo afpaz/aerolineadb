@@ -92,7 +92,8 @@ public class PanelDestinos extends JPanel {
 		textAreaDescripcion = new JTextArea();
 		scrollPane_1.setViewportView(textAreaDescripcion);
 		
-		btnListo = new JButton("");
+		ImageIcon image1 = new ImageIcon("./imagenes/listo.png");
+		btnListo = new JButton(image1);
 		btnListo.setBounds(526, 305, 33, 23);
 		btnListo.setEnabled(false);
 		add(btnListo);
