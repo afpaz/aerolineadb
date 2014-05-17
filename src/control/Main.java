@@ -358,7 +358,7 @@ public class Main {
 				String latitud = panelDestinos.getTxtLatitud().getText();
 				String longitud = panelDestinos.getTxtLongitud().getText();
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
-				
+
 				// es un id valido
 				try
 				{
@@ -494,6 +494,7 @@ public class Main {
 				if(!listaTarifas.isSelectionEmpty())
 				{
 					Tarifa tarifa = (Tarifa)listaTarifas.getSelectedValue();
+					panelTarifa.getTxtId().setText(tarifa.getid()+"");
 					panelTarifa.getTxtValorKm().setText(tarifa.getValorKm()+"");
 					panelTarifa.getTxtLimInfKm().setText(tarifa.getLimInfKm()+"");
 					panelTarifa.getTxtLimSup().setText(tarifa.getLimSupKm()+"");					
@@ -520,7 +521,7 @@ public class Main {
 				int valor = 0;
 				int inferior = Integer.parseInt(panelTarifa.getTxtLimInfKm().getText());
 				int superior = Integer.parseInt(panelTarifa.getTxtLimSup().getText());
-				
+
 				// validacion para el id
 				try
 				{
@@ -531,7 +532,7 @@ public class Main {
 					JOptionPane.showMessageDialog(null, "El id debe de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
+
 				//validacion para el valor
 				try
 				{
@@ -542,7 +543,7 @@ public class Main {
 					JOptionPane.showMessageDialog(null, "El valor debe ser un numero", "Error en el formato", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
+
 				// validacion inferior y superior
 				try
 				{
@@ -554,8 +555,8 @@ public class Main {
 					JOptionPane.showMessageDialog(null, "El Limite inferior y superior deben de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				
+
+
 				// agregar o actualizar
 				try
 				{
@@ -585,19 +586,23 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) 
-			{
-				try
+			{				
+				String id = panelTarifa.getTxtId().getText();
+				if( !panelTarifa.getListTarifas().isSelectionEmpty( ) )
 				{
-					int id = Integer.parseInt(panelTarifa.getTxtId().getText());
-					controladoraBD.eliminarTarifa(id);
-				}
-				catch (ClassNotFoundException e1)
-				{
-					e1.printStackTrace();
-				}
-				catch (SQLException e2)
-				{
-					e2.printStackTrace();
+					try 
+					{
+						controladoraBD.eliminarTarifa(Integer.parseInt(id));
+						panelTarifa.limpiarCampos();
+					}
+					catch (ClassNotFoundException e1) 
+					{
+						e1.printStackTrace();
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
 				}
 				actualizarPanelGerente();
 			}
