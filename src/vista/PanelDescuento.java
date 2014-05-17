@@ -7,7 +7,6 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,7 +27,7 @@ public class PanelDescuento extends JPanel
 	private JButton btnAgregar;	
 	private JButton btnEliminar;	
 	private JButton btnLimpiar;
-	private JTextField textField;
+	private JTextField txtId;
 	
 	public PanelDescuento() {
 		setLayout(null);
@@ -102,10 +101,10 @@ public class PanelDescuento extends JPanel
 		lblId.setBounds(325, 51, 46, 14);
 		add(lblId);
 		
-		textField = new JTextField();
-		textField.setBounds(480, 48, 126, 20);
-		add(textField);
-		textField.setColumns(10);
+		txtId = new JTextField();
+		txtId.setBounds(480, 48, 126, 20);
+		add(txtId);
+		txtId.setColumns(10);
 	}
 
 	public JDatePickerImpl getdPInicio( )
@@ -155,7 +154,6 @@ public class PanelDescuento extends JPanel
 
 	public JTextField getId( )
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return txtId;
 	}	
 }

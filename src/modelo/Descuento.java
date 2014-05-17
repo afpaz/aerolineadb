@@ -5,12 +5,12 @@ public class Descuento
 	private String id;
 	private String fechaLimiteInferior;
 	private String fechaLimiteSuperior;
-	private String ocupacionLimiteInferior;
-	private String ocupacionLimiteSuperior;
+	private int ocupacionLimiteInferior;
+	private int ocupacionLimiteSuperior;
 	private int porcentajeDescuento;
 	
-	public Descuento( String id, String fechaLimiteInferior, String fechaLimiteSuperior, String ocupacionLimiteInferior, 
-			String ocupacionLimiteSuperior, int porcentajeDescuento )
+	public Descuento( String id, String fechaLimiteInferior, String fechaLimiteSuperior, int ocupacionLimiteInferior, 
+			int ocupacionLimiteSuperior, int porcentajeDescuento )
 	{
 		this.id = id;
 		this.fechaLimiteInferior = fechaLimiteInferior;
@@ -40,22 +40,22 @@ public class Descuento
 		this.fechaLimiteSuperior = fechaLimiteSuperior;
 	}
 
-	public String getOcupacionLimiteInferior( )
+	public int getOcupacionLimiteInferior( )
 	{
 		return ocupacionLimiteInferior;
 	}
 
-	public void setOcupacionLimiteInferior( String ocupacionLimiteInferior )
+	public void setOcupacionLimiteInferior( int ocupacionLimiteInferior )
 	{
 		this.ocupacionLimiteInferior = ocupacionLimiteInferior;
 	}
 
-	public String getOcupacionLimiteSuperior( )
+	public int getOcupacionLimiteSuperior( )
 	{
 		return ocupacionLimiteSuperior;
 	}
 
-	public void setOcupacionLimiteSuperior( String ocupacionLimiteSuperior )
+	public void setOcupacionLimiteSuperior( int ocupacionLimiteSuperior )
 	{
 		this.ocupacionLimiteSuperior = ocupacionLimiteSuperior;
 	}

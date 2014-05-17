@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.swing.JList;
@@ -101,7 +102,13 @@ public class Main {
 			{
 				if( !listDescuentos.isSelectionEmpty( ) )
 				{
-
+					Descuento d = ( Descuento ) listDescuentos.getSelectedValue( );
+					panelDescuento.getId( ).setText( d.getId( ) );
+					panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( d.getOcupacionLimiteInferior( ) );
+					panelDescuento.getjSocupacionSup( ).getModel( ).setValue( d.getOcupacionLimiteSuperior( ) );
+					panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( d.getFechaLimiteInferior( ) );
+					panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( d.getFechaLimiteSuperior( ) );
+					panelDescuento.getsPPorcentage( ).getModel( ).setValue( d.getPorcentajeDescuento( ) );
 				}
 			}
 		});
@@ -110,6 +117,7 @@ public class Main {
 		panelDescuento.getBtnLimpiar( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				panelDescuento.getId( ).setText( "" );
 				panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
 				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
 				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
@@ -159,13 +167,7 @@ public class Main {
 					catch (SQLException e1) 
 					{
 						e1.printStackTrace();
-					}
-
-					System.out.println(fechaInf);
-					System.out.println(fechaSup);
-					System.out.println(ocupacionInf);
-					System.out.println(ocupacionSup);
-					System.out.println(descuento); 
+					} 
 				}
 			}
 		});	
@@ -394,9 +396,7 @@ public class Main {
 				{
 					try 
 					{
-
 						controladoraBD.crearDestino(id, latitud, longitud, descripcion);
-
 					} 
 					catch (ClassNotFoundException e1) 
 					{
@@ -657,10 +657,12 @@ public class Main {
 			{
 				String id = resultado.getString( 1 );
 				int porcentajeDescuento = resultado.getInt( 2 );
-				String fechaLimiteInferior = resultado.getString( 3 );
-				String fechaLimiteSuperior = resultado.getString( 4 );
-				String ocupacionLimiteInferior = resultado.getString( 5 );
-				String ocupacionLimiteSuperior = resultado.getString( 6 );
+				String f1[] = resultado.getString( 3 ).split( " " )[0].split( "-" );
+				String fechaLimiteInferior = f1[2] + "/" + f1[1] + "/" + f1[0];
+				String f2[] = resultado.getString( 4 ).split( " " )[0].split( "-" );
+				String fechaLimiteSuperior = f2[2] + "/" + f2[1] + "/" + f2[0];
+				int ocupacionLimiteInferior = resultado.getInt( 5 );
+				int ocupacionLimiteSuperior = resultado.getInt( 6 );
 
 				Descuento d = new Descuento( id, fechaLimiteInferior, fechaLimiteSuperior, ocupacionLimiteInferior, ocupacionLimiteSuperior, porcentajeDescuento );
 				descuentos.add( d );
