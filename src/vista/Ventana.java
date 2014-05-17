@@ -18,6 +18,7 @@ public class Ventana extends JFrame {
 	private JPanel contentPane;
 	PanelConsultaViajes panelConsultaViajes;
 	private PanelGerente panelGerente;
+	private PanelReporteVentas panelReporteVentas;
 	/**
 	 * Create the frame.
 	 */
@@ -40,7 +41,10 @@ public class Ventana extends JFrame {
 		
 		
 		panelConsultaViajes = new PanelConsultaViajes();
-		tabbedPane.addTab("Panel Consuta", null, panelConsultaViajes, null);
+		tabbedPane.addTab("Viajes", null, panelConsultaViajes, null);
+		
+		panelReporteVentas = new PanelReporteVentas();
+		tabbedPane.addTab("Reporte de Ventas", null, panelReporteVentas, null);
 	}
 	
 	public PanelConsultaViajes getPanelConsultaViajes()
