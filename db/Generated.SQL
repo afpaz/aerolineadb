@@ -1,6 +1,22 @@
+drop table Roles cascade constraints;
+drop table Rol_Pantalla cascade constraints;
+drop table Usuarios cascade constraints;
+drop table Ventas cascade constraints;
+drop table Tiquetes cascade constraints;
+drop table Rutas cascade constraints;
+drop table Viajes cascade constraints;
+drop table Vuelos cascade constraints;
+drop table Lugares cascade constraints;
+drop table Descuentos cascade constraints;
+drop table Clases cascade constraints;
+drop table Usuario_Rol cascade constraints;
+drop table Pantallas cascade constraints;
+drop table Ruta_Vuelo cascade constraints;
+drop table Tarifas cascade constraints;
+
 /*
-Created: 04;05;2014
-Modified: 09;05;2014
+Created: 04/05/2014
+Modified: 17/05/2014
 Model: Oracle 12c
 Database: Oracle 12c
 */
@@ -52,7 +68,7 @@ ALTER TABLE Rol_Pantalla ADD CONSTRAINT KeyRol_Pantalla PRIMARY KEY (rol_id,pant
 CREATE TABLE Usuarios(
   usuario_id Number(3,0) NOT NULL,
   nombre Varchar2(30 ) NOT NULL,
-  email Varchar2(30 ),
+  email Varchar2(30 ) NOT NULL,
   telefono Varchar2(30 ) NOT NULL,
   direccion Varchar2(30 ) NOT NULL,
   usuario Varchar2(30 ) NOT NULL,
@@ -70,13 +86,14 @@ ALTER TABLE Usuarios ADD CONSTRAINT KeyUsuarios PRIMARY KEY (usuario_id)
 CREATE TABLE Ventas(
   venta_id Number(3,0) NOT NULL,
   fecha Date NOT NULL,
-  usuario_id Number(3,0) NOT NULL
+  vendedor Number(3,0) NOT NULL,
+  comprador Number(3,0) NOT NULL
 )
 ;
 
 -- Add keys for table Ventas
 
-ALTER TABLE Ventas ADD CONSTRAINT Key_Venta PRIMARY KEY (venta_id,usuario_id)
+ALTER TABLE Ventas ADD CONSTRAINT Key_Venta PRIMARY KEY (venta_id)
 ;
 
 -- Table Tiquetes
@@ -84,34 +101,23 @@ ALTER TABLE Ventas ADD CONSTRAINT Key_Venta PRIMARY KEY (venta_id,usuario_id)
 CREATE TABLE Tiquetes(
   tiquete_id Number(3,0) NOT NULL,
   valor Number(10,10) NOT NULL,
-  usuario_id Number(3,0) NOT NULL,
-  viaje_id Number(3,0) NOT NULL
+  venta_id Number(3,0) NOT NULL,
+  viaje_id Varchar2(30 ) NOT NULL
 )
 ;
 
 -- Add keys for table Tiquetes
 
-ALTER TABLE Tiquetes ADD CONSTRAINT Key_Tiquetes PRIMARY KEY (tiquete_id,usuario_id,viaje_id)
-;
-
--- Table Pasabordos
-
-CREATE TABLE Pasabordos(
-  pasabordo_id Number(3,0) NOT NULL,
-  usuario_id Number(3,0) NOT NULL
-)
-;
-
--- Add keys for table Pasabordos
-
-ALTER TABLE Pasabordos ADD CONSTRAINT Key_Pasabordos PRIMARY KEY (pasabordo_id,usuario_id)
+ALTER TABLE Tiquetes ADD CONSTRAINT Key_Tiquetes PRIMARY KEY (tiquete_id)
 ;
 
 -- Table Rutas
 
 CREATE TABLE Rutas(
-  ruta_id Number(3,0) NOT NULL,
-  fecha Date NOT NULL
+  ruta_id Varchar2(30) NOT NULL,
+  fecha Date NOT NULL,
+  viaje_id Varchar2(30 ) NOT NULL,
+  tarifa_id Varchar2(12 ) NOT NULL
 )
 ;
 
@@ -123,10 +129,12 @@ ALTER TABLE Rutas ADD CONSTRAINT KeyRutas PRIMARY KEY (ruta_id)
 -- Table Viajes
 
 CREATE TABLE Viajes(
-  viaje_id Number(3,0) NOT NULL,
+  viaje_id Varchar2(30 ) NOT NULL,
   sentido Varchar2(30 ) NOT NULL,
-  origen Number(3,0) NOT NULL,
-  destino Number(3,0) NOT NULL
+  clase_id Varchar2(12 ) NOT NULL,
+  descuento_id Varchar2(12 ) NOT NULL,
+  origen Varchar2(30 ) NOT NULL,
+  destino Varchar2(30 ) NOT NULL
 )
 ;
 
@@ -138,10 +146,11 @@ ALTER TABLE Viajes ADD CONSTRAINT KeyViajes PRIMARY KEY (viaje_id)
 -- Table Vuelos
 
 CREATE TABLE Vuelos(
-  vuelo_id Number(3,0) NOT NULL,
+  vuelo_id Varchar2(30 ) NOT NULL,
   fecha Date NOT NULL,
   cupoMax Number(5,0) NOT NULL,
-  viaje_id Number(3,0) NOT NULL
+  origen Varchar2(30 ) NOT NULL,
+  destino Varchar2(30 ) NOT NULL
 )
 ;
 
@@ -153,43 +162,27 @@ ALTER TABLE Vuelos ADD CONSTRAINT KeyVuelo PRIMARY KEY (vuelo_id)
 -- Table Lugares
 
 CREATE TABLE Lugares(
-  lugar_id Number(3,0) NOT NULL,
+  nombre_lugar Varchar2(30 ) NOT NULL,
   descripcion Varchar2(500 ) NOT NULL,
-  latitud varchar(30) NOT NULL,
-  longitud varchar(30) NOT NULL
+  latitud Number(10,5) NOT NULL,
+  longitud Number(10,5) NOT NULL
 )
 ;
 
 -- Add keys for table Lugares
 
-ALTER TABLE Lugares ADD CONSTRAINT KeyLugar PRIMARY KEY (lugar_id)
-;
-
--- Table Tarifas
-
-CREATE TABLE Tarifas(
-  tarifa_id Number(3,0) NOT NULL,
-  valorKM Number(10,0) NOT NULL,
-  limiteInfKM Number(10,0) NOT NULL,
-  limiteSupKM Number(10,0) NOT NULL
-)
-;
-
--- Add keys for table Tarifas
-
-ALTER TABLE Tarifas ADD CONSTRAINT KeyTarifas PRIMARY KEY (tarifa_id)
+ALTER TABLE Lugares ADD CONSTRAINT KeyLugar PRIMARY KEY (nombre_lugar)
 ;
 
 -- Table Descuentos
 
 CREATE TABLE Descuentos(
-  descuento_id Number(3,0) NOT NULL,
-  porcentaje_desc Number(2,6) NOT NULL,
-  viaje_id Number(3,0) NOT NULL,
-  limiteInfDias Number(10,0) NOT NULL,
-  limiteSupDias Number(10,0) NOT NULL,
-  limiteSupOcup Number(10,0) NOT NULL,
-  limiteInfOcup Number(10,0) NOT NULL
+  descuento_id Varchar2(12 ) NOT NULL,
+  porcentaje_desc Number(2,0) NOT NULL,
+  limInfDias Number(3,0) NOT NULL,
+  limSupDias Number(3,0) NOT NULL,
+  limInfCupos Number(3,0) NOT NULL,
+  limSupCupos Number(3,0) NOT NULL
 )
 ;
 
@@ -201,7 +194,7 @@ ALTER TABLE Descuentos ADD CONSTRAINT KeyDescuento PRIMARY KEY (descuento_id)
 -- Table Clases
 
 CREATE TABLE Clases(
-  clase_id Number(3,0) NOT NULL,
+  clase_id Varchar2(12 ) NOT NULL,
   descripcion Varchar2(500 ) NOT NULL,
   multiplicador Varchar2(30 )
 )
@@ -225,57 +218,32 @@ CREATE TABLE Usuario_Rol(
 ALTER TABLE Usuario_Rol ADD CONSTRAINT KeyUsuario_Rol PRIMARY KEY (usuario_id,rol_id)
 ;
 
--- Table Pasabordo_Viaje
-
-CREATE TABLE Pasabordo_Viaje(
-  pasabordo_id Number(3,0) NOT NULL,
-  usuario_id Number(3,0) NOT NULL,
-  viaje_id Number(3,0) NOT NULL
-)
-;
-
--- Add keys for table Pasabordo_Viaje
-
-ALTER TABLE Pasabordo_Viaje ADD CONSTRAINT KeyPasabordo_Viaje PRIMARY KEY (pasabordo_id,usuario_id,viaje_id)
-;
-
--- Table Viaje_Tarifa
-
-CREATE TABLE Viaje_Tarifa(
-  tarifa_id Number(3,0) NOT NULL,
-  viaje_id Number(3,0) NOT NULL
-)
-;
-
--- Add keys for table Viaje_Tarifa
-
-ALTER TABLE Viaje_Tarifa ADD CONSTRAINT KeyViaje_Tarifa PRIMARY KEY (tarifa_id,viaje_id)
-;
-
--- Table Vuelo_Clase
-
-CREATE TABLE Vuelo_Clase(
-  vuelo_id Number(3,0) NOT NULL,
-  clase_id Number(3,0) NOT NULL
-)
-;
-
--- Add keys for table Vuelo_Clase
-
-ALTER TABLE Vuelo_Clase ADD CONSTRAINT KeyVuelo_Clase PRIMARY KEY (vuelo_id,clase_id)
-;
-
 -- Table Ruta_Vuelo
 
 CREATE TABLE Ruta_Vuelo(
-  ruta_id Number(3,0) NOT NULL,
-  vuelo_id Number(3,0) NOT NULL
+  ruta_id Varchar2(30 ) NOT NULL,
+  vuelo_id Varchar2(30 ) NOT NULL
 )
 ;
 
 -- Add keys for table Ruta_Vuelo
 
-ALTER TABLE Ruta_Vuelo ADD CONSTRAINT KeyRuta_Vuelo PRIMARY KEY (ruta_id,vuelo_id)
+ALTER TABLE Ruta_Vuelo ADD CONSTRAINT Key1 PRIMARY KEY (ruta_id,vuelo_id)
+;
+
+-- Table Tarifas
+
+CREATE TABLE Tarifas(
+  tarifa_id Varchar2(12 ) NOT NULL,
+  vlr_km Number(10,0) NOT NULL,
+  limInfKm Number(10,1) NOT NULL,
+  limSupKm Number(10,1) NOT NULL
+)
+;
+
+-- Add keys for table Tarifas
+
+ALTER TABLE Tarifas ADD CONSTRAINT Key2 PRIMARY KEY (tarifa_id)
 ;
 
 -- Create relationships section ------------------------------------------------- 
@@ -292,52 +260,46 @@ ALTER TABLE Usuario_Rol ADD CONSTRAINT Relationship7 FOREIGN KEY (usuario_id) RE
 ALTER TABLE Usuario_Rol ADD CONSTRAINT Relationship8 FOREIGN KEY (rol_id) REFERENCES Roles (rol_id)
 ;
 
-ALTER TABLE Ventas ADD CONSTRAINT Relationship9 FOREIGN KEY (usuario_id) REFERENCES Usuarios (usuario_id)
+ALTER TABLE Ventas ADD CONSTRAINT Comprador FOREIGN KEY (comprador) REFERENCES Usuarios (usuario_id)
 ;
 
-ALTER TABLE Tiquetes ADD CONSTRAINT Relationship10 FOREIGN KEY (usuario_id) REFERENCES Usuarios (usuario_id)
+ALTER TABLE Ventas ADD CONSTRAINT Vendedor FOREIGN KEY (vendedor) REFERENCES Usuarios (usuario_id)
 ;
 
-ALTER TABLE Pasabordos ADD CONSTRAINT Relationship11 FOREIGN KEY (usuario_id) REFERENCES Usuarios (usuario_id)
+ALTER TABLE Tiquetes ADD CONSTRAINT Relationship47 FOREIGN KEY (venta_id) REFERENCES Ventas (venta_id)
 ;
 
-ALTER TABLE Pasabordo_Viaje ADD CONSTRAINT Relationship12 FOREIGN KEY (pasabordo_id, usuario_id) REFERENCES Pasabordos (pasabordo_id, usuario_id)
+ALTER TABLE Tiquetes ADD CONSTRAINT Relationship49 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
 ;
 
-ALTER TABLE Pasabordo_Viaje ADD CONSTRAINT Relationship13 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
+ALTER TABLE Viajes ADD CONSTRAINT Relationship51 FOREIGN KEY (clase_id) REFERENCES Clases (clase_id)
 ;
 
-ALTER TABLE Viaje_Tarifa ADD CONSTRAINT Relationship14 FOREIGN KEY (tarifa_id) REFERENCES Tarifas (tarifa_id)
+ALTER TABLE Rutas ADD CONSTRAINT Relationship52 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
 ;
 
-ALTER TABLE Viaje_Tarifa ADD CONSTRAINT Relationship15 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
+ALTER TABLE Ruta_Vuelo ADD CONSTRAINT Relationship53 FOREIGN KEY (ruta_id) REFERENCES Rutas (ruta_id)
 ;
 
-ALTER TABLE Descuentos ADD CONSTRAINT Relationship16 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
+ALTER TABLE Ruta_Vuelo ADD CONSTRAINT Relationship54 FOREIGN KEY (vuelo_id) REFERENCES Vuelos (vuelo_id)
 ;
 
-ALTER TABLE Tiquetes ADD CONSTRAINT Relationship17 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
+ALTER TABLE Rutas ADD CONSTRAINT Relationship55 FOREIGN KEY (tarifa_id) REFERENCES Tarifas (tarifa_id)
 ;
 
-ALTER TABLE Vuelos ADD CONSTRAINT Relationship18 FOREIGN KEY (viaje_id) REFERENCES Viajes (viaje_id)
+ALTER TABLE Viajes ADD CONSTRAINT Relationship58 FOREIGN KEY (descuento_id) REFERENCES Descuentos (descuento_id)
 ;
 
-ALTER TABLE Vuelo_Clase ADD CONSTRAINT Relationship19 FOREIGN KEY (vuelo_id) REFERENCES Vuelos (vuelo_id)
+ALTER TABLE Viajes ADD CONSTRAINT origen FOREIGN KEY (origen) REFERENCES Lugares (nombre_lugar)
 ;
 
-ALTER TABLE Vuelo_Clase ADD CONSTRAINT Relationship20 FOREIGN KEY (clase_id) REFERENCES Clases (clase_id)
+ALTER TABLE Viajes ADD CONSTRAINT destino FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
 ;
 
-ALTER TABLE Ruta_Vuelo ADD CONSTRAINT Relationship21 FOREIGN KEY (ruta_id) REFERENCES Rutas (ruta_id)
+ALTER TABLE Vuelos ADD CONSTRAINT origen2 FOREIGN KEY (origen) REFERENCES Lugares (nombre_lugar)
 ;
 
-ALTER TABLE Ruta_Vuelo ADD CONSTRAINT Relationship22 FOREIGN KEY (vuelo_id) REFERENCES Vuelos (vuelo_id)
-;
-
-ALTER TABLE Viajes ADD CONSTRAINT destino FOREIGN KEY (destino) REFERENCES Lugares (lugar_id)
-;
-
-ALTER TABLE Viajes ADD CONSTRAINT origen FOREIGN KEY (origen) REFERENCES Lugares (lugar_id)
+ALTER TABLE Vuelos ADD CONSTRAINT destino2 FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
 ;
 
 
