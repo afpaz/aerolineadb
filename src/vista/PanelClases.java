@@ -2,7 +2,6 @@ package vista;
 
 import java.awt.Color;
 
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

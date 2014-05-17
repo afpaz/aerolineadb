@@ -216,15 +216,26 @@ public class Main {
 			{
 				String nom = panelClases.getTxtNombreClase().getText(  );
 				String des = panelClases.getTxtDescripcion( ).getText(  );
-				int mul = Integer.parseInt( panelClases.getTxtMultiplicador( ).getText( ) );
-
+				
 				try
 				{
+					int mul = Integer.parseInt( panelClases.getTxtMultiplicador( ).getText( ) );
+					
 					if( panelClases.getListClases( ).isSelectionEmpty( ) )
 						controladoraBD.crearClase( nom, des, mul );
 					else
-						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul );
+						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul+"" );
 					ventana.actualizarPanelClases( consultarClases( ) );
+					
+					panelClases.getTxtNombreClase().setText( "" );
+					panelClases.getTxtMultiplicador().setText( "" );
+					panelClases.getTxtDescripcion().setText( "" );
+					panelClases.getListClases( ).clearSelection( );
+				}
+				catch ( NumberFormatException e2 )
+				{
+					JOptionPane.showMessageDialog( null, "El porcentaje debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE );
+					panelClases.getTxtMultiplicador().setText( "" );
 				}
 				catch ( ClassNotFoundException e1 )
 				{
@@ -234,12 +245,6 @@ public class Main {
 				{
 					e1.printStackTrace();
 				}
-
-				panelClases.getTxtNombreClase().setText( "" );
-				panelClases.getTxtMultiplicador().setText( "" );
-				panelClases.getTxtDescripcion().setText( "" );
-				panelClases.getListClases( ).clearSelection( );
-
 			}
 		});	
 
@@ -508,7 +513,7 @@ public class Main {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				panelTarifa.limpiarCampos();	
-				listaTarifas.clearSelection();	
+				listaTarifas.clearSelection();
 			}
 		});
 

@@ -59,10 +59,10 @@ public class ControladoraBD {
 		return con.prepareStatement( sql ).executeQuery( );
 	}
 	
-	public boolean actualizarClase(String nombreV, String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
+	public boolean actualizarClase(String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConection();
-		String sql = "UPDATE CLASES SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', multiplicador = '" + multiplicador + "' WHERE nombre = '" + nombreV +"'" ;
+		String sql = "UPDATE CLASES SET clase_id = '" + nombre + "', descripcion = '" + descripcion + "', multiplicador = '" + multiplicador + "' WHERE clase_id = '" + nombreV +"'" ;
 		Statement statement = con.createStatement( );
 		return statement.execute( sql );		
 	}
