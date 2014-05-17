@@ -89,7 +89,7 @@ public class Main {
 		try
 		{
 			ventana.actualizarPanelClases( consultarClases( ) );
-						
+
 		}
 		catch ( ClassNotFoundException e )
 		{
@@ -354,17 +354,43 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				int id = Integer.parseInt(panelDestinos.getTxtId().getText());
+				int id = 0;
 				String latitud = panelDestinos.getTxtLatitud().getText();
-
 				String longitud = panelDestinos.getTxtLongitud().getText();
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
+				
+				// es un id valido
+				try
+				{
+					id = Integer.parseInt(panelDestinos.getTxtId().getText());
+				}
+				catch(NumberFormatException ni)
+				{
+					JOptionPane.showMessageDialog(null, "El id debe de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+
+				//es una longitud y latitud correcta
+				try
+				{
+					Double.parseDouble(longitud);
+					Double.parseDouble(latitud);
+				}
+				catch(NumberFormatException nfe)
+				{
+					JOptionPane.showMessageDialog(null, "La Latitud y/o longitud no tienen un formato correcto", "Error en el formato", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
 
 				if(panelDestinos.getCrear())
 				{
 					try 
 					{
+
 						controladoraBD.crearDestino(id, latitud, longitud, descripcion);
+
 					} 
 					catch (ClassNotFoundException e1) 
 					{
@@ -380,6 +406,7 @@ public class Main {
 					try 
 					{
 						controladoraBD.actualizarDestino(id, latitud, longitud, descripcion);
+
 					} 
 					catch (ClassNotFoundException e1)
 					{
@@ -391,6 +418,7 @@ public class Main {
 					}
 				}
 				actualizarPanelGerente();
+				panelDestinos.deshabilitarCampos();
 			}
 		});
 
@@ -406,6 +434,7 @@ public class Main {
 					try 
 					{
 						controladoraBD.eliminarDestino(id);
+						panelDestinos.limpiarCampos();
 					}
 					catch (ClassNotFoundException e1) 
 					{
@@ -487,11 +516,47 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				int id = Integer.parseInt(panelTarifa.getTxtId().getText());
-				int valor = Integer.parseInt(panelTarifa.getTxtValorKm().getText());
+				int id = 0;
+				int valor = 0;
 				int inferior = Integer.parseInt(panelTarifa.getTxtLimInfKm().getText());
 				int superior = Integer.parseInt(panelTarifa.getTxtLimSup().getText());
-
+				
+				// validacion para el id
+				try
+				{
+					id = Integer.parseInt(panelTarifa.getTxtId().getText());
+				}
+				catch(NumberFormatException ni)
+				{
+					JOptionPane.showMessageDialog(null, "El id debe de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				//validacion para el valor
+				try
+				{
+					valor = Integer.parseInt(panelTarifa.getTxtValorKm().getText());
+				}
+				catch(NumberFormatException ni)
+				{
+					JOptionPane.showMessageDialog(null, "El valor debe ser un numero", "Error en el formato", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				// validacion inferior y superior
+				try
+				{
+					inferior =  Integer.parseInt(panelTarifa.getTxtLimInfKm().getText());
+					superior = Integer.parseInt(panelTarifa.getTxtLimSup().getText());
+				}
+				catch(NumberFormatException ni)
+				{
+					JOptionPane.showMessageDialog(null, "El Limite inferior y superior deben de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				
+				// agregar o actualizar
 				try
 				{
 					if(listaTarifas.isSelectionEmpty())
@@ -539,10 +604,10 @@ public class Main {
 		});
 
 	}
-	
+
 	public static ArrayList<Tarifa> getTarifas()
 	{
-		ArrayList<Tarifa> destinos = new ArrayList<Tarifa>();
+		ArrayList<Tarifa> tarifas = new ArrayList<Tarifa>();
 		try 
 		{
 			ResultSet resultado = controladoraBD.consultarTarifas();
@@ -554,7 +619,7 @@ public class Main {
 				int superior = resultado.getInt(4);
 
 				Tarifa tarifa = new Tarifa(id, valor, inferior, superior);
-				destinos.add(tarifa);
+				tarifas.add(tarifa);
 			}
 
 		} 
@@ -568,7 +633,7 @@ public class Main {
 
 			e.printStackTrace();
 		}
-		return destinos;
+		return tarifas;
 	}
 
 }
