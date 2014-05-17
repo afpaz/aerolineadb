@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Clase;
+import modelo.Descuento;
 import modelo.Destino;
 import modelo.Tarifa;
 
@@ -71,5 +72,10 @@ public class Ventana extends JFrame {
 	public void actualizarListaTarifas(ArrayList<Tarifa> tarifas) 
 	{
 		panelGerente.getPanelTarifa().getListTarifas().setListData(tarifas.toArray());
+	}
+
+	public void actualizarListaDescuentos( ArrayList< Descuento > descuentos )
+	{
+		panelGerente.getPanelDescuento( ).getList( ).setListData(descuentos.toArray());
 	}
 }

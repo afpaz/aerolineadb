@@ -285,6 +285,3 @@ ALTER TABLE Vuelos ADD CONSTRAINT origen2 FOREIGN KEY (origen) REFERENCES Lugare
 
 ALTER TABLE Vuelos ADD CONSTRAINT destino2 FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
 ;
-
-
-

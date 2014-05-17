@@ -86,19 +86,8 @@ public class Main {
 	{
 		ventana.actualizarListaDestinos(getDestinos());
 		ventana.actualizarListaTarifas(getTarifas());
-		try
-		{
-			ventana.actualizarPanelClases( consultarClases( ) );
-
-		}
-		catch ( ClassNotFoundException e )
-		{
-			e.printStackTrace();
-		}
-		catch ( SQLException e )
-		{
-			e.printStackTrace();
-		}
+		ventana.actualizarPanelClases( consultarClases( ) );
+		ventana.actualizarListaDescuentos(getDescuentos( ));
 	}
 
 	private static void eventosPanelDescuentos( )
@@ -154,6 +143,7 @@ public class Main {
 				}
 				else
 				{
+					String id = panelDescuento.getId().getText();
 					String fechaInf = panelDescuento.getdPInicio().getJFormattedTextField().getText();
 					String fechaSup = panelDescuento.getdPFin().getJFormattedTextField().getText();
 					Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
@@ -161,7 +151,7 @@ public class Main {
 					Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
 
 					try {
-						controladoraBD.crearDescuento( fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
+						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
 					} catch (ClassNotFoundException e1) 
 					{
 						e1.printStackTrace();
@@ -216,17 +206,17 @@ public class Main {
 			{
 				String nom = panelClases.getTxtNombreClase().getText(  );
 				String des = panelClases.getTxtDescripcion( ).getText(  );
-				
+
 				try
 				{
 					int mul = Integer.parseInt( panelClases.getTxtMultiplicador( ).getText( ) );
-					
+
 					if( panelClases.getListClases( ).isSelectionEmpty( ) )
 						controladoraBD.crearClase( nom, des, mul );
 					else
 						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul+"" );
 					ventana.actualizarPanelClases( consultarClases( ) );
-					
+
 					panelClases.getTxtNombreClase().setText( "" );
 					panelClases.getTxtMultiplicador().setText( "" );
 					panelClases.getTxtDescripcion().setText( "" );
@@ -289,17 +279,28 @@ public class Main {
 		return clase;
 	}
 
-	public static ArrayList< Clase > consultarClases() throws SQLException, ClassNotFoundException
+	public static ArrayList< Clase > consultarClases()
 	{
 		ArrayList< Clase > clases = new ArrayList< Clase >( );
-		ResultSet resultSet = controladoraBD.consultarClases( );
-		while ( resultSet.next( ) )
+		try
 		{
-			String nom = resultSet.getString( 1 );
-			String des = resultSet.getString( 2 );
-			int mul = resultSet.getInt( 3 );
-			Clase c = new Clase( nom, des, mul );
-			clases.add( c );
+			ResultSet resultSet = controladoraBD.consultarClases( );
+			while ( resultSet.next( ) )
+			{
+				String nom = resultSet.getString( 1 );
+				String des = resultSet.getString( 2 );
+				int mul = resultSet.getInt( 3 );
+				Clase c = new Clase( nom, des, mul );
+				clases.add( c );
+			}
+		}
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
 		}
 		return clases;
 	}
@@ -644,6 +645,39 @@ public class Main {
 			e.printStackTrace();
 		}
 		return tarifas;
+	}
+
+	public static ArrayList<Descuento> getDescuentos()
+	{
+		ArrayList<Descuento> descuentos = new ArrayList<Descuento>();
+		try 
+		{
+			ResultSet resultado = controladoraBD.consultarDescuentos();
+			while(resultado.next())
+			{
+				String id = resultado.getString( 1 );
+				int porcentajeDescuento = resultado.getInt( 2 );
+				String fechaLimiteInferior = resultado.getString( 3 );
+				String fechaLimiteSuperior = resultado.getString( 4 );
+				String ocupacionLimiteInferior = resultado.getString( 5 );
+				String ocupacionLimiteSuperior = resultado.getString( 6 );
+
+				Descuento d = new Descuento( id, fechaLimiteInferior, fechaLimiteSuperior, ocupacionLimiteInferior, ocupacionLimiteSuperior, porcentajeDescuento );
+				descuentos.add( d );
+			}
+
+		} 
+		catch (ClassNotFoundException e) 
+		{
+
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return descuentos;
 	}
 
 }

@@ -2,14 +2,14 @@ package modelo;
 
 public class Descuento
 {
-	private int id;
+	private String id;
 	private String fechaLimiteInferior;
 	private String fechaLimiteSuperior;
 	private String ocupacionLimiteInferior;
 	private String ocupacionLimiteSuperior;
 	private int porcentajeDescuento;
 	
-	public Descuento( int id, String fechaLimiteInferior, String fechaLimiteSuperior, String ocupacionLimiteInferior, 
+	public Descuento( String id, String fechaLimiteInferior, String fechaLimiteSuperior, String ocupacionLimiteInferior, 
 			String ocupacionLimiteSuperior, int porcentajeDescuento )
 	{
 		this.id = id;
@@ -70,13 +70,13 @@ public class Descuento
 		this.porcentajeDescuento = porcentajeDescuento;
 	}
 
-	public int getId( )
+	public String getId( )
 	{
 		return id;
 	}
 	
 	public String toString()
 	{
-		return "( " + fechaLimiteInferior + " - " + fechaLimiteSuperior + " ), ( " + ocupacionLimiteInferior + " - " + ocupacionLimiteSuperior + " ), " + porcentajeDescuento;
+		return id;
 	}
 }

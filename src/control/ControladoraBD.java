@@ -72,7 +72,7 @@ public class ControladoraBD {
 		Connection con = getConection();
 		String sql = "INSERT INTO CLASES VALUES( '" + nombre + "', '" + descripcion + "', '" + multiplicador + "')";
 		Statement statement = con.createStatement( );
-		return statement.execute( sql );		
+		return statement.execute( sql );
 	}
 	
 	public boolean eliminarClase(String nombre) throws ClassNotFoundException, SQLException
@@ -131,10 +131,10 @@ public class ControladoraBD {
 		//TODO revizar 
 	}
 
-	public void crearDescuento(String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException 
+	public void crearDescuento(String id, String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException 
 	{
 		Connection con = getConection();
-		String sql = "INSERT INTO DESCUENTOS VALUES( '" + fechaInf + ", " + fechaSup + ", '"+ ocupacionInf + ", '"+ ocupacionSup + ", '"+ descuento +"')";
+		String sql = "INSERT INTO DESCUENTOS VALUES( '" + id + "'," + "'" + descuento + "', TO_DATE('" + fechaInf + "'," + "'DD/MM/YYYY'), TO_DATE('" + fechaSup + "'," + "'DD/MM/YYYY')," +  ocupacionInf + ", '"+ ocupacionSup + "')";
 		Statement statement = con.createStatement( );
 		statement.execute( sql );
 		//TODO revizar estructura de la tabla
@@ -168,6 +168,13 @@ public class ControladoraBD {
 	{
 		Connection conect = getConection();
 		String sql = "SELECT * FROM TARIFAS";
+		return conect.prepareStatement(sql).executeQuery();
+	}
+
+	public ResultSet consultarDescuentos( ) throws ClassNotFoundException, SQLException
+	{
+		Connection conect = getConection();
+		String sql = "SELECT * FROM DESCUENTOS";
 		return conect.prepareStatement(sql).executeQuery();
 	}	
 	
