@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import modelo.ItemSet;
+import modelo.Pasabordo;
 public class PanelClientes extends JPanel
 {
 	private static final long serialVersionUID = 1L;
@@ -55,5 +56,20 @@ public class PanelClientes extends JPanel
 		
 		for(String var : arregloClases)
 			panelRealizarCompra.getComboClases().addItem(var);
+	}
+	
+	public ArrayList<Pasabordo> darListaPasabordos() throws ClassNotFoundException, SQLException
+	{
+		return new ItemSet().llenarListaPasabordos();
+	}
+	
+	public String darIdUsuario()
+	{
+		return panelPasabordo.darIdUsuario();
+	}
+	
+	public String darIdViaje()
+	{
+		return panelPasabordo.darIdViaje();
 	}
 }
