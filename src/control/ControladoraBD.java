@@ -257,4 +257,20 @@ public class ControladoraBD {
 		statement.execute();
 		return statement.getString( 1 );
 	}
+	
+//------------------------------------------------------------------------------------------------------------------------------------------
+	public void realizarVenta(String fecha, int id_comprador, int id_vendedor) throws ClassNotFoundException, SQLException 
+	{
+		int idVenta=0;
+		Connection connection = getConection();
+		String procedure = "{? = call REALIZAR_VENTA(?,?,?,?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString(1,fecha);
+		pr_almacenado.setInt(2,id_comprador);
+		pr_almacenado.setInt(3,id_vendedor);
+		pr_almacenado.setInt(4,idVenta);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
 }

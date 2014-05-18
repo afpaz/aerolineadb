@@ -33,7 +33,6 @@ public class Main {
 	{
 		ventana.getPanelReporteVentas().getBtnGenerarReporte().addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Entra al evento - Usuario: " +  ventana.getPanelReporteVentas().getIdVendedor().getText()  );
