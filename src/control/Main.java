@@ -94,7 +94,12 @@ public class Main {
 				try
 				{
 					controladoraBD.generarTablaRankingDinero( );
-					Object[] rank = controladoraBD.consultarCompactadoTablaRank( ).split( "," );
+					String r = controladoraBD.consultarCompactadoTablaRank( );
+					String[] rank = null;
+					if( r != null )
+						rank = r.split( "," );
+					else
+						rank = new String[]{""};
 					double dineroTotal = controladoraBD.consultarDineroTotalRecaudado();
 					int tiquetesTotal = controladoraBD.consultarDineroTotalTiquetes( );
 					DialogGenerarReporte dialog = new DialogGenerarReporte( rank, dineroTotal, tiquetesTotal );
@@ -320,7 +325,7 @@ public class Main {
 					if( panelClases.getListClases( ).isSelectionEmpty( ) )
 						controladoraBD.crearClase( usu, nom, des, mul );
 					else
-						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul+"" );
+						controladoraBD.actualizarClase( usu, ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul+"" );
 					ventana.actualizarPanelClases( consultarClases( ) );
 
 					panelClases.getTxtNombreClase().setText( "" );

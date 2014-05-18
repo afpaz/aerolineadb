@@ -118,6 +118,21 @@ EXECUTE IMMEDIATE 'INSERT INTO CLASES VALUES( :1, :2, :3 )' USING clase, descrip
 ELSE raise_application_error( -20004, 'Debes ser Gerente.');
 END IF;
 end;
+/
+
+reate or replace procedure editar_clases( usuario in VARCHAR2, clase in VARCHAR2, descripcion in VARCHAR2, multiplicador in VARCHAR2, clase_ant in VARCHAR2 ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usuario
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'UPDATE CLASES SET clase_id = :1, descripcion = :2, multiplicador :3 WHERE clase_id = :4 )' USING clase, descripcion, multiplicador, clase_ant;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
 
 --================ FUNCIONES ========================
 

@@ -28,8 +28,10 @@ public class ControladoraBD {
 		String servidor = IP_EXTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "P09551_1_2";
-		String pass = "kirUjsrZ";
+//		String usr = "P09551_1_2";
+//		String pass = "kirUjsrZ";
+		String usr = "P09551_1_10";
+		String pass = "cbTOc4Ht";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
@@ -107,12 +109,19 @@ public class ControladoraBD {
 		connection.close();
 	}
 	
-	public boolean actualizarClase(String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
+	public void actualizarClase(String usuario, String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
-		Connection con = getConnection();
-		String sql = "UPDATE CLASES SET clase_id = '" + nombre + "', descripcion = '" + descripcion + "', multiplicador = '" + multiplicador + "' WHERE clase_id = '" + nombreV +"'" ;
-		Statement statement = con.createStatement( );
-		return statement.execute( sql );		
+		Connection connection = getConnection( );
+		String procedure = "{ call editar_clases( ?, ?, ?, ?, ? ) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString( 3, descripcion );
+		pr_almacenado.setString( 4, multiplicador );
+		pr_almacenado.setString( 5, nombreV );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 	
 	public boolean actualizarDestino(String id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException 
