@@ -828,23 +828,29 @@ public class Main {
 				}
 				
 				
-				try {
-					ResultSet resultado = controladoraBD.ConsultarDemanda(inicio, fin, 
-							((panelDemanda.getCbxOrigen().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxOrigen().getSelectedItem())),
-							((panelDemanda.getCbxDestino().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxDestino().getSelectedItem())));
 				
-					DefaultTableModel model = new DefaultTableModel();
-					while(resultado.next())
+					ResultSet resultado;
+					try
 					{
-						Object[] array =  {resultado.getObject(1), resultado.getObject(2)};
-						model.addRow(array);
+						resultado = controladoraBD.ConsultarDemanda(inicio, fin, 
+								((panelDemanda.getCbxOrigen().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxOrigen().getSelectedItem())),
+								((panelDemanda.getCbxDestino().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxDestino().getSelectedItem())));
+						DefaultTableModel model = new DefaultTableModel();
+						while(resultado.next())
+						{
+							Object[] array =  {resultado.getObject(1), resultado.getObject(2)};
+							model.addRow(array);
+						}
+						panelDemanda.getTable().setModel(model);
 					}
-					panelDemanda.getTable().setModel(model);
-				} catch (ClassNotFoundException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+					catch ( ClassNotFoundException e1 )
+					{
+						e1.printStackTrace();
+					}
+					catch ( SQLException e1 )
+					{
+						e1.printStackTrace();
+					}
 			}
 		});
 		

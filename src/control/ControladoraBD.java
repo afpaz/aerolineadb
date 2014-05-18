@@ -110,7 +110,7 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public boolean actualizarClase(String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
+	public boolean actualizarClase(String usuario, String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConnection();
 		String sql = "UPDATE CLASES SET clase_id = '" + nombre + "', descripcion = '" + descripcion + "', multiplicador = '" + multiplicador + "' WHERE clase_id = '" + nombreV + "'";
@@ -142,7 +142,7 @@ public class ControladoraBD
 		statement.execute(sql);
 	}
 
-	public boolean crearClase(String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
+	public boolean crearClase(String usuario, String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConnection();
 		String sql = "INSERT INTO CLASES VALUES( '" + nombre + "', '" + descripcion + "', '" + multiplicador + "')";
