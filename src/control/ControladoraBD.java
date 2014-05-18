@@ -149,10 +149,11 @@ public class ControladoraBD {
 		return statement.execute( sql );
 	}
 	
-	public boolean crearRuta(String id, String fecha, String viajeID, String tarifaID) throws ClassNotFoundException, SQLException
+	public boolean crearRuta(String fecha, String viajeID, String tarifaID) throws ClassNotFoundException, SQLException
 	{
+		String formatDate = "TO_DATE('" + fecha + "','YYYY/MM/DD')";
 		Connection con = getConnection();
-		String sql = "INSERT INTO RUTAS VALUES('"+ id + "','" + fecha + "','"+ viajeID + "','" + tarifaID +"')";
+		String sql = "INSERT INTO Rutas VALUES("+ "seq_ruta.nextval" + "," +formatDate+",'"+ viajeID + "','" + tarifaID +"')";
 		Statement statement = con.createStatement();
 		return statement.execute(sql);
 	}
