@@ -17,10 +17,11 @@ import modelo.Tarifa;
 public class Ventana extends JFrame {
 
 	private JPanel contentPane;
-	PanelConsultaViajes panelConsultaViajes;
+	private PanelConsultaViajes panelConsultaViajes;
 	private PanelGerente panelGerente;
 	private PanelReporteVentas panelReporteVentas;
 	private PanelClientes panelClientes;
+	private PanelDemanda panelDemanda;
 	/**
 	 * Create the frame.
 	 */
@@ -50,8 +51,19 @@ public class Ventana extends JFrame {
 		
 		panelClientes = new PanelClientes();
 		tabbedPane.addTab("Clientes", null, panelClientes, null);
+		
+		panelDemanda = new PanelDemanda();
+		tabbedPane.addTab("Reporte de demanda", null, panelDemanda, null);
 	}
 	
+	public PanelDemanda getPanelDemanda() {
+		return panelDemanda;
+	}
+
+	public void setPanelDemanda(PanelDemanda panelDemanda) {
+		this.panelDemanda = panelDemanda;
+	}
+
 	public PanelConsultaViajes getPanelConsultaViajes()
 	{
 		return this.panelConsultaViajes;
@@ -76,6 +88,12 @@ public class Ventana extends JFrame {
 	public void actualizarListaDestinos (ArrayList<Destino> destinos)
 	{
 		panelGerente.getPanelDestinos().getListDestinos().setListData(destinos.toArray());
+		
+		panelDemanda.getCbxOrigen().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
+		panelDemanda.getCbxDestino().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
+		
+		panelDemanda.getCbxOrigen().setSelectedIndex(-1);
+		panelDemanda.getCbxDestino().setSelectedIndex(-1);
 	}
 
 	public void actualizarListaTarifas(ArrayList<Tarifa> tarifas) 

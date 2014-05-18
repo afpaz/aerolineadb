@@ -8,11 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import modelo.Destino;
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
 
@@ -420,5 +422,63 @@ public class ControladoraBD
 			arreglo = dato.split(",");
 
 		return arreglo;
+	}
+
+	public ResultSet ConsultarDemanda(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException {
+		Connection con = getConnection();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		String sql = "SELECT V.FECHA, SUM(OcupacionVuelo(V.VUELO_ID)) FROM VUELOS V GROUP BY V.FECHA;";
+		/*if(inicio != null)
+		{
+
+			
+			sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(inicio) + "'," + "'DD/MM/YYYY')";
+			if(fin != null)
+			{
+				sql+= " AND V.FECHA >= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
+			}
+			
+			if(origen != null)
+			{
+				sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
+			}
+			
+			if(destino != null)
+			{
+				sql+= " AND V.ORIGEN = '"+ destino.getId() +"' ";
+			}
+		}else if(fin != null)
+		{
+			sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
+			
+			if(origen != null)
+			{
+				sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
+			}
+			
+			if(destino != null)
+			{
+				sql+= " AND V.ORIGEN = '"+ destino.getId() +"' ";
+			}
+		}else if(origen != null)
+		{
+			sql+= " WHERE V.ORIGEN = '"+ origen.getId() +"' ";
+			
+			if(destino != null)
+			{
+				sql+= " AND V.ORIGEN = '"+ destino.getId() +"' ";
+			}
+		}else if(destino != null)
+		{
+			sql+= " WHERE V.ORIGEN = '"+ destino.getId() +"' ";
+		}
+		*/
+		//sql+= " GROUP BY V.FECHA;";
+		return con.prepareStatement( sql ).executeQuery( );
+	}
+
+	public ResultSet ConsultarDemandaMes(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException  {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

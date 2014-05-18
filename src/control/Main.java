@@ -11,6 +11,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
+import com.jgoodies.forms.layout.FormSpec.DefaultAlignment;
 
 import modelo.Clase;
 import modelo.Descuento;
@@ -19,6 +22,7 @@ import modelo.ReporteVentas;
 import modelo.Tarifa;
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
+import vista.PanelDemanda;
 import vista.PanelDescuento;
 import vista.PanelDestinos;
 import vista.PanelTarifa;
@@ -793,6 +797,64 @@ public class Main {
 		eventosPanelGerente( );
 		eventosPanelTarifa();
 		actualizarPanelGerente();
+		
+		eventosPanelDemanda();
+		//actualizarPanelDemanda();
+	}
+
+	private static void actualizarPanelDemanda() {
+		ventana.actualizarListaDestinos(consultarDestinos());
+		ventana.getPanelDemanda().getTable().setModel(new DefaultTableModel());;
+	}
+
+	private static void eventosPanelDemanda() {
+		final PanelDemanda panelDemanda = ventana.getPanelDemanda();
+		
+		panelDemanda.getBtnGenerar().addActionListener(new ActionListener() 
+		{			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				Date inicio = (Date) panelDemanda.getdPInicio( ).getModel().getValue();
+				
+				Date fin = (Date) panelDemanda.getdPFin( ).getModel().getValue();
+				
+				
+				if(inicio != null && fin != null && inicio.compareTo(fin)>=0)
+				{
+					JOptionPane.showMessageDialog(null, "La fecha de inicio debe ser anterior a la fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				
+				try {
+					ResultSet resultado = controladoraBD.ConsultarDemanda(inicio, fin, 
+							((panelDemanda.getCbxOrigen().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxOrigen().getSelectedItem())),
+							((panelDemanda.getCbxDestino().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxDestino().getSelectedItem())));
+				
+					DefaultTableModel model = new DefaultTableModel();
+					while(resultado.next())
+					{
+						Object[] array =  {resultado.getObject(1), resultado.getObject(2)};
+						model.addRow(array);
+					}
+					panelDemanda.getTable().setModel(model);
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+		panelDemanda.getBtnRefrescar().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				actualizarPanelDemanda();
+			}
+		});
 	}
 
 }
