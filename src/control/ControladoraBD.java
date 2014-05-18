@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ControladoraBD {
@@ -39,18 +40,13 @@ public class ControladoraBD {
 		connection.close();
 	}
 	
-	static ResultSet consultarVuelosEntreFechas (Date inicio, Date fin) throws ClassNotFoundException, SQLException
+	public ResultSet consultarVuelosEntreFechas (Date inicio, Date fin) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConection();
-		String query =  "SELECT vu.FECHA, vu.VUELO_ID, l1.NOMBRE_LUGAR, l2.NOMBRE_LUGAR" +
-						"FROM VUELOS vu, LUGARES l1, LUGARES l2" +
-						"WHERE vu.FECHA >= ?" +
-						"AND vu.FECHA <= ?" +
-						"AND vu.ORIGEN = l1.NOMBRE_LUGAR" +
-						"AND vu.DESTINO = l2.NOMBRE_LUGAR;";
+		String query =  "SELECT vu.FECHA AS Fecha, vu.VUELO_ID AS Vuelo, l1.NOMBRE_LUGAR AS Origen, l2.NOMBRE_LUGAR AS Destino FROM VUELOS vu, LUGARES l1, LUGARES l2 WHERE vu.FECHA >= ? AND vu.FECHA <= ? AND vu.ORIGEN = l1.NOMBRE_LUGAR AND vu.DESTINO = l2.NOMBRE_LUGAR";
 		PreparedStatement stat = con.prepareStatement(query);  
-		stat.setDate(1, (java.sql.Date) inicio);
-		stat.setDate(2, (java.sql.Date) fin);
+		stat.setDate(1, new java.sql.Date (inicio.getTime()));
+		stat.setDate(2, new java.sql.Date (fin.getTime()));
         ResultSet rs = stat.executeQuery();
         
 		return rs;
