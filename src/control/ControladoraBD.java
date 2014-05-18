@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
+import vista.PanelClientes;
+import vista.PanelPasabordo;
 
 public class ControladoraBD {
 	
@@ -25,11 +27,11 @@ public class ControladoraBD {
 	{
 		Connection connection = null;
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String servidor = IP_EXTERNA;
+		String servidor = IP_INTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "P09551_1_2";
-		String pass = "kirUjsrZ";
+		String usr = "P09551_1_9";
+		String pass = "feTugqRM";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
@@ -421,4 +423,46 @@ public class ControladoraBD {
 		
 		return arreglo;
 	}
+	
+	
+	public static String[] generarPasabordos() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String function = "{? = call generarPasabordo(?, ?)}";
+		String dato = "";
+		String[] arreglo;
+		CallableStatement cs = null;
+		
+		try
+		{
+			cs = con.prepareCall(function);
+			cs.setString(2, PanelPasabordo.idUsuario);
+			cs.setString(3, PanelPasabordo.idViaje);
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			dato = cs.getString(1);
+		}
+		
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error al recuperar la función desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		finally
+		{
+			cs.close();
+			con.close();
+		}
+		
+		if(dato == null)
+		{
+			arreglo = new String[1];
+			arreglo[0] = "No hay pasabordos disponibles!!!";
+		}
+		
+		else
+			arreglo = dato.split(";");
+		
+		return arreglo;
+	}	
 }
