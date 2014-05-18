@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,14 +30,15 @@ public class PanelRutas extends JPanel
 	private JComboBox comboTarifaRuta;
 	private JButton btnAgregar;
 
-	//ControladorBD
+	// ControladorBD
 	private ControladoraBD controladorBD;
-	
+
 	public PanelRutas()
 	{
 		controladorBD = new ControladoraBD();
-		
+
 		iniciarComponentes();
+		eventosComponentes();
 
 		setBackground(new Color(184, 207, 229));
 		setLayout(null);
@@ -45,7 +50,7 @@ public class PanelRutas extends JPanel
 		titleBorder = BorderFactory.createTitledBorder("Creación de rutas");
 		panelIzquierda.setBorder(titleBorder);
 
-		GridLayout layoutPanelIzq = new GridLayout(2, 2);
+		GridLayout layoutPanelIzq = new GridLayout(3, 2);
 		panelIzquierda.setLayout(layoutPanelIzq);
 
 		JLabel lblViaje = new JLabel("Viaje:");
@@ -57,6 +62,8 @@ public class PanelRutas extends JPanel
 		panelIzquierda.add(lblTarifa);
 
 		panelIzquierda.add(comboTarifaRuta);
+
+		panelIzquierda.add(btnAgregar);
 
 		// Panel Derecha
 
@@ -92,27 +99,41 @@ public class PanelRutas extends JPanel
 
 	public void eventosComponentes()
 	{
-		
+
 		btnAgregar.addActionListener(new ActionListener()
 		{
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// TODO Auto-generated method stub
-				if(comboTarifaRuta.getSelectedItem()!=null && comboViajeRuta.getSelectedItem()!=null)
+
+				if (comboTarifaRuta.getSelectedItem() != null && comboViajeRuta.getSelectedItem() != null)
 				{
-					Tarifa t = (Tarifa) comboTarifaRuta.getSelectedItem();
-					
-					
-					
-					//controladorBD.crearRuta(id, fecha, viajeID, tarifaID)
-				}
-				else
+					// Tarifa t = (Tarifa) comboTarifaRuta.getSelectedItem();
+					// Viaje v = (Viaje) comboViajeRuta.getSelectedItem();
+
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					Date date = new Date();
+					String fechaFormateada = dateFormat.format(date);
+					try
+					{
+						controladorBD.crearRuta(fechaFormateada, "v.getId()", "t.getid()");
+					} catch (ClassNotFoundException e)
+					{
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(PanelRutas.this, "Error en el programa");
+
+					} catch (SQLException e)
+					{
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(PanelRutas.this, "Error en el programa");
+					}
+
+				} else
 				{
 					JOptionPane.showMessageDialog(PanelRutas.this, "Hay campos vacíos");
 				}
-				
+
 			}
 		});
 
