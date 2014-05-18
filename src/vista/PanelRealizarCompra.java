@@ -137,8 +137,6 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		{
 			if(comboOrigen.getSelectedIndex() != comboDestino.getSelectedIndex())
 			{
-				JOptionPane.showMessageDialog(null, darFecha(), "La fecha", JOptionPane.INFORMATION_MESSAGE);
-				
 				btnConsultar.setVisible(false);
 				lblOrigen.setVisible(false);
 				lblDestino.setVisible(false);
