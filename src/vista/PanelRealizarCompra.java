@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.freixas.jcalendar.JCalendar;
+
+import control.ControladoraBD;
 
 public class PanelRealizarCompra extends JPanel implements ActionListener
 {
@@ -153,6 +158,24 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 			
 			else
 				JOptionPane.showMessageDialog(null, "Las ciudades de origen y destino deben ser diferentes!", "ERROR", JOptionPane.ERROR_MESSAGE);
+			
+			try {
+				String[] strings = comboOrigen.getSelectedItem().toString().split(",");
+				String origen = strings[0];
+				strings = comboDestino.getSelectedItem().toString().split(",");
+				String destino = strings[0];
+				String clase = comboClase.getSelectedItem().toString();
+//				JOptionPane.showMessageDialog(this, origen+"."+destino+"."+clase);
+				String[] viajes = ControladoraBD.consultarViajes(origen,destino,clase);
+				model.removeAllElements();
+				for (int i = 0; i < viajes.length; i++) {
+					model.addElement(viajes[i]);
+				}
+			} catch (ClassNotFoundException e1) {
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(this, "error "+e1.getMessage());
+			}
+			
 		}
 		
 		else if(e.getSource() == btnVolver)
