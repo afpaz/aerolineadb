@@ -62,6 +62,16 @@ public class ControladoraBD {
 		connection.close();
 	}
 	
+	public void generarTablaRankingTiquetes( ) throws ClassNotFoundException, SQLException
+	{
+		Connection connection = getConection();
+		String procedure = "{ call ranking_cantidad }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
+	
 	public boolean actualizarClase(String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConection();
@@ -199,6 +209,16 @@ public class ControladoraBD {
 	{
 		Connection connection = getConection();
 		String funcion = "{ ? = call compactar_tabla_rank }";
+		CallableStatement statement = connection.prepareCall(funcion);
+		statement.registerOutParameter(1, java.sql.Types.VARCHAR);
+		statement.execute();
+		return statement.getString( 1 );
+	}
+	
+	public String consultarCompactadoTablaRank2() throws SQLException, ClassNotFoundException
+	{
+		Connection connection = getConection();
+		String funcion = "{ ? = call compactar_tabla_rank2 }";
 		CallableStatement statement = connection.prepareCall(funcion);
 		statement.registerOutParameter(1, java.sql.Types.VARCHAR);
 		statement.execute();

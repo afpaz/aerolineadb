@@ -283,5 +283,10 @@ ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship69 FOREIGN KEY (rol_id) REFE
 ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship70 FOREIGN KEY (pantalla_id) REFERENCES Pantallas (pantalla_id)
 ;
 
+-- Tablas aux
+
+CREATE TABLE ranking(	posicion NUMBER, nombre VARCHAR2(30), dinero_recaudado	NUMBER(10,2), PRIMARY KEY (posicion) )';
+
+CREATE TABLE ranking2(	posicion NUMBER, nombre VARCHAR2(30), cantidad_Tiquetes	NUMBER(10,0), PRIMARY KEY (posicion) );
 
 

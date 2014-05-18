@@ -3,17 +3,14 @@ package control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
 import modelo.Clase;
 import modelo.Descuento;
@@ -69,6 +66,7 @@ public class Main {
 					Object[] rank = controladoraBD.consultarCompactadoTablaRank( ).split( "," );
 					DialogGenerarReporte dialog = new DialogGenerarReporte( rank );
 					dialog.setVisible(true);
+					eventosPanelReporte( dialog );
 				}
 				catch ( ClassNotFoundException e )
 				{
@@ -84,6 +82,56 @@ public class Main {
 		eventosPanelDescuentos();
 		eventosPanelClases( );
 		eventosPanelDestinos( );
+	}
+
+	private static void eventosPanelReporte( final DialogGenerarReporte dialog )
+	{
+		// evento boton cantidad de dinero
+		dialog.getRdbtnCantidadDineroRecaudado( ).addActionListener( new ActionListener( )
+		{
+			@Override
+			public void actionPerformed( ActionEvent e )
+			{
+				try
+				{
+					controladoraBD.generarTablaRankingDinero( );
+					Object[] rank = controladoraBD.consultarCompactadoTablaRank( ).split( "," );
+					dialog.getList( ).setListData( rank );
+				}
+				catch ( ClassNotFoundException e1 )
+				{
+					e1.printStackTrace();
+				}
+				catch ( SQLException e1 )
+				{
+					e1.printStackTrace();
+				}
+			}
+		} );
+
+
+		// evento boton cantidad tiquetes
+		dialog.getRdbtnCantidadViajesVendidos( ).addActionListener( new ActionListener( )
+		{
+			@Override
+			public void actionPerformed( ActionEvent e )
+			{
+				try
+				{
+					controladoraBD.generarTablaRankingTiquetes( );
+					Object[] rank = controladoraBD.consultarCompactadoTablaRank2( ).split( "," );
+					dialog.getList( ).setListData( rank );
+				}
+				catch ( ClassNotFoundException e1 )
+				{
+					e1.printStackTrace();
+				}
+				catch ( SQLException e1 )
+				{
+					e1.printStackTrace();
+				}
+			}
+		} );
 	}
 
 	private static void eventosPanelDescuentos( )
@@ -133,8 +181,8 @@ public class Main {
 				Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
 				Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
 				Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
-				
-				
+
+
 				try 
 				{
 					if( !panelDescuento.getList( ).isSelectionEmpty() )
@@ -144,7 +192,7 @@ public class Main {
 					}
 					else
 						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			
-					
+
 					panelDescuento.getId( ).setText( "" );
 					panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
 					panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );

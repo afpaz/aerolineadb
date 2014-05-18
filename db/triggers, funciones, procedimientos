@@ -40,6 +40,32 @@ end;
 /
 
 
+create or replace procedure ranking_cantidad is
+cursor iterador is
+SELECT v.VENDEDOR as Nombre, count( t.TIQUETE_ID ) as Cantidad_Tiquetes
+FROM VENTAS v, TIQUETES t
+WHERE v.VENTA_ID = t.VENTA_ID
+GROUP BY v.VENDEDOR
+ORDER BY Cantidad_Tiquetes DESC;
+pos NUMBER := 1;
+begin
+EXECUTE IMMEDIATE 'CREATE TABLE ranking2(	posicion NUMBER, nombre VARCHAR2(30), cantidad_Tiquetes	NUMBER(10,0), PRIMARY KEY (posicion) )';
+EXCEPTION
+    WHEN OTHERS THEN
+      IF SQLCODE = -955 THEN
+        EXECUTE IMMEDIATE 'TRUNCATE table ranking2';
+      ELSE
+         RAISE;
+      END IF;
+  for v in iterador loop
+  EXECUTE IMMEDIATE 'insert into ranking2 values ( :1, :2, :3 )' using pos, v.Nombre, v.Cantidad_Tiquetes;
+  pos := pos + 1;
+  end loop;  
+  commit;
+end;
+/
+
+
 ================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
@@ -54,4 +80,19 @@ BEGIN
   end loop; 
   return compactado;
 END;
+/
+
+create or replace FUNCTION compactar_tabla_rank2 return varchar2 IS
+compactado varchar2(500);
+cursor iterador is
+SELECT *
+FROM RANKING2 r
+ORDER BY r.cantidad_Tiquetes ASC;
+BEGIN  
+  for v in iterador loop
+  compactado :=  v.NOMBRE || ' - # Tiquetes: ' || v.cantidad_Tiquetes || ', ' || compactado;
+  end loop; 
+  return compactado;
+END;
+/
 

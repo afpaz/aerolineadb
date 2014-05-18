@@ -20,6 +20,7 @@ public class DialogGenerarReporte extends JDialog {
 	private JTextField txtTotalViajes;
 	private JTextField txtTotalDescuentos;
 	private ButtonGroup butGroup;
+	private JList list;
 	
 	private JRadioButton rdbtnCantidadDineroRecaudado;
 	private JRadioButton rdbtnCantidadViajesVendidos;
@@ -101,10 +102,45 @@ public class DialogGenerarReporte extends JDialog {
 			scrollPane.setBounds(10, 36, 231, 292);
 			contentPanel.add(scrollPane);
 			{
-				JList list = new JList( rank );
+				list = new JList( rank );
 				scrollPane.setViewportView(list);
 			}
 		}
 	}
 
+	public JTextField getTxtTotalDinero( )
+	{
+		return txtTotalDinero;
+	}
+
+	public JTextField getTxtTotalViajes( )
+	{
+		return txtTotalViajes;
+	}
+
+	public JTextField getTxtTotalDescuentos( )
+	{
+		return txtTotalDescuentos;
+	}
+
+	public JRadioButton getRdbtnCantidadDineroRecaudado( )
+	{
+		return rdbtnCantidadDineroRecaudado;
+	}
+
+	public JRadioButton getRdbtnCantidadViajesVendidos( )
+	{
+		return rdbtnCantidadViajesVendidos;
+	}
+
+	public JList getList( )
+	{
+		return list;
+	}
+
+	public ButtonGroup getButGroup( )
+	{
+		return butGroup;
+	}
+	
 }
