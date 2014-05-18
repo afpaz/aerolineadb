@@ -77,5 +77,5 @@ public class Ventana extends JFrame {
 	public void actualizarListaDescuentos( ArrayList< Descuento > descuentos )
 	{
 		panelGerente.getPanelDescuento( ).getList( ).setListData(descuentos.toArray());
-	}
+	}	
 }
