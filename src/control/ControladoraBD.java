@@ -259,7 +259,12 @@ public class ControladoraBD {
 		return statement.getString( 1 );
 	}
 	
-//------------------------------------------------------------------------------------------------------------------------------------------
+	public String consultarDineroTotalRecaudado( )
+	{
+		return "";
+	}
+
+	//------------------------------------------------------------------------------------------------------------------------------------------
 	public String generarVenta(String fecha, int id_comprador, int id_vendedor) throws ClassNotFoundException, SQLException 
 	{
 		int id=0;

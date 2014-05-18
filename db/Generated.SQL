@@ -1,9 +1,26 @@
 /*
 Created: 04/05/2014
-Modified: 17/05/2014
+Modified: 18/05/2014
 Model: Oracle 12c
 Database: Oracle 12c
 */
+
+drop table Roles cascade constraints;
+drop table Rol_Pantalla cascade constraints;
+drop table Usuarios cascade constraints;
+drop table Ventas cascade constraints;
+drop table Tiquetes cascade constraints;
+drop table Rutas cascade constraints;
+drop table Viajes cascade constraints;
+drop table Vuelos cascade constraints;
+drop table Lugares cascade constraints;
+drop table Descuentos cascade constraints;
+drop table Clases cascade constraints;
+drop table Usuario_Rol cascade constraints;
+drop table Pantallas cascade constraints;
+drop table Ruta_Vuelo cascade constraints;
+drop table Tarifas cascade constraints;
+
 
 -- Create tables section -------------------------------------------------
 
@@ -66,7 +83,7 @@ ALTER TABLE Usuarios ADD CONSTRAINT KeyUsuarios PRIMARY KEY (usuario)
 
 CREATE TABLE Ventas(
   venta_id Varchar2(30 ) NOT NULL,
-  fecha Date NOT NULL,
+  fecha Varchar2(30 ) NOT NULL,
   vendedor Varchar2(30 ) NOT NULL,
   comprador Varchar2(30 ) NOT NULL
 )
@@ -96,7 +113,7 @@ ALTER TABLE Tiquetes ADD CONSTRAINT Key_Tiquetes PRIMARY KEY (tiquete_id)
 
 CREATE TABLE Rutas(
   ruta_id Varchar2(30 ) NOT NULL,
-  fecha Date NOT NULL,
+  fecha Varchar2(30 ) NOT NULL,
   viaje_id Varchar2(30 ) NOT NULL,
   tarifa_id Varchar2(12 ) NOT NULL
 )
@@ -128,10 +145,11 @@ ALTER TABLE Viajes ADD CONSTRAINT KeyViajes PRIMARY KEY (viaje_id)
 
 CREATE TABLE Vuelos(
   vuelo_id Varchar2(30 ) NOT NULL,
-  fecha Date NOT NULL,
+  fecha Varchar2(30 ) NOT NULL,
   cupoMax Number(5,0) NOT NULL,
   origen Varchar2(30 ) NOT NULL,
-  destino Varchar2(30 ) NOT NULL
+  destino Varchar2(30 ) NOT NULL,
+  cupo_actual Number(3,0) NOT NULL
 )
 ;
 
@@ -282,11 +300,3 @@ ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship69 FOREIGN KEY (rol_id) REFE
 
 ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship70 FOREIGN KEY (pantalla_id) REFERENCES Pantallas (pantalla_id)
 ;
-
--- Tablas aux
-
-CREATE TABLE ranking(	posicion NUMBER, nombre VARCHAR2(30), dinero_recaudado	NUMBER(10,2), PRIMARY KEY (posicion) )';
-
-CREATE TABLE ranking2(	posicion NUMBER, nombre VARCHAR2(30), cantidad_Tiquetes	NUMBER(10,0), PRIMARY KEY (posicion) );
-
-
