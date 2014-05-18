@@ -14,9 +14,33 @@ END;
 
 ================ PROCEDIMIENTOS ========================
 
-
-
-
+create or replace procedure ranking_dinero is
+cursor iterador is
+SELECT v.VENDEDOR as Nombre, SUM( t.VALOR ) as Dinero_Recaudado
+FROM VENTAS v, TIQUETES t
+WHERE v.VENTA_ID = t.VENTA_ID
+GROUP BY v.VENDEDOR
+ORDER BY Dinero_Recaudado DESC;
+pos NUMBER := 1;
+begin
+EXECUTE IMMEDIATE 'CREATE TABLE ranking(	posicion NUMBER, nombre VARCHAR2(30), dinero_recaudado	NUMBER(10,2), PRIMARY KEY (posicion) )';
+EXCEPTION
+    WHEN OTHERS THEN
+      IF SQLCODE = -955 THEN
+        EXECUTE IMMEDIATE 'TRUNCATE table ranking';
+      ELSE
+         RAISE;
+      END IF;
+  for v in iterador loop
+  EXECUTE IMMEDIATE 'insert into ranking values ( :1, :2, :3 )' using pos, v.Nombre, TO_NUMBER(v.Dinero_Recaudado) ;
+  pos := pos + 1;
+  end loop;  
+  commit;
+end;
+/
 
 
 ================ FUNCIONES ========================
+
+
+

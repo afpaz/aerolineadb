@@ -56,6 +56,16 @@ public class ControladoraBD {
 		return rs;
 	}
 	
+	public void generarTablaRankingDinero() throws SQLException, ClassNotFoundException
+	{
+		Connection connection = getConection();
+		String procedure = "{ call ranking_dinero }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
+	
 	public boolean actualizarClase(String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConection();
@@ -188,6 +198,4 @@ public class ControladoraBD {
 		String sql = "SELECT * FROM CLASES c WHERE c.nombre = '" + nombre + "'";
 		return con.prepareStatement( sql ).executeQuery( );
 	}	
-	
-	
 }

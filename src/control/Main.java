@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import javax.swing.JList;
@@ -61,6 +60,18 @@ public class Main {
 		ventana.getPanelGerente( ).getBtnGenerarReporte( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				try
+				{
+					controladoraBD.generarTablaRankingDinero( );
+				}
+				catch ( ClassNotFoundException e )
+				{
+					e.printStackTrace();
+				}
+				catch ( SQLException e )
+				{
+					e.printStackTrace();
+				}
 				DialogGenerarReporte dialog = new DialogGenerarReporte( );
 				dialog.setVisible(true);
 			}
@@ -129,6 +140,15 @@ public class Main {
 					}
 					else
 						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			
+					
+					panelDescuento.getId( ).setText( "" );
+					panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
+					panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
+					panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
+					panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
+					panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
+					panelDescuento.getList( ).clearSelection( );
+					ventana.actualizarListaDescuentos( consultarDescuentos( ) );
 				} 
 				catch (ClassNotFoundException e1) 
 				{
@@ -142,14 +162,6 @@ public class Main {
 					else
 						e1.printStackTrace();
 				}
-				panelDescuento.getId( ).setText( "" );
-				panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
-				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
-				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
-				panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
-				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
-				panelDescuento.getList( ).clearSelection( );
-				ventana.actualizarListaDescuentos( consultarDescuentos( ) );
 			}
 		});	
 
