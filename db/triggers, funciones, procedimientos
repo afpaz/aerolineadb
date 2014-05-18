@@ -6,6 +6,8 @@ FOR EACH ROW
 BEGIN
 if :NEW.liminfdias >= :NEW.limsupdias then
 raise_application_error( -20000,'Verifique que la fecha limite inferior es menor que la fecha limite superior.');
+elsif :NEW.liminfcupos >= :NEW.limsupcupos then
+raise_application_error( -20001,'Verifique que la ocupacion inferior es menor que la ocupacion superior.');
 END if;
 END;
 
