@@ -281,7 +281,7 @@ public class ControladoraBD {
 	public void generarTiquete (int valor, String id_venta, String id_viaje) throws ClassNotFoundException, SQLException 
 	{
 		Connection connection = getConection();
-		String procedure = "{? = call GENERAR_TIQUETE(?,?,?) }";
+		String procedure = "{ call GENERAR_TIQUETE(?,?,?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
 		pr_almacenado.setInt(1,valor);
 		pr_almacenado.setString(2,id_venta);
