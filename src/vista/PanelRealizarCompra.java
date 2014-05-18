@@ -106,9 +106,6 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		scrollLista.setVisible(false);
 		add(scrollLista);
 		
-		model.add(0, "hola");
-		model.add(1, "hola 1");
-		
 		lista.setModel(model);
 		
 		lista.addMouseListener(new MouseAdapter() 
@@ -133,28 +130,31 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		return respuesta;
 	}
 	
-
-
-	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getSource() == btnConsultar)
 		{
-			JOptionPane.showMessageDialog(null, darFecha(), "La fecha", JOptionPane.INFORMATION_MESSAGE);
+			if(comboOrigen.getSelectedIndex() != comboDestino.getSelectedIndex())
+			{
+				JOptionPane.showMessageDialog(null, darFecha(), "La fecha", JOptionPane.INFORMATION_MESSAGE);
+				
+				btnConsultar.setVisible(false);
+				lblOrigen.setVisible(false);
+				lblDestino.setVisible(false);
+				lblClase.setVisible(false);
+				comboOrigen.setVisible(false);
+				comboDestino.setVisible(false);
+				calendario.setVisible(false);
+				comboClase.setVisible(false);
+				
+				btnVolver.setVisible(true);
+				scrollLista.setVisible(true);
+				btnComprar.setVisible(true);				
+			}
 			
-			btnConsultar.setVisible(false);
-			lblOrigen.setVisible(false);
-			lblDestino.setVisible(false);
-			lblClase.setVisible(false);
-			comboOrigen.setVisible(false);
-			comboDestino.setVisible(false);
-			calendario.setVisible(false);
-			comboClase.setVisible(false);
-			
-			btnVolver.setVisible(true);
-			scrollLista.setVisible(true);
-			btnComprar.setVisible(true);
+			else
+				JOptionPane.showMessageDialog(null, "Las ciudades de origen y destino deben ser diferentes!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		else if(e.getSource() == btnVolver)
