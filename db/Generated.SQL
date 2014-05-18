@@ -149,7 +149,7 @@ CREATE TABLE Vuelos(
   cupoMax Number(5,0) NOT NULL,
   origen Varchar2(30 ) NOT NULL,
   destino Varchar2(30 ) NOT NULL,
-  cupo_actual Number(3,0) NOT NULL
+  cupo_actual Number(3,0) DEFAULT 0 NOT NULL
 )
 ;
 
