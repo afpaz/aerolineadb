@@ -515,4 +515,9 @@ public class ControladoraBD
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static String[ ] generarPasabordos( )
+	{
+		return new String[]{"METODO AUXILIAR PARA QUITAR ERROR EN CONTROLADORA DB"};
+	}
 }
