@@ -2,28 +2,28 @@ package modelo;
 
 public class Tarifa 
 {
-	private int id;
+	private String id;
 	private int valorKm;
-	private int limInfKm;
-	private int limSupKm;
+	private double limInfKm;
+	private double limSupKm;
 	
-	public Tarifa(int id, int valorKm, int limInfKm, int limSupKm) {
+	public Tarifa(String id, int valorKm, double limInfKm, double limSupKm) {
 		super();
 		this.id = id;
 		this.valorKm = valorKm;
 		this.limInfKm = limInfKm;
 		this.limSupKm = limSupKm;
 	}	
-	public int getid() {
+	public String getid() {
 		return id;
 	}	
 	public int getValorKm() {
 		return valorKm;
 	}
-	public int getLimInfKm() {
+	public double getLimInfKm() {
 		return limInfKm;
 	}
-	public int getLimSupKm() {
+	public double getLimSupKm() {
 		return limSupKm;
 	}
 	public String toString()
