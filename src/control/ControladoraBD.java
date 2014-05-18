@@ -141,12 +141,18 @@ public class ControladoraBD {
 		statement.execute(sql);
 	}
 
-	public boolean crearClase(String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
+	public void crearClase(String usuario, String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
 	{
-		Connection con = getConnection();
-		String sql = "INSERT INTO CLASES VALUES( '" + nombre + "', '" + descripcion + "', '" + multiplicador + "')";
-		Statement statement = con.createStatement( );
-		return statement.execute( sql );
+		Connection connection = getConnection( );
+		String procedure = "{ call crear_clases( ?, ?, ?, ? ) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString( 3, descripcion );
+		pr_almacenado.setInt( 4, multiplicador );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 	
 	public boolean crearRuta(String fecha, String viajeID, String tarifaID) throws ClassNotFoundException, SQLException

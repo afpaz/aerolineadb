@@ -198,7 +198,7 @@ public class Main {
 				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
 				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
 				panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
-				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
+				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 1 );
 				panelDescuento.getList( ).clearSelection( );
 			}
 		});	
@@ -312,13 +312,13 @@ public class Main {
 			{
 				String nom = panelClases.getTxtNombreClase().getText(  );
 				String des = panelClases.getTxtDescripcion( ).getText(  );
-
+				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				try
 				{
 					int mul = Integer.parseInt( panelClases.getTxtMultiplicador( ).getText( ) );
 
 					if( panelClases.getListClases( ).isSelectionEmpty( ) )
-						controladoraBD.crearClase( nom, des, mul );
+						controladoraBD.crearClase( usu, nom, des, mul );
 					else
 						controladoraBD.actualizarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ) ,nom, des, mul+"" );
 					ventana.actualizarPanelClases( consultarClases( ) );
@@ -339,7 +339,11 @@ public class Main {
 				}
 				catch ( SQLException e1 )
 				{
-					e1.printStackTrace();
+					String[] err = e1.getMessage( ).split( "\n" );
+					if( e1.getErrorCode( ) == 20004 )
+						JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+					else
+						e1.printStackTrace();
 				}
 			}
 		});	
