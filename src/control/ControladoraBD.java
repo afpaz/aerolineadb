@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -259,16 +260,32 @@ public class ControladoraBD {
 	}
 	
 //------------------------------------------------------------------------------------------------------------------------------------------
-	public void realizarVenta(String fecha, int id_comprador, int id_vendedor) throws ClassNotFoundException, SQLException 
+	public String generarVenta(String fecha, int id_comprador, int id_vendedor) throws ClassNotFoundException, SQLException 
 	{
-		int idVenta=0;
+		int id=0;
+		String idVenta="";
 		Connection connection = getConection();
 		String procedure = "{? = call REALIZAR_VENTA(?,?,?,?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
 		pr_almacenado.setString(1,fecha);
 		pr_almacenado.setInt(2,id_comprador);
 		pr_almacenado.setInt(3,id_vendedor);
-		pr_almacenado.setInt(4,idVenta);
+		pr_almacenado.setInt(4,id);
+		pr_almacenado.registerOutParameter(1, Types.VARCHAR);
+		pr_almacenado.execute();
+		idVenta = pr_almacenado.getString(1);
+		pr_almacenado.close();
+		connection.close();
+		return idVenta;
+	}
+	public void generarTiquete (int valor, String id_venta, String id_viaje) throws ClassNotFoundException, SQLException 
+	{
+		Connection connection = getConection();
+		String procedure = "{? = call GENERAR_TIQUETE(?,?,?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setInt(1,valor);
+		pr_almacenado.setString(2,id_venta);
+		pr_almacenado.setString(3,id_viaje);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
