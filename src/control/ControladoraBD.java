@@ -11,6 +11,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
 
@@ -294,4 +296,44 @@ public class ControladoraBD {
 		pr_almacenado.close();
 		connection.close();
 	}
+	
+	public static String[] getLugares() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String function = "{? = call getLugares()}";
+		String dato = "";
+		String[] arreglo;
+		CallableStatement cs = null;
+		
+		try
+		{
+			cs = con.prepareCall(function);
+//			cs.setString(0, "");
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			dato = cs.getString(1);
+		}
+		
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error al recuperar la función desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		finally
+		{
+			cs.close();
+			con.close();
+		}
+		
+		if(dato == null)
+		{
+			arreglo = new String[1];
+			arreglo[0] = "No hay ciudades!!!";
+		}
+		
+		else
+			arreglo = dato.split(",");
+		
+		return arreglo;
+	}	
 }
