@@ -51,24 +51,24 @@ public class PanelDescuento extends JPanel
 		add(dPFin);
 		
 		JLabel lblLimiteSuperiorOcupacion = new JLabel("Limite Superior Ocupacion");
-		lblLimiteSuperiorOcupacion.setBounds(325, 171, 155, 14);
+		lblLimiteSuperiorOcupacion.setBounds(325, 213, 155, 14);
 		add(lblLimiteSuperiorOcupacion);
 		
 		JLabel lblLimiteInferiorOcupacion = new JLabel("Limite Inferior Ocupacion");
-		lblLimiteInferiorOcupacion.setBounds(325, 206, 155, 14);
+		lblLimiteInferiorOcupacion.setBounds(325, 180, 155, 14);
 		add(lblLimiteInferiorOcupacion);
 		
 		jSocupacionSup = new JSpinner();
 		jSocupacionSup.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		jSocupacionSup.setBounds(551, 169, 55, 18);
+		jSocupacionSup.setBounds(551, 211, 55, 18);
 		add(jSocupacionSup);
 		
 		jSOcupacionInf = new JSpinner();
 		jSOcupacionInf.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		jSOcupacionInf.setBounds(551, 204, 55, 18);
+		jSOcupacionInf.setBounds(551, 178, 55, 18);
 		add(jSOcupacionInf);
 		
-		btnAgregar = new JButton("Agregar");
+		btnAgregar = new JButton("Guardar");
 		btnAgregar.setBounds(515, 285, 91, 23);
 		add(btnAgregar);
 		

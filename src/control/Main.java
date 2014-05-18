@@ -108,50 +108,47 @@ public class Main {
 		});	
 
 
-		//evento bnt Agregar
+		//evento bnt Guardar
 		panelDescuento.getBtnAgregar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-
-				if( !panelDescuento.getList( ).isSelectionEmpty() )
+				String id = panelDescuento.getId().getText();
+				String fechaInf = panelDescuento.getdPInicio().getJFormattedTextField().getText();
+				String fechaSup = panelDescuento.getdPFin().getJFormattedTextField().getText();
+				Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
+				Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
+				Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
+				
+				
+				try 
 				{
-					Descuento d = (Descuento) panelDescuento.getList( ).getSelectedValue();
-					try 
+					if( !panelDescuento.getList( ).isSelectionEmpty() )
 					{
-						controladoraBD.actualizarDescuento(0, null, null, 0, 0, 0);
-					} 
-					catch (ClassNotFoundException e1) 
-					{
-						e1.printStackTrace();
-					} 
-					catch (SQLException e1) 
-					{
-						e1.printStackTrace();
+						Descuento d = (Descuento) panelDescuento.getList( ).getSelectedValue();
+						controladoraBD.actualizarDescuento( d.getId( ), id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
 					}
-				}
-				else
+					else
+						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			
+				} 
+				catch (ClassNotFoundException e1) 
 				{
-					String id = panelDescuento.getId().getText();
-					String fechaInf = panelDescuento.getdPInicio().getJFormattedTextField().getText();
-					String fechaSup = panelDescuento.getdPFin().getJFormattedTextField().getText();
-					Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
-					Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
-					Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
-
-					try {
-						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
-					} catch (ClassNotFoundException e1) 
-					{
-						e1.printStackTrace();
-					} 
-					catch (SQLException e1) 
-					{
-						e1.printStackTrace();
-					} 
+					e1.printStackTrace();
+				} 
+				catch (SQLException e1) 
+				{
+					e1.printStackTrace();
 				}
+				panelDescuento.getId( ).setText( "" );
+				panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
+				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
+				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
+				panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
+				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
+				panelDescuento.getList( ).clearSelection( );
+				ventana.actualizarListaDescuentos( consultarDescuentos( ) );
 			}
 		});	
-		
+
 		//evento eliminar
 		panelDescuento.getBtnEliminar( ).addActionListener( new ActionListener( )
 		{			
@@ -627,20 +624,20 @@ public class Main {
 				String descripcion = resultado.getString(2);
 				String latitud = resultado.getString(3);
 				String longitud = resultado.getString(4);
-	
+
 				Destino destino = new Destino(id, latitud, longitud, descripcion);
 				destinos.add(destino);
 			}
-	
+
 		} 
 		catch (ClassNotFoundException e) 
 		{
-	
+
 			e.printStackTrace();
 		} 
 		catch (SQLException e) 
 		{
-	
+
 			e.printStackTrace();
 		}
 		return destinos;
@@ -700,11 +697,11 @@ public class Main {
 		ventana = new Ventana();
 		ventana.setVisible(true);
 		controladoraBD = new ControladoraBD();
-	
+
 		eventosPanelConsultaViajes();
 		eventosPanelGerente( );
 		eventosPanelTarifa();
-	
+
 		actualizarPanelGerente();
 	}
 

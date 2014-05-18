@@ -62,20 +62,20 @@ public class ControladoraBD {
 	
 	public boolean actualizarDestino(int id, String latitud, String longitud, String descripcion) throws ClassNotFoundException, SQLException 
 	{		
-		
 		Connection conect = getConection();
 		String sql = "UPDATE LUGARES SET latitud = '" + latitud + "', longitud = '" + longitud + "', descripcion = '" + descripcion + "' WHERE lugar_id = " + id;
 		Statement statement = conect.createStatement();
 		return statement.execute(sql);
 	}
 
-	public void actualizarDescuento(int id, String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento ) throws ClassNotFoundException, SQLException 
+	public void actualizarDescuento(String id_v, String id, String fechaInf, String fechaSup, int ocupacionInf, int ocupacionSup, int descuento ) throws ClassNotFoundException, SQLException 
 	{
-		Connection con = getConection();
-		String sql = "UPDATE DESCUENTOS SET  '" + fechaInf + ", " + fechaSup + ", '"+ ocupacionInf + ", '"+ ocupacionSup + ", '"+ descuento +"')";
+		Connection con = getConection();		
+		String sql = "UPDATE DESCUENTOS SET DESCUENTO_ID = '" + id + "', porcentaje_desc = " + descuento + ", liminfdias = " +
+				"TO_DATE('" + fechaInf + "'," + "'DD/MM/YYYY'), limsupdias = TO_DATE('" + fechaSup + "'," + "'DD/MM/YYYY'), " +
+						"liminfcupos = " + ocupacionInf + ", limsupcupos = " + ocupacionSup + " WHERE DESCUENTO_ID = '" + id_v + "'";
 		Statement statement = con.createStatement( );
 		statement.execute( sql );
-		//TODO revizar 
 	}
 
 	public void actualizarTarifa(int id, int valor, int inferior, int superior) throws SQLException, ClassNotFoundException 
@@ -108,7 +108,6 @@ public class ControladoraBD {
 		String sql = "INSERT INTO DESCUENTOS VALUES( '" + id + "'," + "'" + descuento + "', TO_DATE('" + fechaInf + "'," + "'DD/MM/YYYY'), TO_DATE('" + fechaSup + "'," + "'DD/MM/YYYY')," +  ocupacionInf + ", '"+ ocupacionSup + "')";
 		Statement statement = con.createStatement( );
 		statement.execute( sql );
-		//TODO revizar estructura de la tabla
 	}
 
 	public void crearTarifa(int id, int valor, int inferior, int superior) throws ClassNotFoundException, SQLException 
