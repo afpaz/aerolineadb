@@ -15,6 +15,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class PanelReporteVentas extends JPanel {
 
@@ -27,6 +28,7 @@ public class PanelReporteVentas extends JPanel {
 	private JLabel lblNumeroTiquetes;
 	private JList listaLugares;
 	private JButton btnGenerarReporte;
+	private JTextField idVendedor;
 	
 	public PanelReporteVentas() {
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -81,7 +83,7 @@ public class PanelReporteVentas extends JPanel {
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{17, 115, 20, 56, 72, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0, 15, 0, 0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -147,6 +149,24 @@ public class PanelReporteVentas extends JPanel {
 		gbc_lblNumeroTiquetes.gridy = 3;
 		panel.add(lblNumeroTiquetes, gbc_lblNumeroTiquetes);
 		
+		JLabel lblIdVendedor = new JLabel("Id Vendedor:");
+		GridBagConstraints gbc_lblIdVendedor = new GridBagConstraints();
+		gbc_lblIdVendedor.anchor = GridBagConstraints.EAST;
+		gbc_lblIdVendedor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblIdVendedor.gridx = 1;
+		gbc_lblIdVendedor.gridy = 6;
+		panel.add(lblIdVendedor, gbc_lblIdVendedor);
+		
+		idVendedor = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.gridwidth = 2;
+		gbc_textField.insets = new Insets(0, 0, 5, 5);
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 3;
+		gbc_textField.gridy = 6;
+		panel.add(idVendedor, gbc_textField);
+		idVendedor.setColumns(10);
+		
 		btnGenerarReporte = new JButton("Generar Reporte");
 		GridBagConstraints gbc_btnGenerarReporte = new GridBagConstraints();
 		gbc_btnGenerarReporte.gridwidth = 4;
@@ -191,5 +211,23 @@ public class PanelReporteVentas extends JPanel {
 	public void setListaLugares(JList listaLugares) {
 		this.listaLugares = listaLugares;
 	}
+
+	public JButton getBtnGenerarReporte() {
+		return btnGenerarReporte;
+	}
+
+	public void setBtnGenerarReporte(JButton btnGenerarReporte) {
+		this.btnGenerarReporte = btnGenerarReporte;
+	}
+
+	public JTextField getIdVendedor() {
+		return idVendedor;
+	}
+
+	public void setIdVendedor(JTextField idVendedor) {
+		this.idVendedor = idVendedor;
+	}
+	
+	
 
 }
