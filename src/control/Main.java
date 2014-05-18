@@ -44,12 +44,7 @@ public class Main {
 					dateInicio = (Date) ventana.getPanelConsultaViajes().getFechaInicio().getModel().getValue();
 					dateFin = (Date) ventana.getPanelConsultaViajes().getFechaFin().getModel().getValue();
 					ResultSet rs = controladoraBD.consultarVuelosEntreFechas(dateInicio, dateFin);
-					
-					while(rs.next())
-			        {
-			        	System.out.println("Origen: " + rs.getString(3) + " - Destino: " + rs.getString(4));
-			        }
-					
+
 					ventana.getPanelConsultaViajes().actualizarTabla(rs);
 				}
 				catch(Exception ex)
