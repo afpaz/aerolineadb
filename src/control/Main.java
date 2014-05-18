@@ -3,20 +3,22 @@ package control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import modelo.Clase;
 import modelo.Descuento;
 import modelo.Destino;
 import modelo.Tarifa;
-
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
 import vista.PanelDescuento;
@@ -35,14 +37,20 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("Entra al metodo desde el main");
 				Date dateInicio, dateFin;
 				try
 				{
 					dateInicio = (Date) ventana.getPanelConsultaViajes().getFechaInicio().getModel().getValue();
 					dateFin = (Date) ventana.getPanelConsultaViajes().getFechaFin().getModel().getValue();
-					ventana.getPanelConsultaViajes().setTable(new ResultSetTable(ControladoraBD.consultarVuelosEntreFechas(dateInicio, dateFin)));
-					ventana.getPanelConsultaViajes().repaint();
+					ResultSet rs = controladoraBD.consultarVuelosEntreFechas(dateInicio, dateFin);
+					
+					while(rs.next())
+			        {
+			        	System.out.println("Origen: " + rs.getString(3) + " - Destino: " + rs.getString(4));
+			        }
+					
+					ventana.getPanelConsultaViajes().actualizarTabla(rs);
 				}
 				catch(Exception ex)
 				{
@@ -245,7 +253,7 @@ public class Main {
 				}
 				catch ( NumberFormatException e2 )
 				{
-					JOptionPane.showMessageDialog( null, "El porcentaje debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE );
+					JOptionPane.showMessageDialog( null, "El porcentaje debe ser num��rico", "Error", JOptionPane.ERROR_MESSAGE );
 					panelClases.getTxtMultiplicador().setText( "" );
 				}
 				catch ( ClassNotFoundException e1 )
