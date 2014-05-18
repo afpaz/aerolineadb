@@ -12,6 +12,18 @@ END if;
 END;
 /
 
+create or replace trigger trigger_tarifa BEFORE UPDATE OR INSERT 
+ON TARIFAS
+FOR EACH ROW
+BEGIN
+if :NEW.liminfkm >= :NEW.limsupkm then
+raise_application_error( -20002,'Verifique que el limite inferior km es menor que el limite superior.');
+elsif :NEW.vlr_km <= 0 then
+raise_application_error( -20003,'El valor km no puede ser 0 ni negativo.');
+END if;
+END;
+/
+
 --================ PROCEDIMIENTOS ========================
 
 create or replace procedure ranking_dinero is

@@ -73,7 +73,7 @@ public class PanelDescuento extends JPanel
 		add(btnAgregar);
 		
 		sPPorcentage = new JSpinner();
-		sPPorcentage.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		sPPorcentage.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		sPPorcentage.setBounds(551, 233, 55, 18);
 		add(sPPorcentage);
 		

@@ -588,9 +588,13 @@ public class Main {
 				{
 					e1.printStackTrace();
 				}
-				catch (SQLException e2)
+				catch (SQLException e1)
 				{
-					e2.printStackTrace();
+					String[] err = e1.getMessage( ).split( "\n" );
+					if( e1.getErrorCode( ) == 20002 || e1.getErrorCode( ) == 20003 )
+						JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+					else
+						e1.printStackTrace();
 				}
 
 				actualizarPanelGerente();
