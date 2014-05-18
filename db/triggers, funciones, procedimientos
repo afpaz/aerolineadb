@@ -1,0 +1,20 @@
+================ TRIGGERS ========================
+
+create or replace trigger trigger_descuento BEFORE UPDATE OR INSERT 
+ON DESCUENTOS
+FOR EACH ROW
+BEGIN
+if :NEW.liminfdias >= :NEW.limsupdias then
+raise_application_error( -20000,'Verifique que la fecha limite inferior es menor que la fecha limite superior.');
+END if;
+END;
+
+
+================ PROCEDIMIENTOS ========================
+
+
+
+
+
+
+================ FUNCIONES ========================

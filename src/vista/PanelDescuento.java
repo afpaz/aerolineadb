@@ -33,39 +33,39 @@ public class PanelDescuento extends JPanel
 		setLayout(null);
 		setBackground( new Color(184, 207, 229) );
 		dPInicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		dPInicio.setBounds(480, 82, 126, 23);
+		dPInicio.setBounds(480, 93, 126, 23);
 		add(dPInicio);
 		
 		JLabel lblFechaLimiteSuperior = new JLabel("Fecha Limite Superior");
-		lblFechaLimiteSuperior.setBounds(325, 82, 142, 24);
+		lblFechaLimiteSuperior.setBounds(325, 127, 142, 24);
 		add(lblFechaLimiteSuperior);
 		
 		JLabel lblFechaLimiteInferior = new JLabel("Fecha Limite inferior");
-		lblFechaLimiteInferior.setBounds(325, 129, 142, 23);
+		lblFechaLimiteInferior.setBounds(325, 93, 142, 23);
 		add(lblFechaLimiteInferior);
 		
 		dPFin = new JDatePickerImpl((new JDatePanelImpl(new UtilDateModel())));
 		dPFin.getJFormattedTextField().setSize(117, 23);
 		dPFin.getJFormattedTextField().setLocation(266, 0);
-		dPFin.setBounds(480, 129, 126, 23);
+		dPFin.setBounds(480, 128, 126, 23);
 		add(dPFin);
 		
 		JLabel lblLimiteSuperiorOcupacion = new JLabel("Limite Superior Ocupacion");
-		lblLimiteSuperiorOcupacion.setBounds(325, 213, 155, 14);
+		lblLimiteSuperiorOcupacion.setBounds(325, 206, 155, 14);
 		add(lblLimiteSuperiorOcupacion);
 		
 		JLabel lblLimiteInferiorOcupacion = new JLabel("Limite Inferior Ocupacion");
-		lblLimiteInferiorOcupacion.setBounds(325, 180, 155, 14);
+		lblLimiteInferiorOcupacion.setBounds(325, 173, 155, 14);
 		add(lblLimiteInferiorOcupacion);
 		
 		jSocupacionSup = new JSpinner();
 		jSocupacionSup.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		jSocupacionSup.setBounds(551, 211, 55, 18);
+		jSocupacionSup.setBounds(551, 204, 55, 18);
 		add(jSocupacionSup);
 		
 		jSOcupacionInf = new JSpinner();
 		jSOcupacionInf.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		jSOcupacionInf.setBounds(551, 178, 55, 18);
+		jSOcupacionInf.setBounds(551, 171, 55, 18);
 		add(jSOcupacionInf);
 		
 		btnAgregar = new JButton("Guardar");
@@ -74,7 +74,7 @@ public class PanelDescuento extends JPanel
 		
 		sPPorcentage = new JSpinner();
 		sPPorcentage.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		sPPorcentage.setBounds(551, 240, 55, 18);
+		sPPorcentage.setBounds(551, 233, 55, 18);
 		add(sPPorcentage);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -85,7 +85,7 @@ public class PanelDescuento extends JPanel
 		scrollPane.setViewportView(list);
 		
 		JLabel lblPorcentaje = new JLabel("Porcentaje de descuento");
-		lblPorcentaje.setBounds(325, 242, 142, 14);
+		lblPorcentaje.setBounds(325, 235, 142, 14);
 		add(lblPorcentaje);
 		
 		ImageIcon image = new ImageIcon("./imagenes/delete.png");
@@ -98,11 +98,11 @@ public class PanelDescuento extends JPanel
 		add(btnLimpiar);
 		
 		JLabel lblId = new JLabel("Id");
-		lblId.setBounds(325, 51, 46, 14);
+		lblId.setBounds(325, 65, 46, 14);
 		add(lblId);
 		
 		txtId = new JTextField();
-		txtId.setBounds(480, 48, 126, 20);
+		txtId.setBounds(480, 62, 126, 20);
 		add(txtId);
 		txtId.setColumns(10);
 	}
