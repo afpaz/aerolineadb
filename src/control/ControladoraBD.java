@@ -256,6 +256,12 @@ public class ControladoraBD
 		return con.prepareStatement(sql).executeQuery();
 	}
 
+	/**
+	 * Permite consultar todos los viajes que hay en la bd. Se necesitar para crear una ruta.
+	 * @return Lista de viajes que hay en la bd
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public ResultSet consultarViajes() throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConnection();
