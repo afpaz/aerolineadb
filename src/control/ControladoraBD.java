@@ -60,10 +60,10 @@ public class ControladoraBD {
 		return statement.execute( sql );		
 	}
 	
-	public boolean actualizarDestino(int id, String latitud, String longitud, String descripcion) throws ClassNotFoundException, SQLException 
+	public boolean actualizarDestino(String id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException 
 	{		
 		Connection conect = getConection();
-		String sql = "UPDATE LUGARES SET latitud = '" + latitud + "', longitud = '" + longitud + "', descripcion = '" + descripcion + "' WHERE lugar_id = " + id;
+		String sql = "UPDATE LUGARES SET latitud = " + latitud + ", longitud = " + longitud + ", descripcion = '" + descripcion + "' WHERE nombre_lugar = '" + id+ "'";
 		Statement statement = conect.createStatement();
 		return statement.execute(sql);
 	}
@@ -78,10 +78,10 @@ public class ControladoraBD {
 		statement.execute( sql );
 	}
 
-	public void actualizarTarifa(int id, int valor, int inferior, int superior) throws SQLException, ClassNotFoundException 
+	public void actualizarTarifa(String id, int valor, double inferior, double superior) throws SQLException, ClassNotFoundException 
 	{
 		Connection conect = getConection();
-		String sql= "UPDATE TARIFAS SET valorKM =" + valor + ", limiteInfKM = " + inferior + ", limiteSupKM = " + superior + " where tarifa_id = " + id +"";
+		String sql= "UPDATE TARIFAS SET valorKM =" + valor + ", limiteInfKM = " + inferior + ", limiteSupKM = " + superior + " where tarifa_id = '" + id +"'";
 		Statement statement = conect.createStatement();
 		statement.execute(sql);
 	}
@@ -94,10 +94,10 @@ public class ControladoraBD {
 		return statement.execute( sql );
 	}
 	
-	public boolean crearDestino(int id, String latitud, String longitud, String descripcion) throws SQLException, ClassNotFoundException
+	public boolean crearDestino(String id, double latitud, double longitud, String descripcion) throws SQLException, ClassNotFoundException
 	{		
 		Connection con = getConection();
-		String sql = "INSERT INTO LUGARES VALUES( " + id + ", '"+ descripcion + "', '" + latitud + "', '" + longitud +"')";
+		String sql = "INSERT INTO LUGARES VALUES( '" + id + "', '"+ descripcion + "', " + latitud + ", " + longitud +")";
 		Statement statement = con.createStatement( );
 		return statement.execute( sql );	
 	}
@@ -110,18 +110,18 @@ public class ControladoraBD {
 		statement.execute( sql );
 	}
 
-	public void crearTarifa(int id, int valor, int inferior, int superior) throws ClassNotFoundException, SQLException 
+	public void crearTarifa(String id, int valor, double inferior, double superior) throws ClassNotFoundException, SQLException 
 	{
 		Connection conect = getConection();
-		String sql = "INSERT INTO TARIFAS VALUES("+ id + ", " + valor + ", " + inferior + ", " + superior + ")";
+		String sql = "INSERT INTO TARIFAS VALUES('"+ id + "', " + valor + ", " + inferior + ", " + superior + ")";
 		Statement statement = conect.createStatement();
 		statement.execute(sql);
 	}
 
-	public void eliminarTarifa(int id) throws ClassNotFoundException, SQLException 
+	public void eliminarTarifa(String id) throws ClassNotFoundException, SQLException 
 	{
 		Connection conect = getConection();
-		String sql= "DELETE FROM TARIFAS where tarifa_id = " + id + "";
+		String sql= "DELETE FROM TARIFAS where tarifa_id = '" + id + "'";
 		Statement statement = conect.createStatement();
 		statement.execute(sql);		
 	}
@@ -129,7 +129,7 @@ public class ControladoraBD {
 	public boolean eliminarDestino(String id) throws SQLException, ClassNotFoundException 
 	{
 		Connection conect = getConection();
-		String sql = "DELETE FROM LUGARES WHERE lugar_id = '" + id + "'" ;
+		String sql = "DELETE FROM LUGARES WHERE nombre_lugar = '" + id + "'" ;
 		Statement statement = conect.createStatement();
 		return statement.execute(sql);
 	}
