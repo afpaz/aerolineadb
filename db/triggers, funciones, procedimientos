@@ -42,5 +42,16 @@ end;
 
 ================ FUNCIONES ========================
 
-
+create or replace FUNCTION compactar_tabla_rank return varchar2 IS
+compactado varchar2(500);
+cursor iterador is
+SELECT *
+FROM RANKING r
+ORDER BY r.DINERO_RECAUDADO ASC;
+BEGIN  
+  for v in iterador loop
+  compactado :=  v.NOMBRE || ' - $' || v.DINERO_RECAUDADO || ', ' || compactado;
+  end loop; 
+  return compactado;
+END;
 

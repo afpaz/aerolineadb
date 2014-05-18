@@ -194,4 +194,14 @@ public class ControladoraBD {
 		String sql = "SELECT * FROM CLASES c WHERE c.nombre = '" + nombre + "'";
 		return con.prepareStatement( sql ).executeQuery( );
 	}	
+	
+	public String consultarCompactadoTablaRank() throws SQLException, ClassNotFoundException
+	{
+		Connection connection = getConection();
+		String funcion = "{ ? = call compactar_tabla_rank }";
+		CallableStatement statement = connection.prepareCall(funcion);
+		statement.registerOutParameter(1, java.sql.Types.VARCHAR);
+		statement.execute();
+		return statement.getString( 1 );
+	}
 }

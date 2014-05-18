@@ -66,6 +66,9 @@ public class Main {
 				try
 				{
 					controladoraBD.generarTablaRankingDinero( );
+					Object[] rank = controladoraBD.consultarCompactadoTablaRank( ).split( "," );
+					DialogGenerarReporte dialog = new DialogGenerarReporte( rank );
+					dialog.setVisible(true);
 				}
 				catch ( ClassNotFoundException e )
 				{
@@ -75,8 +78,6 @@ public class Main {
 				{
 					e.printStackTrace();
 				}
-				DialogGenerarReporte dialog = new DialogGenerarReporte( );
-				dialog.setVisible(true);
 			}
 		});
 

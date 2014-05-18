@@ -26,8 +26,9 @@ public class DialogGenerarReporte extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @param rank 
 	 */
-	public DialogGenerarReporte() 
+	public DialogGenerarReporte(Object[ ] rank) 
 	{
 		setResizable(false);
 		contentPanel.setBackground( new Color(184, 207, 229) );
@@ -100,7 +101,7 @@ public class DialogGenerarReporte extends JDialog {
 			scrollPane.setBounds(10, 36, 231, 292);
 			contentPanel.add(scrollPane);
 			{
-				JList list = new JList();
+				JList list = new JList( rank );
 				scrollPane.setViewportView(list);
 			}
 		}
