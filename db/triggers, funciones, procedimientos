@@ -1,4 +1,4 @@
-================ TRIGGERS ========================
+--================ TRIGGERS ========================
 
 create or replace trigger trigger_descuento BEFORE UPDATE OR INSERT 
 ON DESCUENTOS
@@ -10,9 +10,9 @@ elsif :NEW.liminfcupos >= :NEW.limsupcupos then
 raise_application_error( -20001,'Verifique que la ocupacion inferior es menor que la ocupacion superior.');
 END if;
 END;
+/
 
-
-================ PROCEDIMIENTOS ========================
+--================ PROCEDIMIENTOS ========================
 
 create or replace procedure ranking_dinero is
 cursor iterador is
@@ -95,7 +95,7 @@ END REPORTE_VENDEDOR;
 /
 
 
-================ FUNCIONES ========================
+--================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
 compactado varchar2(500);
@@ -125,3 +125,12 @@ BEGIN
 END;
 /
 
+create or replace FUNCTION calcular_total_dinero return varchar2 IS
+total Number;
+cursor iterador is
+SELECT SUM(t.VALOR)
+FROM TIQUETES t;
+BEGIN  
+return total;
+END;
+/

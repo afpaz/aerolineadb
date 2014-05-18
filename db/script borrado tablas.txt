@@ -13,3 +13,5 @@ drop table Usuario_Rol cascade constraints;
 drop table Pantallas cascade constraints;
 drop table Ruta_Vuelo cascade constraints;
 drop table Tarifas cascade constraints;
+drop table Ranking cascade constraints;
+drop table Ranking2 cascade constraints;

@@ -260,9 +260,14 @@ public class ControladoraBD {
 		return statement.getString( 1 );
 	}
 	
-	public String consultarDineroTotalRecaudado( )
+	public double consultarDineroTotalRecaudado( ) throws ClassNotFoundException, SQLException
 	{
-		return "";
+		Connection connection = getConection();
+		String funcion = "{ ? = call calcular_total_dinero }";
+		CallableStatement statement = connection.prepareCall(funcion);
+		statement.registerOutParameter(1, java.sql.Types.NUMERIC);
+		statement.execute();
+		return statement.getDouble( 1 );
 	}
 
 	//------------------------------------------------------------------------------------------------------------------------------------------
@@ -316,7 +321,7 @@ public class ControladoraBD {
 		
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error al recuperar la función desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funciï¿½n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		finally
@@ -356,7 +361,7 @@ public class ControladoraBD {
 		
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error al recuperar la función desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funciï¿½n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		finally

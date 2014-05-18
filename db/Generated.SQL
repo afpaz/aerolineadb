@@ -20,6 +20,8 @@ drop table Usuario_Rol cascade constraints;
 drop table Pantallas cascade constraints;
 drop table Ruta_Vuelo cascade constraints;
 drop table Tarifas cascade constraints;
+drop table Ranking cascade constraints;
+drop table Ranking2 cascade constraints;
 
 
 -- Create tables section -------------------------------------------------
@@ -83,7 +85,7 @@ ALTER TABLE Usuarios ADD CONSTRAINT KeyUsuarios PRIMARY KEY (usuario)
 
 CREATE TABLE Ventas(
   venta_id Varchar2(30 ) NOT NULL,
-  fecha Varchar2(30 ) NOT NULL,
+  fecha Date NOT NULL,
   vendedor Varchar2(30 ) NOT NULL,
   comprador Varchar2(30 ) NOT NULL
 )
@@ -112,8 +114,8 @@ ALTER TABLE Tiquetes ADD CONSTRAINT Key_Tiquetes PRIMARY KEY (tiquete_id)
 -- Table Rutas
 
 CREATE TABLE Rutas(
-  ruta_id Varchar2(30 ) NOT NULL,
-  fecha Varchar2(30 ) NOT NULL,
+  ruta_id Number(3,0) NOT NULL,
+  fecha Date NOT NULL,
   viaje_id Varchar2(30 ) NOT NULL,
   tarifa_id Varchar2(12 ) NOT NULL
 )
@@ -145,7 +147,7 @@ ALTER TABLE Viajes ADD CONSTRAINT KeyViajes PRIMARY KEY (viaje_id)
 
 CREATE TABLE Vuelos(
   vuelo_id Varchar2(30 ) NOT NULL,
-  fecha Varchar2(30 ) NOT NULL,
+  fecha Date NOT NULL,
   cupoMax Number(5,0) NOT NULL,
   origen Varchar2(30 ) NOT NULL,
   destino Varchar2(30 ) NOT NULL,
@@ -207,7 +209,7 @@ ALTER TABLE Clases ADD CONSTRAINT KeyClase PRIMARY KEY (clase_id)
 -- Table Ruta_Vuelo
 
 CREATE TABLE Ruta_Vuelo(
-  ruta_id Varchar2(30 ) NOT NULL,
+  ruta_id Number(3,0) NOT NULL,
   vuelo_id Varchar2(30 ) NOT NULL
 )
 ;
@@ -300,3 +302,8 @@ ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship69 FOREIGN KEY (rol_id) REFE
 
 ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship70 FOREIGN KEY (pantalla_id) REFERENCES Pantallas (pantalla_id)
 ;
+
+
+CREATE TABLE ranking(	posicion NUMBER, nombre VARCHAR2(30), dinero_recaudado	NUMBER(10,2), PRIMARY KEY (posicion) );
+
+CREATE TABLE ranking2(	posicion NUMBER, nombre VARCHAR2(30), cantidad_Tiquetes	NUMBER(10,0), PRIMARY KEY (posicion) );
