@@ -46,20 +46,20 @@ public class PanelConsultaViajes extends JPanel implements ActionListener {
 		
 		label_2 = new JLabel("");
 		add(label_2, "1, 2, fill, fill");
-		JLabel label_1 = new JLabel("Fecha de fin");
+		JLabel label_1 = new JLabel("Fecha de inicio");
 		this.add(label_1, "2, 2, fill, fill");
 		
 		buscar = new JButton("Buscar");
 		buscar.setActionCommand(BUSCAR);
 		buscar.addActionListener(this);
 		
-		fin = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		this.add(fin, "3, 2, fill, fill");
-		JLabel label = new JLabel("Fecha de inicio");
+		inicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
+		this.add(inicio, "3, 2, fill, fill");
+		JLabel label = new JLabel("Fecha de fin");
 		this.add(label, "2, 3, fill, fill");
 		
-		inicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		this.add(inicio, "3, 3, fill, fill");
+		fin = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
+		this.add(fin, "3, 3, fill, fill");
 		this.add(buscar, "2, 4, 2, 1, center, center");
 		
 		table = new JTable();
@@ -88,23 +88,29 @@ public class PanelConsultaViajes extends JPanel implements ActionListener {
 		this.table = table;
 	}
 	
+	public JTable getTable ()
+	{
+		return this.table;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(BUSCAR)) {
-			Date dateInicio, dateFin;
-			try
-			{
-				dateInicio = (Date) inicio.getModel().getValue();
-				dateFin = (Date) fin.getModel().getValue();
-			}
-			catch(Exception ex)
-			{
-				JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+ex.getMessage());
-				
-			}
-			
-			
-		}
+//		if (e.getActionCommand().equals(BUSCAR)) {
+//			Date dateInicio, dateFin;
+//			try
+//			{
+//				System.out.println("Entra al evento");
+//				dateInicio = (Date) inicio.getModel().getValue();
+//				dateFin = (Date) fin.getModel().getValue();
+//			}
+//			catch(Exception ex)
+//			{
+//				JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+ex.getMessage());
+//				
+//			}
+//			
+//			
+//		}
 	}
 
 }
