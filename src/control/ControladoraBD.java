@@ -335,7 +335,7 @@ public class ControladoraBD
 		return statement.getDouble(1);
 	}
 
-	public int consultarDineroTotalTiquetes() throws ClassNotFoundException, SQLException
+	public int consultarTotalTiquetes() throws ClassNotFoundException, SQLException
 	{
 		Connection connection = getConnection();
 		String funcion = "{ ? = call calcular_total_viajes }";

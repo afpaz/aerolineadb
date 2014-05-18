@@ -3,19 +3,14 @@ package control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
-import com.jgoodies.forms.layout.FormSpec.DefaultAlignment;
 
 import modelo.Clase;
 import modelo.Descuento;
@@ -23,7 +18,6 @@ import modelo.Destino;
 import modelo.Tarifa;
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
-import vista.PanelDemanda;
 import vista.PanelDescuento;
 import vista.PanelDestinos;
 import vista.PanelTarifa;
@@ -69,14 +63,19 @@ public class Main {
 				try
 				{
 					controladoraBD.generarTablaRankingDinero( );
+
 					String r = controladoraBD.consultarCompactadoTablaRank( );
-					String[] rank = null;
+					double d = controladoraBD.consultarDineroTotalRecaudado( );
+					int t = controladoraBD.consultarTotalTiquetes( );
+					Object[] rank = null;
 					if( r != null )
 						rank = r.split( "," );
 					else
-						rank = new String[]{""};
-					//DialogGenerarReporte dialog = new DialogGenerarReporte( rank );
-					//dialog.setVisible(true);
+						rank = new Object[]{};
+					DialogGenerarReporte dialog = new DialogGenerarReporte( rank, d, t );
+					dialog.setVisible(true);
+					eventosPanelReporte( dialog );
+
 				}
 				catch ( ClassNotFoundException e )
 				{
@@ -92,6 +91,56 @@ public class Main {
 		eventosPanelDescuentos();
 		eventosPanelClases( );
 		eventosPanelDestinos( );
+	}
+
+	private static void eventosPanelReporte( final DialogGenerarReporte dialog )
+	{
+		// evento boton cantidad de dinero
+		dialog.getRdbtnCantidadDineroRecaudado( ).addActionListener( new ActionListener( )
+		{
+			@Override
+			public void actionPerformed( ActionEvent e )
+			{
+				try
+				{
+					controladoraBD.generarTablaRankingDinero( );
+					Object[] rank = controladoraBD.consultarCompactadoTablaRank( ).split( "," );
+					dialog.getList( ).setListData( rank );
+				}
+				catch ( ClassNotFoundException e1 )
+				{
+					e1.printStackTrace();
+				}
+				catch ( SQLException e1 )
+				{
+					e1.printStackTrace();
+				}
+			}
+		} );
+
+
+		// evento boton cantidad tiquetes
+		dialog.getRdbtnCantidadViajesVendidos( ).addActionListener( new ActionListener( )
+		{
+			@Override
+			public void actionPerformed( ActionEvent e )
+			{
+				try
+				{
+					controladoraBD.generarTablaRankingTiquetes( );
+					Object[] rank = controladoraBD.consultarCompactadoTablaRank2( ).split( "," );
+					dialog.getList( ).setListData( rank );
+				}
+				catch ( ClassNotFoundException e1 )
+				{
+					e1.printStackTrace();
+				}
+				catch ( SQLException e1 )
+				{
+					e1.printStackTrace();
+				}
+			}
+		} );
 	}
 
 	private static void eventosPanelDescuentos( )
@@ -125,7 +174,7 @@ public class Main {
 				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
 				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
 				panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
-				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 1 );
+				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
 				panelDescuento.getList( ).clearSelection( );
 			}
 		});	
@@ -141,8 +190,8 @@ public class Main {
 				Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
 				Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
 				Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
-				
-				
+
+
 				try 
 				{
 					if( !panelDescuento.getList( ).isSelectionEmpty() )
@@ -152,7 +201,7 @@ public class Main {
 					}
 					else
 						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			
-					
+
 					panelDescuento.getId( ).setText( "" );
 					panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
 					panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
@@ -266,11 +315,7 @@ public class Main {
 				}
 				catch ( SQLException e1 )
 				{
-					String[] err = e1.getMessage( ).split( "\n" );
-					if( e1.getErrorCode( ) == 20004 )
-						JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
-					else
-						e1.printStackTrace();
+					e1.printStackTrace();
 				}
 			}
 		});	
@@ -710,70 +755,6 @@ public class Main {
 		eventosPanelTarifa();
 
 		actualizarPanelGerente();
-		
-		eventosPanelDemanda();
-		//actualizarPanelDemanda();
-	}
-
-	private static void actualizarPanelDemanda() {
-		ventana.actualizarListaDestinos(consultarDestinos());
-		ventana.getPanelDemanda().getTable().setModel(new DefaultTableModel());;
-	}
-
-	private static void eventosPanelDemanda() {
-		final PanelDemanda panelDemanda = ventana.getPanelDemanda();
-		
-		panelDemanda.getBtnGenerar().addActionListener(new ActionListener() 
-		{			
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				
-				Date inicio = (Date) panelDemanda.getdPInicio( ).getModel().getValue();
-				
-				Date fin = (Date) panelDemanda.getdPFin( ).getModel().getValue();
-				
-				
-				if(inicio != null && fin != null && inicio.compareTo(fin)>=0)
-				{
-					JOptionPane.showMessageDialog(null, "La fecha de inicio debe ser anterior a la fecha fin", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				
-				
-					ResultSet resultado;
-					try
-					{
-						resultado = controladoraBD.ConsultarDemanda(inicio, fin, 
-								((panelDemanda.getCbxOrigen().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxOrigen().getSelectedItem())),
-								((panelDemanda.getCbxDestino().getSelectedIndex()< 0)? null: ((Destino) panelDemanda.getCbxDestino().getSelectedItem())));
-						DefaultTableModel model = new DefaultTableModel();
-						while(resultado.next())
-						{
-							Object[] array =  {resultado.getObject(1), resultado.getObject(2)};
-							model.addRow(array);
-						}
-						panelDemanda.getTable().setModel(model);
-					}
-					catch ( ClassNotFoundException e1 )
-					{
-						e1.printStackTrace();
-					}
-					catch ( SQLException e1 )
-					{
-						e1.printStackTrace();
-					}
-			}
-		});
-		
-		panelDemanda.getBtnRefrescar().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				actualizarPanelDemanda();
-			}
-		});
 	}
 
 }
