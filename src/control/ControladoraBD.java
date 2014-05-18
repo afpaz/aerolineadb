@@ -336,4 +336,44 @@ public class ControladoraBD {
 		
 		return arreglo;
 	}	
+	
+	public static String[] getClases() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConection();
+		String function = "{? = call getClases()}";
+		String dato = "";
+		String[] arreglo;
+		CallableStatement cs = null;
+		
+		try
+		{
+			cs = con.prepareCall(function);
+//			cs.setString(0, "");
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			dato = cs.getString(1);
+		}
+		
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error al recuperar la función desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		finally
+		{
+			cs.close();
+			con.close();
+		}
+		
+		if(dato == null)
+		{
+			arreglo = new String[1];
+			arreglo[0] = "No hay clases!!!";
+		}
+		
+		else
+			arreglo = dato.split(",");
+		
+		return arreglo;
+	}
 }
