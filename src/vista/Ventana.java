@@ -58,6 +58,11 @@ public class Ventana extends JFrame {
 		return panelGerente;
 	}	
 	
+	public PanelReporteVentas getPanelReporteVentas()
+	{
+		return this.panelReporteVentas;
+	}
+	
 	public void actualizarPanelClases(ArrayList< Clase > clases)
 	{
 		getPanelGerente( ).getPanelClases( ).getListClases( ).setListData( clases.toArray( ) );

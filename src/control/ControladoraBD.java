@@ -8,7 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import modelo.ReporteVentas;
+import oracle.jdbc.OracleTypes;
 
 public class ControladoraBD {
 	
@@ -38,6 +42,35 @@ public class ControladoraBD {
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
+	}
+	
+	public ReporteVentas reporteVendedor(String usuario) throws ClassNotFoundException, SQLException
+	{
+			Connection connection = getConection();
+			String procedure = "{ call REPORTE_VENDEDOR(?,?,?,?) }";
+			CallableStatement pr_almacenado = connection.prepareCall(procedure);
+			pr_almacenado.setString(1, usuario);
+			pr_almacenado.registerOutParameter(2, java.sql.Types.NUMERIC);
+			pr_almacenado.registerOutParameter(3, java.sql.Types.NUMERIC);
+			pr_almacenado.registerOutParameter(4, OracleTypes.CURSOR);
+			pr_almacenado.execute();
+			
+			double valor = pr_almacenado.getDouble(2);
+			int cantidad = pr_almacenado.getInt(3);
+			ResultSet rs = (ResultSet) pr_almacenado.getObject(4);
+			ArrayList<String> lista = new ArrayList<String>();
+			while(rs.next())
+			{
+				lista.add(rs.getString(1) + " - " + rs.getInt(2) + " Tiquete(s)");
+			}
+			
+			ReporteVentas reporte = new ReporteVentas(valor, cantidad, lista);
+			
+			pr_almacenado.close();
+			connection.close();
+			
+			return reporte;
+
 	}
 	
 	public ResultSet consultarVuelosEntreFechas (Date inicio, Date fin) throws ClassNotFoundException, SQLException

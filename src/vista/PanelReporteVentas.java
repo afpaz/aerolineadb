@@ -1,32 +1,43 @@
 package vista;
 
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JList;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
+
 import javax.swing.JSplitPane;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 
-public class PanelReporteVentas extends JPanel {
-
-	/**
-	 * Create the panel.
-	 */
-	
-	private JLabel lblNombreVendedor;
+public class PanelReporteVentas extends JPanel implements ActionListener {
 	private JLabel lblValorTotalVendido;
 	private JLabel lblNumeroTiquetes;
-	private JList listaLugares;
+	private JList<String> listaLugares;
 	private JButton btnGenerarReporte;
 	private JTextField idVendedor;
 	
@@ -76,7 +87,7 @@ public class PanelReporteVentas extends JPanel {
 		add(lblInfoGral, "4, 4, 17, 1");
 		
 		JLabel lblLugaresMsPopulares = new JLabel("Lugares m\u00E1s populares:");
-		add(lblLugaresMsPopulares, "24, 4, 5, 1");
+		add(lblLugaresMsPopulares, "24, 4, 7, 1");
 		
 		JPanel panel = new JPanel();
 		add(panel, "4, 6, 19, 1, fill, fill");
@@ -86,27 +97,6 @@ public class PanelReporteVentas extends JPanel {
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
-		
-		JLabel lblVendedor = new JLabel("Vendedor: ");
-		lblVendedor.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		GridBagConstraints gbc_lblVendedor = new GridBagConstraints();
-		gbc_lblVendedor.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblVendedor.gridwidth = 3;
-		gbc_lblVendedor.anchor = GridBagConstraints.WEST;
-		gbc_lblVendedor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblVendedor.gridx = 0;
-		gbc_lblVendedor.gridy = 1;
-		panel.add(lblVendedor, gbc_lblVendedor);
-		
-		lblNombreVendedor = new JLabel("");
-		lblNombreVendedor.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		GridBagConstraints gbc_lblNombreVendedor = new GridBagConstraints();
-		gbc_lblNombreVendedor.anchor = GridBagConstraints.WEST;
-		gbc_lblNombreVendedor.gridwidth = 3;
-		gbc_lblNombreVendedor.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNombreVendedor.gridx = 3;
-		gbc_lblNombreVendedor.gridy = 1;
-		panel.add(lblNombreVendedor, gbc_lblNombreVendedor);
 		
 		JLabel lblTotalVendido = new JLabel("Total vendido:");
 		lblTotalVendido.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
@@ -175,17 +165,9 @@ public class PanelReporteVentas extends JPanel {
 		gbc_btnGenerarReporte.gridy = 7;
 		panel.add(btnGenerarReporte, gbc_btnGenerarReporte);
 		
-		listaLugares = new JList();
-		add(listaLugares, "24, 6, 5, 1, fill, fill");
+		listaLugares = new JList<String>();
+		add(new JScrollPane(listaLugares), "24, 6, 5, 1, fill, fill");
 
-	}
-
-	public JLabel getLblNombreVendedor() {
-		return lblNombreVendedor;
-	}
-
-	public void setLblNombreVendedor(JLabel lblNombreVendedor) {
-		this.lblNombreVendedor = lblNombreVendedor;
 	}
 
 	public JLabel getLblValorTotalVendido() {
@@ -204,11 +186,11 @@ public class PanelReporteVentas extends JPanel {
 		this.lblNumeroTiquetes = lblNumeroTiquetes;
 	}
 
-	public JList getListaLugares() {
+	public JList<String> getListaLugares() {
 		return listaLugares;
 	}
 
-	public void setListaLugares(JList listaLugares) {
+	public void setListaLugares(JList<String> listaLugares) {
 		this.listaLugares = listaLugares;
 	}
 
@@ -226,6 +208,24 @@ public class PanelReporteVentas extends JPanel {
 
 	public void setIdVendedor(JTextField idVendedor) {
 		this.idVendedor = idVendedor;
+	}
+
+	public void actualizarRankingLugares(ArrayList<String> lista) {
+		
+		DefaultListModel<String> model = new DefaultListModel<String>();
+		for(String a : lista){
+			
+			model.addElement(a);
+		}
+		this.listaLugares.setModel(model);
+		this.listaLugares.repaint();
+
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
 	}
 	
 	

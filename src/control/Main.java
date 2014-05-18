@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Clase;
 import modelo.Descuento;
 import modelo.Destino;
+import modelo.ReporteVentas;
 import modelo.Tarifa;
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
@@ -28,6 +29,30 @@ public class Main {
 	public static Ventana ventana;
 	public static ControladoraBD controladoraBD;
 
+	private static void eventosPanelReporteVendedor()
+	{
+		ventana.getPanelReporteVentas().getBtnGenerarReporte().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Entra al evento - Usuario: " +  ventana.getPanelReporteVentas().getIdVendedor().getText()  );
+				
+				try {
+					ReporteVentas reporte = controladoraBD.reporteVendedor(ventana.getPanelReporteVentas().getIdVendedor().getText());
+					ventana.getPanelReporteVentas().getLblValorTotalVendido().setText("$" + reporte.getValorTotal());
+					ventana.getPanelReporteVentas().getLblNumeroTiquetes().setText("" + reporte.getCantidad());
+					ventana.getPanelReporteVentas().actualizarRankingLugares(reporte.getRanking());
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+e1.getMessage());
+				}
+				
+			}
+		});
+	}
+	
 	private static void eventosPanelConsultaViajes() {
 
 		ventana.getPanelConsultaViajes().getBuscar().addActionListener(new ActionListener(){
@@ -473,6 +498,7 @@ public class Main {
 			}
 		});
 	}
+	
 	private static void eventosPanelTarifa() 
 	{
 		final PanelTarifa panelTarifa = ventana.getPanelGerente().getPanelTarifa();
@@ -740,11 +766,11 @@ public class Main {
 		ventana = new Ventana();
 		ventana.setVisible(true);
 		controladoraBD = new ControladoraBD();
-
+		
 		eventosPanelConsultaViajes();
+		eventosPanelReporteVendedor();
 		eventosPanelGerente( );
 		eventosPanelTarifa();
-
 		actualizarPanelGerente();
 	}
 
