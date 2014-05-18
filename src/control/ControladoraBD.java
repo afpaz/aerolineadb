@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
-import vista.PanelClientes;
 import vista.PanelPasabordo;
 
 public class ControladoraBD {
@@ -30,8 +29,8 @@ public class ControladoraBD {
 		String servidor = IP_INTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "P09551_1_9";
-		String pass = "feTugqRM";
+		String usr = "P09551_1_2";
+		String pass = "kirUjsrZ";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
