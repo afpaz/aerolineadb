@@ -81,7 +81,7 @@ public class ControladoraBD {
 	public void actualizarTarifa(String id, int valor, double inferior, double superior) throws SQLException, ClassNotFoundException 
 	{
 		Connection conect = getConection();
-		String sql= "UPDATE TARIFAS SET valorKM =" + valor + ", limiteInfKM = " + inferior + ", limiteSupKM = " + superior + " where tarifa_id = '" + id +"'";
+		String sql= "UPDATE TARIFAS SET vlr_km =" + valor + ", limInfKM = " + inferior + ", limSupKM = " + superior + " where tarifa_id = '" + id +"'";
 		Statement statement = conect.createStatement();
 		statement.execute(sql);
 	}
