@@ -5,13 +5,12 @@ Model: Oracle 12c
 Database: Oracle 12c
 */
 
-
 -- Create tables section -------------------------------------------------
 
 -- Table Pantallas
 
 CREATE TABLE Pantallas(
-  pantalla_id Number(3,0) NOT NULL,
+  pantalla_id Varchar2(30 ) NOT NULL,
   descripcion Varchar2(500 )
 )
 ;
@@ -24,7 +23,7 @@ ALTER TABLE Pantallas ADD CONSTRAINT Key_pantallas PRIMARY KEY (pantalla_id)
 -- Table Roles
 
 CREATE TABLE Roles(
-  rol_id Number(3,0) NOT NULL,
+  rol_id Varchar2(30 ) NOT NULL,
   descripcion Varchar2(500 )
 )
 ;
@@ -37,8 +36,8 @@ ALTER TABLE Roles ADD CONSTRAINT Key_Roles PRIMARY KEY (rol_id)
 -- Table Rol_Pantalla
 
 CREATE TABLE Rol_Pantalla(
-  rol_id Number(3,0) NOT NULL,
-  pantalla_id Number(3,0) NOT NULL
+  rol_id Varchar2(30 ) NOT NULL,
+  pantalla_id Varchar2(30 ) NOT NULL
 )
 ;
 
@@ -50,28 +49,26 @@ ALTER TABLE Rol_Pantalla ADD CONSTRAINT KeyRol_Pantalla PRIMARY KEY (rol_id,pant
 -- Table Usuarios
 
 CREATE TABLE Usuarios(
-  usuario_id Number(3,0) NOT NULL,
-  nombre Varchar2(30 ) NOT NULL,
+  usuario Varchar2(30 ) NOT NULL,
   email Varchar2(30 ) NOT NULL,
   telefono Varchar2(30 ) NOT NULL,
   direccion Varchar2(30 ) NOT NULL,
-  usuario Varchar2(30 ) NOT NULL,
   contrasena Varchar2(30 ) NOT NULL
 )
 ;
 
 -- Add keys for table Usuarios
 
-ALTER TABLE Usuarios ADD CONSTRAINT KeyUsuarios PRIMARY KEY (usuario_id)
+ALTER TABLE Usuarios ADD CONSTRAINT KeyUsuarios PRIMARY KEY (usuario)
 ;
 
 -- Table Ventas
 
 CREATE TABLE Ventas(
-  venta_id Number(3,0) NOT NULL,
+  venta_id Varchar2(30 ) NOT NULL,
   fecha Date NOT NULL,
-  vendedor Number(3,0) NOT NULL,
-  comprador Number(3,0) NOT NULL
+  vendedor Varchar2(30 ) NOT NULL,
+  comprador Varchar2(30 ) NOT NULL
 )
 ;
 
@@ -83,9 +80,9 @@ ALTER TABLE Ventas ADD CONSTRAINT Key_Venta PRIMARY KEY (venta_id)
 -- Table Tiquetes
 
 CREATE TABLE Tiquetes(
-  tiquete_id Number(3,0) NOT NULL,
-  valor Number(10,2) NOT NULL,
-  venta_id Number(3,0) NOT NULL,
+  tiquete_id Varchar2(30 ) NOT NULL,
+  valor Number(15,5) NOT NULL,
+  venta_id Varchar2(30 ) NOT NULL,
   viaje_id Varchar2(30 ) NOT NULL
 )
 ;
@@ -98,7 +95,7 @@ ALTER TABLE Tiquetes ADD CONSTRAINT Key_Tiquetes PRIMARY KEY (tiquete_id)
 -- Table Rutas
 
 CREATE TABLE Rutas(
-  ruta_id Varchar2(30) NOT NULL,
+  ruta_id Varchar2(30 ) NOT NULL,
   fecha Date NOT NULL,
   viaje_id Varchar2(30 ) NOT NULL,
   tarifa_id Varchar2(12 ) NOT NULL
@@ -116,7 +113,7 @@ CREATE TABLE Viajes(
   viaje_id Varchar2(30 ) NOT NULL,
   sentido Varchar2(30 ) NOT NULL,
   clase_id Varchar2(12 ) NOT NULL,
-  descuento_id Varchar2(12 ) NOT NULL,
+  descuento_id Varchar2(12 ),
   origen Varchar2(30 ) NOT NULL,
   destino Varchar2(30 ) NOT NULL
 )
@@ -180,26 +177,13 @@ ALTER TABLE Descuentos ADD CONSTRAINT KeyDescuento PRIMARY KEY (descuento_id)
 CREATE TABLE Clases(
   clase_id Varchar2(12 ) NOT NULL,
   descripcion Varchar2(500 ) NOT NULL,
-  multiplicador Number(2,0) NOT NULL
+  multiplicador Varchar2(30 ) NOT NULL
 )
 ;
 
 -- Add keys for table Clases
 
 ALTER TABLE Clases ADD CONSTRAINT KeyClase PRIMARY KEY (clase_id)
-;
-
--- Table Usuario_Rol
-
-CREATE TABLE Usuario_Rol(
-  usuario_id Number(3,0) NOT NULL,
-  rol_id Number(3,0) NOT NULL
-)
-;
-
--- Add keys for table Usuario_Rol
-
-ALTER TABLE Usuario_Rol ADD CONSTRAINT KeyUsuario_Rol PRIMARY KEY (usuario_id,rol_id)
 ;
 
 -- Table Ruta_Vuelo
@@ -230,25 +214,20 @@ CREATE TABLE Tarifas(
 ALTER TABLE Tarifas ADD CONSTRAINT Key2 PRIMARY KEY (tarifa_id)
 ;
 
+-- Table Usuario_Rol
+
+CREATE TABLE Usuario_Rol(
+  usuario Varchar2(30 ) NOT NULL,
+  rol_id Varchar2(30 ) NOT NULL
+)
+;
+
+-- Add keys for table Usuario_Rol
+
+ALTER TABLE Usuario_Rol ADD CONSTRAINT Key3 PRIMARY KEY (usuario,rol_id)
+;
+
 -- Create relationships section ------------------------------------------------- 
-
-ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship3 FOREIGN KEY (rol_id) REFERENCES Roles (rol_id)
-;
-
-ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship4 FOREIGN KEY (pantalla_id) REFERENCES Pantallas (pantalla_id)
-;
-
-ALTER TABLE Usuario_Rol ADD CONSTRAINT Relationship7 FOREIGN KEY (usuario_id) REFERENCES Usuarios (usuario_id)
-;
-
-ALTER TABLE Usuario_Rol ADD CONSTRAINT Relationship8 FOREIGN KEY (rol_id) REFERENCES Roles (rol_id)
-;
-
-ALTER TABLE Ventas ADD CONSTRAINT Comprador FOREIGN KEY (comprador) REFERENCES Usuarios (usuario_id)
-;
-
-ALTER TABLE Ventas ADD CONSTRAINT Vendedor FOREIGN KEY (vendedor) REFERENCES Usuarios (usuario_id)
-;
 
 ALTER TABLE Tiquetes ADD CONSTRAINT Relationship47 FOREIGN KEY (venta_id) REFERENCES Ventas (venta_id)
 ;
@@ -274,14 +253,35 @@ ALTER TABLE Rutas ADD CONSTRAINT Relationship55 FOREIGN KEY (tarifa_id) REFERENC
 ALTER TABLE Viajes ADD CONSTRAINT Relationship58 FOREIGN KEY (descuento_id) REFERENCES Descuentos (descuento_id)
 ;
 
-ALTER TABLE Viajes ADD CONSTRAINT origen FOREIGN KEY (origen) REFERENCES Lugares (nombre_lugar)
+ALTER TABLE Viajes ADD CONSTRAINT origen2 FOREIGN KEY (origen) REFERENCES Lugares (nombre_lugar)
 ;
 
-ALTER TABLE Viajes ADD CONSTRAINT destino FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
+ALTER TABLE Viajes ADD CONSTRAINT destino2 FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
 ;
 
-ALTER TABLE Vuelos ADD CONSTRAINT origen2 FOREIGN KEY (origen) REFERENCES Lugares (nombre_lugar)
+ALTER TABLE Vuelos ADD CONSTRAINT origen FOREIGN KEY (origen) REFERENCES Lugares (nombre_lugar)
 ;
 
-ALTER TABLE Vuelos ADD CONSTRAINT destino2 FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
+ALTER TABLE Vuelos ADD CONSTRAINT destino FOREIGN KEY (destino) REFERENCES Lugares (nombre_lugar)
 ;
+
+ALTER TABLE Usuario_Rol ADD CONSTRAINT Relationship65 FOREIGN KEY (usuario) REFERENCES Usuarios (usuario)
+;
+
+ALTER TABLE Usuario_Rol ADD CONSTRAINT Relationship66 FOREIGN KEY (rol_id) REFERENCES Roles (rol_id)
+;
+
+ALTER TABLE Ventas ADD CONSTRAINT vendedor FOREIGN KEY (vendedor) REFERENCES Usuarios (usuario)
+;
+
+ALTER TABLE Ventas ADD CONSTRAINT comprador FOREIGN KEY (comprador) REFERENCES Usuarios (usuario)
+;
+
+ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship69 FOREIGN KEY (rol_id) REFERENCES Roles (rol_id)
+;
+
+ALTER TABLE Rol_Pantalla ADD CONSTRAINT Relationship70 FOREIGN KEY (pantalla_id) REFERENCES Pantallas (pantalla_id)
+;
+
+
+
