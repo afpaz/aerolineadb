@@ -36,18 +36,25 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Entra al evento - Usuario: " +  ventana.getPanelReporteVentas().getIdVendedor().getText()  );
-				
-				try {
-					ReporteVentas reporte = controladoraBD.reporteVendedor(ventana.getPanelReporteVentas().getIdVendedor().getText());
-					ventana.getPanelReporteVentas().getLblValorTotalVendido().setText("$" + reporte.getValorTotal());
-					ventana.getPanelReporteVentas().getLblNumeroTiquetes().setText("" + reporte.getCantidad());
-					ventana.getPanelReporteVentas().actualizarRankingLugares(reporte.getRanking());
-				} catch (ClassNotFoundException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+e1.getMessage());
-				}
-				
+
+					ReporteVentas reporte;
+					try
+					{
+						reporte = controladoraBD.reporteVendedor(ventana.getPanelReporteVentas().getIdVendedor().getText());
+						ventana.getPanelReporteVentas().getLblValorTotalVendido().setText("$" + reporte.getValorTotal());
+						ventana.getPanelReporteVentas().getLblNumeroTiquetes().setText("" + reporte.getCantidad());
+						ventana.getPanelReporteVentas().actualizarRankingLugares(reporte.getRanking());
+					}
+					catch ( ClassNotFoundException e1 )
+					{
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+e1.getMessage());
+					}
+					catch ( SQLException e1 )
+					{
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Error"+System.getProperty("line.separator")+e1.getMessage());
+					}				
 			}
 		});
 	}
