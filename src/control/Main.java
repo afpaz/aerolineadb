@@ -324,28 +324,16 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				int id = 0;
-				String latitud = panelDestinos.getTxtLatitud().getText();
-				String longitud = panelDestinos.getTxtLongitud().getText();
+				String id = panelDestinos.getTxtId().getText();
+				double latitud=0;
+				double longitud=0;
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
-
-				// es un id valido
-				try
-				{
-					id = Integer.parseInt(panelDestinos.getTxtId().getText());
-				}
-				catch(NumberFormatException ni)
-				{
-					JOptionPane.showMessageDialog(null, "El id debe de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
 
 				//es una longitud y latitud correcta
 				try
 				{
-					Double.parseDouble(longitud);
-					Double.parseDouble(latitud);
+					longitud = Double.parseDouble(panelDestinos.getTxtLongitud().getText());
+					latitud = Double.parseDouble(panelDestinos.getTxtLatitud().getText());
 				}
 				catch(NumberFormatException nfe)
 				{
@@ -417,7 +405,6 @@ public class Main {
 			}
 		});
 	}
-
 	private static void eventosPanelTarifa() 
 	{
 		final PanelTarifa panelTarifa = ventana.getPanelGerente().getPanelTarifa();
@@ -445,7 +432,7 @@ public class Main {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				panelTarifa.limpiarCampos();	
-				listaTarifas.clearSelection();
+				listaTarifas.clearSelection();	
 			}
 		});
 
@@ -454,21 +441,10 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				int id = 0;
+				String id=panelTarifa.getTxtId().getText();
 				int valor = 0;
-				int inferior = Integer.parseInt(panelTarifa.getTxtLimInfKm().getText());
-				int superior = Integer.parseInt(panelTarifa.getTxtLimSup().getText());
-
-				// validacion para el id
-				try
-				{
-					id = Integer.parseInt(panelTarifa.getTxtId().getText());
-				}
-				catch(NumberFormatException ni)
-				{
-					JOptionPane.showMessageDialog(null, "El id debe de ser un valor numerico", "Error en el formato", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
+				double inferior = 0;
+				double superior = 0;
 
 				//validacion para el valor
 				try
@@ -484,8 +460,8 @@ public class Main {
 				// validacion inferior y superior
 				try
 				{
-					inferior =  Integer.parseInt(panelTarifa.getTxtLimInfKm().getText());
-					superior = Integer.parseInt(panelTarifa.getTxtLimSup().getText());
+					inferior =  Double.parseDouble(panelTarifa.getTxtLimInfKm().getText());
+					superior = Double.parseDouble(panelTarifa.getTxtLimSup().getText());
 				}
 				catch(NumberFormatException ni)
 				{
@@ -529,7 +505,7 @@ public class Main {
 				{
 					try 
 					{
-						controladoraBD.eliminarTarifa(Integer.parseInt(id));
+						controladoraBD.eliminarTarifa(id);
 						panelTarifa.limpiarCampos();
 					}
 					catch (ClassNotFoundException e1) 
@@ -546,7 +522,6 @@ public class Main {
 		});
 
 	}
-
 	private static void actualizarPanelGerente( )
 	{
 		ventana.actualizarListaDestinos(consultarDestinos());
@@ -563,10 +538,10 @@ public class Main {
 			ResultSet resultado = controladoraBD.consultarTarifas();
 			while(resultado.next())
 			{
-				int id = resultado.getInt(1);
+				String id = resultado.getString(1);
 				int valor = resultado.getInt(2);
-				int inferior = resultado.getInt(3);
-				int superior = resultado.getInt(4);
+				double inferior = resultado.getDouble(3);
+				double superior = resultado.getDouble(4);
 
 				Tarifa tarifa = new Tarifa(id, valor, inferior, superior);
 				tarifas.add(tarifa);
@@ -620,10 +595,10 @@ public class Main {
 			ResultSet resultado = controladoraBD.consultarDestinos();
 			while(resultado.next())
 			{
-				int id = resultado.getInt(1);
+				String id = resultado.getString(1);
 				String descripcion = resultado.getString(2);
-				String latitud = resultado.getString(3);
-				String longitud = resultado.getString(4);
+				double latitud = resultado.getDouble(3);
+				double longitud = resultado.getDouble(4);
 
 				Destino destino = new Destino(id, latitud, longitud, descripcion);
 				destinos.add(destino);
