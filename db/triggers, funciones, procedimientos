@@ -127,10 +127,18 @@ END;
 
 create or replace FUNCTION calcular_total_dinero return varchar2 IS
 total Number;
-cursor iterador is
-SELECT SUM(t.VALOR)
+BEGIN 
+SELECT SUM(t.VALOR) into total
 FROM TIQUETES t;
-BEGIN  
+return total;
+END;
+/
+
+create or replace FUNCTION calcular_total_viajes return varchar2 IS
+total INTEGER;
+BEGIN 
+SELECT COUNT(t.TIQUETE_ID) into total
+FROM TIQUETES t;
 return total;
 END;
 /

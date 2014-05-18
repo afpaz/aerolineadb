@@ -28,8 +28,10 @@ public class DialogGenerarReporte extends JDialog {
 	/**
 	 * Create the dialog.
 	 * @param rank 
+	 * @param dineroTotal 
+	 * @param tiquetesTotal 
 	 */
-	public DialogGenerarReporte(Object[ ] rank) 
+	public DialogGenerarReporte(Object[ ] rank, double dineroTotal, int tiquetesTotal) 
 	{
 		setResizable(false);
 		contentPanel.setBackground( new Color(184, 207, 229) );
@@ -56,7 +58,7 @@ public class DialogGenerarReporte extends JDialog {
 			contentPanel.add(lblTotal);
 		}
 		{
-			txtTotalDinero = new JTextField();
+			txtTotalDinero = new JTextField("$ " + dineroTotal);
 			txtTotalDinero.setEditable(false);
 			txtTotalDinero.setBounds(365, 90, 158, 20);
 			contentPanel.add(txtTotalDinero);
@@ -74,7 +76,7 @@ public class DialogGenerarReporte extends JDialog {
 			butGroup.add(rdbtnCantidadViajesVendidos);
 		}
 		{
-			txtTotalViajes = new JTextField();
+			txtTotalViajes = new JTextField("" + tiquetesTotal);
 			txtTotalViajes.setEditable(false);
 			txtTotalViajes.setBounds(365, 173, 158, 20);
 			contentPanel.add(txtTotalViajes);

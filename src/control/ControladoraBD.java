@@ -28,8 +28,8 @@ public class ControladoraBD {
 		String servidor = IP_EXTERNA;
 		String puerto = "1522";
 		String sid = "ESTUD";
-		String usr = "P09551_1_2";
-		String pass = "kirUjsrZ";
+		String usr = "";
+		String pass = "";
 		String cadenaConeccion = "jdbc:oracle:thin:@" + servidor + ":" + puerto + ":" + sid;
 		connection = DriverManager.getConnection(cadenaConeccion,usr,pass);
         return connection;
@@ -268,6 +268,16 @@ public class ControladoraBD {
 		statement.registerOutParameter(1, java.sql.Types.NUMERIC);
 		statement.execute();
 		return statement.getDouble( 1 );
+	}
+	
+	public int consultarDineroTotalTiquetes( ) throws ClassNotFoundException, SQLException
+	{
+		Connection connection = getConection();
+		String funcion = "{ ? = call calcular_total_viajes }";
+		CallableStatement statement = connection.prepareCall(funcion);
+		statement.registerOutParameter(1, java.sql.Types.INTEGER);
+		statement.execute();
+		return statement.getInt( 1 );
 	}
 
 	//------------------------------------------------------------------------------------------------------------------------------------------

@@ -96,8 +96,8 @@ public class Main {
 					controladoraBD.generarTablaRankingDinero( );
 					Object[] rank = controladoraBD.consultarCompactadoTablaRank( ).split( "," );
 					double dineroTotal = controladoraBD.consultarDineroTotalRecaudado();
-					System.out.println(dineroTotal);
-					DialogGenerarReporte dialog = new DialogGenerarReporte( rank );
+					int tiquetesTotal = controladoraBD.consultarDineroTotalTiquetes( );
+					DialogGenerarReporte dialog = new DialogGenerarReporte( rank, dineroTotal, tiquetesTotal );
 					dialog.setVisible(true);
 					eventosPanelReporte( dialog );
 				}
