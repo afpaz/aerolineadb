@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -88,15 +90,22 @@ public class PanelRutas extends JPanel
 
 	}
 
+	/**
+	 * Se inician los componentes de la UI
+	 */
 	public void iniciarComponentes()
 	{
 		comboViajeRuta = new JComboBox();
 
 		comboTarifaRuta = new JComboBox();
+		llenarComboBoxTarifas();
 
 		btnAgregar = new JButton("Crear");
 	}
 
+	/**
+	 * Se declaran los eventos de los componentes de la UI
+	 */
 	public void eventosComponentes()
 	{
 
@@ -109,6 +118,8 @@ public class PanelRutas extends JPanel
 
 				if (comboTarifaRuta.getSelectedItem() != null && comboViajeRuta.getSelectedItem() != null)
 				{
+					boolean exitoso = false;
+
 					// Tarifa t = (Tarifa) comboTarifaRuta.getSelectedItem();
 					// Viaje v = (Viaje) comboViajeRuta.getSelectedItem();
 
@@ -117,16 +128,20 @@ public class PanelRutas extends JPanel
 					String fechaFormateada = dateFormat.format(date);
 					try
 					{
-						controladorBD.crearRuta(fechaFormateada, "v.getId()", "t.getid()");
+						exitoso = controladorBD.crearRuta(fechaFormateada, "v.getId()", "t.getid()");
+						if (!exitoso)
+						{
+							JOptionPane.showMessageDialog(PanelRutas.this, "No se pudo crear. Intente más tarde.");
+						}
 					} catch (ClassNotFoundException e)
 					{
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(PanelRutas.this, "Error en el programa");
+						JOptionPane.showMessageDialog(PanelRutas.this, "Error creando la ruta");
 
 					} catch (SQLException e)
 					{
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(PanelRutas.this, "Error en el programa");
+						JOptionPane.showMessageDialog(PanelRutas.this, "Error creando la ruta");
 					}
 
 				} else
@@ -139,4 +154,50 @@ public class PanelRutas extends JPanel
 
 	}
 
+	/**
+	 * Permite llenar el combo box de tarifas
+	 */
+	public void llenarComboBoxTarifas()
+	{
+		ResultSet resultado = null;
+		try
+		{
+			comboTarifaRuta.removeAllItems();
+
+			resultado = controladorBD.consultarTarifas();
+			while (resultado.next())
+			{
+				String idTarifa = resultado.getString("tarifa_id");
+				int valorKm = resultado.getInt("vlr_km");
+				double limInfKm = resultado.getDouble("liminfkm");
+				double limSupKm = resultado.getDouble("limsupkm");
+
+				Tarifa t = new Tarifa(idTarifa, valorKm, limInfKm, limSupKm);
+				comboTarifaRuta.addItem(t);
+
+			}
+
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(PanelRutas.this, "Error obteniendo tarifas");
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(PanelRutas.this, "Error obteniendo tarifas");
+		} finally
+		{
+			if (resultado != null)
+			{
+				try
+				{
+					resultado.close();
+				} catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(PanelRutas.this, "Error cerrando la conexión");
+				}
+			}
+		}
+	}
 }
