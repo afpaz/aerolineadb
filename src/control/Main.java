@@ -423,8 +423,8 @@ public class Main {
 				String id = panelDestinos.getTxtId().getText();
 				double latitud=0;
 				double longitud=0;
-				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
 				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
+				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
 				//es una longitud y latitud correcta
 				try
 				{
@@ -545,6 +545,7 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				String id=panelTarifa.getTxtId().getText();
 				int valor = 0;
 				double inferior = 0;
@@ -579,11 +580,11 @@ public class Main {
 				{
 					if(listaTarifas.isSelectionEmpty())
 					{
-						controladoraBD.crearTarifa(id, valor, inferior, superior);
+						controladoraBD.crearTarifa(usu, id, valor, inferior, superior);
 					}
 					else
 					{
-						controladoraBD.actualizarTarifa(id, valor, inferior, superior);
+						controladoraBD.actualizarTarifa(usu, id, valor, inferior, superior);
 					}
 					ventana.actualizarListaTarifas( consultarTarifas( ) );
 				}
@@ -608,11 +609,12 @@ public class Main {
 			public void actionPerformed(ActionEvent e) 
 			{				
 				String id = panelTarifa.getTxtId().getText();
+				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				if( !panelTarifa.getListTarifas().isSelectionEmpty( ) )
 				{
 					try 
 					{
-						controladoraBD.eliminarTarifa(id);
+						controladoraBD.eliminarTarifa(usu, id);
 						panelTarifa.limpiarCampos();
 					}
 					catch (ClassNotFoundException e1) 
