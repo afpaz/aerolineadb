@@ -176,7 +176,7 @@ public class Main {
 				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
 				panelDescuento.getjSOcupacionInf( ).getModel( ).setValue( 0 );
 				panelDescuento.getjSocupacionSup( ).getModel( ).setValue( 0 );
-				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 0 );
+				panelDescuento.getsPPorcentage( ).getModel( ).setValue( 1 );
 				panelDescuento.getList( ).clearSelection( );
 			}
 		});	
