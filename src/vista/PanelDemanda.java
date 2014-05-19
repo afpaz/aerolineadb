@@ -12,6 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
@@ -19,105 +20,78 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.BorderLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 
 public class PanelDemanda extends JPanel
-{	
-	private JDatePickerImpl dPInicio;	
-	private JDatePickerImpl dPFin;	
-	private JButton btnGenerar;	
-	private JComboBox cbxOrigen;
-	private JLabel lblLugarFin;
-	private JComboBox cbxDestino;
-	private JButton btnRefrescar;
-	private JTextArea textArea;
+{
+	private JPanel panel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private JButton btnGenerarReporte;
 	
 	
 	public PanelDemanda() {
-		setLayout(null);
 		setBackground( new Color(184, 207, 229) );
-		dPInicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		dPInicio.setBounds(480, 74, 126, 29);
-		add(dPInicio);
+		setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblFechaLimiteSuperior = new JLabel("Fecha de inico");
-		lblFechaLimiteSuperior.setBounds(325, 74, 142, 24);
-		add(lblFechaLimiteSuperior);
+		panel = new JPanel();
+		add(panel, BorderLayout.WEST);
 		
-		JLabel lblFechaLimiteInferior = new JLabel("Fecha fin");
-		lblFechaLimiteInferior.setBounds(325, 121, 142, 23);
-		add(lblFechaLimiteInferior);
+		panel_1 = new JPanel();
+		add(panel_1, BorderLayout.NORTH);
 		
-		dPFin = new JDatePickerImpl((new JDatePanelImpl(new UtilDateModel())));
-		dPFin.getJFormattedTextField().setSize(117, 23);
-		dPFin.getJFormattedTextField().setLocation(266, 0);
-		dPFin.setBounds(480, 121, 126, 29);
-		add(dPFin);
+		panel_2 = new JPanel();
+		add(panel_2, BorderLayout.EAST);
 		
-		btnGenerar = new JButton("Generar");
-		btnGenerar.setBounds(515, 285, 91, 23);
-		add(btnGenerar);
+		panel_3 = new JPanel();
+		add(panel_3, BorderLayout.SOUTH);
+		
+		btnGenerarReporte = new JButton("Generar Reporte");
+		panel_3.add(btnGenerarReporte);
+		
+		scrollPane = new JScrollPane();
+		add(scrollPane, BorderLayout.CENTER);
+		
+		table = new JTable();
+		DefaultTableModel model = new DefaultTableModel(new String[]{"Vuelo", "Fecha", "Tiquetes Vendidos"}, 0);
+		table.setModel(model);
+		scrollPane.setViewportView(table);
 		
 		ImageIcon image = new ImageIcon("./imagenes/delete.png");
-		
-		JLabel lblLugarInicio = new JLabel("Lugar de Origen");
-		lblLugarInicio.setBounds(325, 188, 116, 14);
-		add(lblLugarInicio);
-		
-		cbxOrigen = new JComboBox();
-		cbxOrigen.setBounds(480, 184, 126, 22);
-		add(cbxOrigen);
-		
-		lblLugarFin = new JLabel("Lugar de Destino");
-		lblLugarFin.setBounds(325, 217, 116, 14);
-		add(lblLugarFin);
-		
-		cbxDestino = new JComboBox();
-		cbxDestino.setBounds(480, 213, 126, 22);
-		add(cbxDestino);
-		
-		btnRefrescar = new JButton("Refrescar");
-		btnRefrescar.setBounds(325, 285, 91, 23);
-		add(btnRefrescar);
-		
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(10, 74, 305, 236);
-		add(textArea);
 	}
 
-	public JDatePickerImpl getdPInicio( )
+	public JTable getTable( )
 	{
-		return dPInicio;
-	}
-
-	public JDatePickerImpl getdPFin( )
-	{
-		return dPFin;
-	}
-
-
-	
-
-	public JTextArea getTextArea() {
-		return textArea;
-	}
-
-	public JButton getBtnRefrescar() {
-		return btnRefrescar;
-	}
-
-	public JButton getBtnGenerar( )
-	{
-		return btnGenerar;
+		return this.table;
 	}
 	
-	public JComboBox getCbxOrigen() {
-		return cbxOrigen;
+	public JButton getBtnGenerarReporte()
+	{
+		return this.btnGenerarReporte;
 	}
-
-	public JComboBox getCbxDestino() {
-		return cbxDestino;
+	
+	public void actualizarTabla(ResultSet rs)
+	{
+		DefaultTableModel model = new DefaultTableModel(new String[]{"Vuelo", "Fecha", "Tiquetes Vendidos"}, 0);
+		try {
+			while(rs.next())
+			{
+				model.addRow(new Object[] {rs.getString(1), rs.getDate(2).toString(), rs.getInt(3)});
+			}
+			this.table.setModel(model);
+			this.table.repaint();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+			e.printStackTrace();
+		}
 	}
 }
