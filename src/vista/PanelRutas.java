@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import modelo.Tarifa;
+import modelo.Viaje;
 import control.ControladoraBD;
 
 public class PanelRutas extends JPanel
@@ -96,6 +97,7 @@ public class PanelRutas extends JPanel
 	public void iniciarComponentes()
 	{
 		comboViajeRuta = new JComboBox();
+		llenarComboBoxViajes();
 
 		comboTarifaRuta = new JComboBox();
 		llenarComboBoxTarifas();
@@ -185,6 +187,57 @@ public class PanelRutas extends JPanel
 		{
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(PanelRutas.this, "Error obteniendo tarifas");
+		} finally
+		{
+			if (resultado != null)
+			{
+				try
+				{
+					resultado.close();
+				} catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(PanelRutas.this, "Error cerrando la conexión");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Permite llenar el combo box de viajes
+	 */
+	public void llenarComboBoxViajes()
+	{
+		ResultSet resultado = null;
+		try
+		{
+			comboViajeRuta.removeAllItems();
+
+			resultado = controladorBD.consultarViajes();
+			while (resultado.next())
+			{
+				String idViaje = resultado.getString("viaje_id");
+				String sentido = resultado.getString("sentido");
+				String clase_id = resultado.getString("clase_id");
+				String descuento_id = resultado.getString("descuento_id");
+				String origen = resultado.getString("origen");
+				String destino = resultado.getString("destino");
+				Date fecha = resultado.getDate("fecha");
+
+				
+				Viaje v = new Viaje(idViaje,sentido,clase_id,descuento_id,origen,destino,fecha);
+				comboViajeRuta.addItem(v);
+
+			}
+
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(PanelRutas.this, "Error obteniendo viajes");
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(PanelRutas.this, "Error obteniendo viajes");
 		} finally
 		{
 			if (resultado != null)
