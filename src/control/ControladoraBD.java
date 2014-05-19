@@ -91,16 +91,17 @@ public class ControladoraBD
 		return rs;
 	}
 
-	public static String[] consultarViajes(String origen, String destino,String clase) throws ClassNotFoundException, SQLException
-	{		
+	public static String[] consultarViajes(String origen, String destino, String clase) throws ClassNotFoundException, SQLException
+	{
 		Connection con = getConnection();
-		
+
 		String function = "{? = call FN_GET_VIAJES(?,?,?)}";
 		String dato = "";
 		String[] arreglo;
 		CallableStatement cs = null;
-		
-		try{
+
+		try
+		{
 			cs = con.prepareCall(function);
 			cs.registerOutParameter(1, Types.VARCHAR);
 			cs.setString(2, origen);
@@ -109,22 +110,24 @@ public class ControladoraBD
 			cs.execute();
 			dato = cs.getString(1);
 		}
-		
-		catch(Exception e)
+
+		catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-		}finally{
+		} finally
+		{
 			cs.close();
 			con.close();
-		}		
-		if(dato == null){
+		}
+		if (dato == null)
+		{
 			arreglo = new String[1];
 			arreglo[0] = "No hay Viajes!!!";
-		}else
+		} else
 			arreglo = dato.split(",");
 		return arreglo;
 	}
-	
+
 	public void generarTablaRankingDinero() throws SQLException, ClassNotFoundException
 	{
 		Connection connection = getConnection();
@@ -150,11 +153,11 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call editar_clases(?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, nombre );
-		pr_almacenado.setString( 3, descripcion );
-		pr_almacenado.setString( 4, multiplicador+"" );
-		pr_almacenado.setString( 5, nombreV );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, nombre);
+		pr_almacenado.setString(3, descripcion);
+		pr_almacenado.setString(4, multiplicador + "");
+		pr_almacenado.setString(5, nombreV);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -165,12 +168,12 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call editar_lugar(?, ?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, id );
-		pr_almacenado.setString( 3, descripcion );
-		pr_almacenado.setDouble( 4, latitud );
-		pr_almacenado.setDouble( 5, longitud );
-		pr_almacenado.setString( 6, nombreV );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, id);
+		pr_almacenado.setString(3, descripcion);
+		pr_almacenado.setDouble(4, latitud);
+		pr_almacenado.setDouble(5, longitud);
+		pr_almacenado.setString(6, nombreV);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -181,16 +184,16 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call editar_descuento(?, ?, ?, ?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, id );
-		java.sql.Date d1 = new java.sql.Date( fechaInf[2], fechaInf[1], fechaInf[0] );
-		pr_almacenado.setDate( 3, d1 );
-		java.sql.Date d2 = new java.sql.Date( fechaSup[2], fechaSup[1], fechaSup[0] );
-		pr_almacenado.setDate( 4, d2 );
-		pr_almacenado.setInt( 5, ocupacionInf );
-		pr_almacenado.setInt( 6, ocupacionSup );
-		pr_almacenado.setInt( 7, descuento );
-		pr_almacenado.setString( 8, id_v );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, id);
+		java.sql.Date d1 = new java.sql.Date(fechaInf[2], fechaInf[1], fechaInf[0]);
+		pr_almacenado.setDate(3, d1);
+		java.sql.Date d2 = new java.sql.Date(fechaSup[2], fechaSup[1], fechaSup[0]);
+		pr_almacenado.setDate(4, d2);
+		pr_almacenado.setInt(5, ocupacionInf);
+		pr_almacenado.setInt(6, ocupacionSup);
+		pr_almacenado.setInt(7, descuento);
+		pr_almacenado.setString(8, id_v);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -201,11 +204,11 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call editar_tarifa(?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, nombre );
-		pr_almacenado.setInt( 3, valor);
-		pr_almacenado.setDouble( 4, inferior );
-		pr_almacenado.setDouble( 5, superior );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, nombre);
+		pr_almacenado.setInt(3, valor);
+		pr_almacenado.setDouble(4, inferior);
+		pr_almacenado.setDouble(5, superior);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -216,10 +219,10 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call crear_clases(?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, nombre );
-		pr_almacenado.setString( 3, descripcion );
-		pr_almacenado.setString( 4, multiplicador+"" );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, nombre);
+		pr_almacenado.setString(3, descripcion);
+		pr_almacenado.setString(4, multiplicador + "");
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -239,30 +242,30 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call crear_lugar(?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, id );
-		pr_almacenado.setString( 3, descripcion );
-		pr_almacenado.setDouble( 4, latitud );
-		pr_almacenado.setDouble( 5, longitud );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, id);
+		pr_almacenado.setString(3, descripcion);
+		pr_almacenado.setDouble(4, latitud);
+		pr_almacenado.setDouble(5, longitud);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
 	}
 
 	public void crearDescuento(String usuario, String id, int[] fechaInf, int[] fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException
-	{		
+	{
 		Connection connection = getConnection();
 		String procedure = "{ call crear_descuento(?, ?, ?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, id );
-		java.sql.Date d1 = new java.sql.Date( fechaInf[2], fechaInf[1], fechaInf[0] );
-		pr_almacenado.setDate( 3, d1 );
-		java.sql.Date d2 = new java.sql.Date( fechaSup[2], fechaSup[1], fechaSup[0] );
-		pr_almacenado.setDate( 4, d2 );
-		pr_almacenado.setInt( 5, ocupacionInf );
-		pr_almacenado.setInt( 6, ocupacionSup );
-		pr_almacenado.setInt( 7, descuento );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, id);
+		java.sql.Date d1 = new java.sql.Date(fechaInf[2], fechaInf[1], fechaInf[0]);
+		pr_almacenado.setDate(3, d1);
+		java.sql.Date d2 = new java.sql.Date(fechaSup[2], fechaSup[1], fechaSup[0]);
+		pr_almacenado.setDate(4, d2);
+		pr_almacenado.setInt(5, ocupacionInf);
+		pr_almacenado.setInt(6, ocupacionSup);
+		pr_almacenado.setInt(7, descuento);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -273,11 +276,11 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call crear_tarifa(?, ?, ?, ?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, nombre );
-		pr_almacenado.setInt( 3, valor );
-		pr_almacenado.setDouble( 4, inferior );
-		pr_almacenado.setDouble( 5, superior );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, nombre);
+		pr_almacenado.setInt(3, valor);
+		pr_almacenado.setDouble(4, inferior);
+		pr_almacenado.setDouble(5, superior);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -288,8 +291,8 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call eliminar_tarifa(?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, nombre);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -300,8 +303,8 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call eliminar_lugar(?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, id );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, id);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -312,8 +315,8 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call eliminar_clases(?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, nombre);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -324,8 +327,8 @@ public class ControladoraBD
 		Connection connection = getConnection();
 		String procedure = "{ call eliminar_descuento(?, ?) }";
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setString( 1, usuario );
-		pr_almacenado.setString( 2, id );
+		pr_almacenado.setString(1, usuario);
+		pr_almacenado.setString(2, id);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -382,7 +385,9 @@ public class ControladoraBD
 	}
 
 	/**
-	 * Permite consultar todos los viajes que hay en la bd. Se necesitar para crear una ruta.
+	 * Permite consultar todos los viajes que hay en la bd. Se necesitar para
+	 * crear una ruta.
+	 * 
 	 * @return Lista de viajes que hay en la bd
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -391,6 +396,27 @@ public class ControladoraBD
 	{
 		Connection con = getConnection();
 		String sql = "SELECT * FROM Viajes";
+		return con.prepareStatement(sql).executeQuery();
+	}
+
+	/**
+	 * Permite consultar todos los pasabordos de un determinado vuelo
+	 * @param idVuelo Id del vuelo para generar los pasabordos
+	 * @return ResultSet Lista de todos los pasabordos asociados al vuelo
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public ResultSet consultarPasabordos(String idVuelo) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String sql = "SELECT ti.tiquete_id,vu.FECHA,vu.ORIGEN,vu.DESTINO,vu.HORA,ve.COMPRADOR "
+				+ "FROM VUELOS vu, RUTA_VUELO rv, RUTAS ru, VIAJES vi, TIQUETES ti, VENTAS ve "
+				+ "WHERE vu.VUELO_ID ='" +idVuelo+"'AND rv.VUELO_ID = vu.VUELO_ID "
+				+ "AND ru.RUTA_ID = rv.RUTA_ID "
+				+ "AND vi.VIAJE_ID = ru.VIAJE_ID "
+				+ "AND ti.VIAJE_ID = vi.VIAJE_ID "
+				+ "AND ve.VENTA_ID = ti.VENTA_ID;";
+		
 		return con.prepareStatement(sql).executeQuery();
 	}
 
@@ -433,9 +459,11 @@ public class ControladoraBD
 		statement.execute();
 		return statement.getInt(1);
 	}
-	
+
 	/**
-	 * Permite consultar las rutas que hay en la bd. Necesario para eliminar rutas.
+	 * Permite consultar las rutas que hay en la bd. Necesario para eliminar
+	 * rutas.
+	 * 
 	 * @return ResultSet con la lista de rutas que hay en la bd.
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -444,11 +472,13 @@ public class ControladoraBD
 	{
 		Connection con = getConnection();
 		String sql = "SELECT * FROM Rutas";
-		return con.prepareStatement(sql).executeQuery();	
+		return con.prepareStatement(sql).executeQuery();
 	}
-	
+
 	/**
-	 * Permite consultar los vuelos que hay en la bd. Necesario para generar pasabordos.
+	 * Permite consultar los vuelos que hay en la bd. Necesario para generar
+	 * pasabordos.
+	 * 
 	 * @return ResultSet con la lista de vuelos que hay en la bd.
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -457,8 +487,10 @@ public class ControladoraBD
 	{
 		Connection con = getConnection();
 		String sql = "SELECT * FROM Vuelos";
-		return con.prepareStatement(sql).executeQuery();	
+		return con.prepareStatement(sql).executeQuery();
 	}
+	
+	
 
 	// ------------------------------------------------------------------------------------------------------------------------------------------
 	public String generarVenta(String fecha, int id_comprador, int id_vendedor) throws ClassNotFoundException, SQLException
@@ -573,57 +605,39 @@ public class ControladoraBD
 		return arreglo;
 	}
 
-	public ResultSet ConsultarDemanda(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException {
+	public ResultSet ConsultarDemanda(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException
+	{
 		Connection con = getConnection();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 		String sql = "SELECT V.FECHA, SUM(OcupacionVuelo(V.VUELO_ID)) FROM VUELOS V GROUP BY V.FECHA;";
-		/*if(inicio != null)
-		{
-
-			
-			sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(inicio) + "'," + "'DD/MM/YYYY')";
-			if(fin != null)
-			{
-				sql+= " AND V.FECHA >= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
-			}
-			
-			if(origen != null)
-			{
-				sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
-			}
-			
-			if(destino != null)
-			{
-				sql+= " AND V.ORIGEN = '"+ destino.getId() +"' ";
-			}
-		}else if(fin != null)
-		{
-			sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
-			
-			if(origen != null)
-			{
-				sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
-			}
-			
-			if(destino != null)
-			{
-				sql+= " AND V.ORIGEN = '"+ destino.getId() +"' ";
-			}
-		}else if(origen != null)
-		{
-			sql+= " WHERE V.ORIGEN = '"+ origen.getId() +"' ";
-			
-			if(destino != null)
-			{
-				sql+= " AND V.ORIGEN = '"+ destino.getId() +"' ";
-			}
-		}else if(destino != null)
-		{
-			sql+= " WHERE V.ORIGEN = '"+ destino.getId() +"' ";
-		}
-		*/
-		//sql+= " GROUP BY V.FECHA;";
-		return con.prepareStatement( sql ).executeQuery( );
+		/*
+		 * if(inicio != null) {
+		 * 
+		 * 
+		 * sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(inicio) + "'," +
+		 * "'DD/MM/YYYY')"; if(fin != null) { sql+= " AND V.FECHA >= TO_DATE('"
+		 * + sdf.format(fin) + "'," + "'DD/MM/YYYY')"; }
+		 * 
+		 * if(origen != null) { sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
+		 * }
+		 * 
+		 * if(destino != null) { sql+= " AND V.ORIGEN = '"+ destino.getId()
+		 * +"' "; } }else if(fin != null) { sql+= " WHERE V.FECHA >= TO_DATE('"
+		 * + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
+		 * 
+		 * if(origen != null) { sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
+		 * }
+		 * 
+		 * if(destino != null) { sql+= " AND V.ORIGEN = '"+ destino.getId()
+		 * +"' "; } }else if(origen != null) { sql+= " WHERE V.ORIGEN = '"+
+		 * origen.getId() +"' ";
+		 * 
+		 * if(destino != null) { sql+= " AND V.ORIGEN = '"+ destino.getId()
+		 * +"' "; } }else if(destino != null) { sql+= " WHERE V.ORIGEN = '"+
+		 * destino.getId() +"' "; }
+		 */
+		// sql+= " GROUP BY V.FECHA;";
+		return con.prepareStatement(sql).executeQuery();
 	}
 	
 	public static String[] getUsuarios() throws ClassNotFoundException, SQLException
@@ -666,6 +680,7 @@ public class ControladoraBD
 		return arreglo;
 	}
 
+
 	public static void veder(String comprador, String vendedor) throws SQLException, ClassNotFoundException {
 		Connection connection = getConnection();
 		String procedure = "{ call VENDER(?,?) }";
@@ -682,7 +697,7 @@ public class ControladoraBD
 		return null;
 	}
 
-	public static String[] generarPasabordos( ) throws ClassNotFoundException, SQLException
+	public static String[] generarPasabordos() throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConnection();
 		String function = "{? = call generarPasabordo(?, ?)}";
@@ -695,8 +710,8 @@ public class ControladoraBD
 			cs = con.prepareCall(function);
 			cs.setString(2, PanelPasabordo.idUsuario);
 			cs.setString(3, PanelPasabordo.idViaje);
-//			cs.setString(2, "Fernando");
-//			cs.setString(3, "V1");
+			// cs.setString(2, "Fernando");
+			// cs.setString(3, "V1");
 			cs.registerOutParameter(1, Types.VARCHAR);
 			cs.execute();
 			dato = cs.getString(1);
