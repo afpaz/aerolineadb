@@ -26,61 +26,39 @@ public class PanelVendedores extends JPanel
 	private static final long serialVersionUID = 1L;
 	
 	private JDatePickerImpl fecha;	
-	private JComboBox cbxOrigen;
-	private JLabel lblLugarFin;
-	private JComboBox cbxDestino;
 	private JButton btnAgregar;
 	private SpringLayout springLayout;
 	private JTextField txtVendedor;
 	private JTextField txtComprador;
 	private JList listVentas;
-	private JLabel lblDescuento;
-	private JComboBox cbxDescuento;
-	private JLabel lblClase;
+	private JLabel lblViaje;
+	private JComboBox cbxViajeId;
 	private JLabel lblVendedor;
-	private JLabel lblLugarInicio;
 	private JLabel lblComprador;
 	private JButton btnModificar;
 	private JLabel lblFecha;
-	private JComboBox cbxClase;
 	private JButton btnLimpiar;
+	private JLabel lblValor;
+	private JTextField txtValor;
 	
 	public PanelVendedores() {
 		
 		setLayout(null);
 		setBackground( new Color(184, 207, 229) );
-		fecha = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		springLayout = (SpringLayout) fecha.getLayout();
-		springLayout.putConstraint(SpringLayout.NORTH, fecha.getJFormattedTextField(), 0, SpringLayout.NORTH, fecha);
-		springLayout.putConstraint(SpringLayout.WEST, fecha.getJFormattedTextField(), 10, SpringLayout.WEST, fecha);
-		
-		fecha.setBounds(328, 81, 126, 23);
-		add(fecha);
 		
 		lblFecha = new JLabel("Fecha");
 		lblFecha.setBounds(232, 81, 142, 24);
 		add(lblFecha);
+		fecha = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
+		fecha.setBounds(328, 81, 126, 23);
+		add(fecha);
+		
+		
 		
 		ImageIcon image = new ImageIcon("./imagenes/delete.png");
 		
-		lblLugarInicio = new JLabel("Lugar de Origen");
-		lblLugarInicio.setBounds(232, 179, 116, 14);
-		add(lblLugarInicio);
-		
-		cbxOrigen = new JComboBox();
-		cbxOrigen.setBounds(328, 175, 126, 22);
-		add(cbxOrigen);
-		
-		lblLugarFin = new JLabel("Lugar de Destino");
-		lblLugarFin.setBounds(232, 208, 116, 14);
-		add(lblLugarFin);
-		
-		cbxDestino = new JComboBox();
-		cbxDestino.setBounds(328, 204, 126, 22);
-		add(cbxDestino);
-		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(222, 254, 91, 23);
+		btnAgregar.setBounds(232, 189, 91, 23);
 		add(btnAgregar);
 		
 		lblVendedor = new JLabel("Vendedor");
@@ -106,28 +84,39 @@ public class PanelVendedores extends JPanel
 		add(listVentas);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(322, 254, 91, 23);
+		btnModificar.setBounds(331, 189, 91, 23);
 		add(btnModificar);
 		
-		lblDescuento = new JLabel("Desucento Id");
-		lblDescuento.setBounds(232, 119, 116, 14);
-		add(lblDescuento);
+		lblViaje = new JLabel("Viaje Id");
+		lblViaje.setBounds(232, 119, 116, 14);
+		add(lblViaje);
 		
-		cbxDescuento = new JComboBox();
-		cbxDescuento.setBounds(328, 115, 126, 22);
-		add(cbxDescuento);
-		
-		lblClase = new JLabel("Clase Id");
-		lblClase.setBounds(232, 150, 116, 14);
-		add(lblClase);
-		
-		cbxClase = new JComboBox();
-		cbxClase.setBounds(328, 146, 126, 22);
-		add(cbxClase);
+		cbxViajeId = new JComboBox();
+		cbxViajeId.setBounds(328, 115, 126, 22);
+		add(cbxViajeId);
 		
 		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBounds(423, 254, 91, 23);
+		btnLimpiar.setBounds(430, 189, 91, 23);
 		add(btnLimpiar);
+		
+
+		
+		
+		springLayout = (SpringLayout) fecha.getLayout();
+		springLayout.putConstraint(SpringLayout.NORTH, fecha.getJFormattedTextField(), 0, SpringLayout.NORTH, fecha);
+		springLayout.putConstraint(SpringLayout.WEST, fecha.getJFormattedTextField(), 10, SpringLayout.WEST, fecha);
+		
+		lblValor = new JLabel("Valor");
+		lblValor.setBounds(232, 147, 61, 14);
+		add(lblValor);
+		
+		txtValor = new JTextField();
+		txtValor.setColumns(10);
+		txtValor.setBounds(328, 144, 126, 20);
+		add(txtValor);
+		
+		
+		
 	}
 
 	public JTextField getTxtComprador()
