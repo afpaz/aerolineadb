@@ -31,17 +31,19 @@ public class Ventana extends JFrame {
 		setTitle("Aerolinea");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 682, 472);
+		setBounds(100, 100, 681, 511);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 676, 444);
+		tabbedPane.setBounds(0, 0, 675, 483);
 		contentPane.add(tabbedPane);
 		
 		panelGerente = new PanelGerente();
+		panelGerente.getPanelTarifa().setBounds(2, 2, 708, 355);
+		panelGerente.getBtnGenerarReporte().setLocation(526, 400);
 		tabbedPane.addTab("Gerente", null, panelGerente, null);
 		
 		
