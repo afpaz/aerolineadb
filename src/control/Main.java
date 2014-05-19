@@ -202,7 +202,7 @@ public class Main {
 					if( !panelDescuento.getList( ).isSelectionEmpty() )
 					{
 						Descuento d = (Descuento) panelDescuento.getList( ).getSelectedValue();
-						controladoraBD.actualizarDescuento( d.getId( ), id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
+						controladoraBD.actualizarDescuento( usu, d.getId( ), id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
 					}
 					else
 						controladoraBD.crearDescuento( usu, id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			

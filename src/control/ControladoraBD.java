@@ -167,12 +167,24 @@ public class ControladoraBD
 		return statement.execute(sql);
 	}
 
-	public void actualizarDescuento(String id_v, String id, int[] fechaInf, int[] fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException
+	public void actualizarDescuento(String usuario, String id_v, String id, int[] fechaInf, int[] fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException
 	{
-		Connection con = getConnection();
-		String sql = "UPDATE DESCUENTOS SET DESCUENTO_ID = '" + id + "', porcentaje_desc = " + descuento + ", liminfdias = " + "TO_DATE('" + fechaInf + "'," + "'DD/MM/YYYY'), limsupdias = TO_DATE('" + fechaSup + "'," + "'DD/MM/YYYY'), " + "liminfcupos = " + ocupacionInf + ", limsupcupos = " + ocupacionSup + " WHERE DESCUENTO_ID = '" + id_v + "'";
-		Statement statement = con.createStatement();
-		statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call editar_descuento(?, ?, ?, ?, ?, ?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, id );
+		java.sql.Date d1 = new java.sql.Date( fechaInf[2], fechaInf[1], fechaInf[0] );
+		pr_almacenado.setDate( 3, d1 );
+		java.sql.Date d2 = new java.sql.Date( fechaSup[2], fechaSup[1], fechaSup[0] );
+		pr_almacenado.setDate( 4, d2 );
+		pr_almacenado.setInt( 5, ocupacionInf );
+		pr_almacenado.setInt( 6, ocupacionSup );
+		pr_almacenado.setInt( 7, descuento );
+		pr_almacenado.setString( 8, id_v );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public void actualizarTarifa(String id, int valor, double inferior, double superior) throws SQLException, ClassNotFoundException

@@ -148,6 +148,50 @@ END IF;
 end;
 /
 
+
+create or replace procedure crear_descuento( usu in VARCHAR2, id_des in VARCHAR2, fechaInf in DATE, fechaSup in DATE, ocupacionInf in INTEGER, ocupacionSup in INTEGER, descuento in INTEGER ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'INSERT INTO DESCUENTOS VALUES( :1, :2, :3, :4, :5, :6 )' USING id_des, descuento, fechaInf, fechaSup, ocupacionInf, ocupacionSup;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
+create or replace procedure editar_descuento( usu in VARCHAR2, id_des in VARCHAR2, fechaInf in DATE, fechaSup in DATE, ocupacionInf in INTEGER, ocupacionSup in INTEGER, descuento in INTEGER, id_desV in VARCHAR2 ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'UPDATE DESCUENTOS SET descuento_id = :1, porcentaje_desc = :2, liminfdias = :3, limsupdias = :4, liminfcupos = :5, limsupcupos = :6 WHERE descuento_id = :7' USING id_des, descuento, fechaInf, fechaSup, ocupacionInf, ocupacionSup, id_desV;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
+create or replace procedure eliminar_descuento( usu in VARCHAR2, id_desc in VARCHAR2 ) is
+aux INTEGER := 0;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'DELETE FROM DESCUENTOS WHERE descuento_id = :1' USING id_desc;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
+
 --================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
