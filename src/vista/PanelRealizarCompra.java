@@ -331,7 +331,10 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 						
 						btnVolver.setVisible(false);
 						scrollLista1.setVisible(false);
-						btnComprar.setVisible(false);					
+						scrollLista2.setVisible(false);
+						scrollLista3.setVisible(false);
+						btnComprar.setVisible(false);
+						
 					}
 					else
 						JOptionPane.showMessageDialog(null, "Los ID's de comprador y vendedor no son válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
