@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.PasabordoVendedor;
 import modelo.Vuelo;
 import control.ControladoraBD;
 
@@ -27,9 +28,12 @@ public class PanelPasabordoVendedor extends JPanel
 	// ControladorBD
 	ControladoraBD controladorBD;
 
+	// Modelo JTable
+	String[] columnas =
+	{ "Nro. Tiquete", "Fecha", "Origen", "Destino", "Hora Salida", "Cliente" };;
+
 	public PanelPasabordoVendedor()
 	{
-
 		controladorBD = new ControladoraBD();
 
 		iniciarUI();
@@ -56,13 +60,18 @@ public class PanelPasabordoVendedor extends JPanel
 	 */
 	public void iniciarUI()
 	{
-		String[] columnas =
-		{ "Nro. Tiquete", "Fecha", "Origen", "Destino", "Hora Salida", "Cliente" };
 		DefaultTableModel model = new DefaultTableModel(columnas, 1);
 		pasabordos = new JTable(model);
 
 		vuelos = new JComboBox();
 		llenarVuelos();
+		
+		Vuelo v = (Vuelo) vuelos.getSelectedItem();
+		if(v!=null)
+		{
+			llenarPasabordos(v.getId());
+		}
+
 	}
 
 	/**
@@ -76,7 +85,11 @@ public class PanelPasabordoVendedor extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				System.out.println(vuelos.getSelectedItem().toString());
+				Vuelo v = (Vuelo) vuelos.getSelectedItem();
+				if(v!=null)
+				{
+					llenarPasabordos(v.getId());
+				}
 			}
 		});
 
@@ -101,18 +114,71 @@ public class PanelPasabordoVendedor extends JPanel
 				String origen = resultado.getString("origen");
 				String destino = resultado.getString("destino");
 				int cupoActual = resultado.getInt("cupo_actual");
+				String hora = resultado.getString("hora");
 
-				Vuelo v = new Vuelo(id, fecha, cupoMax, origen, destino, cupoActual);
+				Vuelo v = new Vuelo(id, fecha, cupoMax, origen, destino, cupoActual, hora);
 				vuelos.addItem(v);
 			}
 
 		} catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(PanelPasabordoVendedor.this, "Error obteniendo vuelos");
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(PanelPasabordoVendedor.this, "Error obteniendo vuelos");
+		} finally
+		{
+			if (resultado != null)
+			{
+				try
+				{
+					resultado.close();
+				} catch (SQLException e)
+				{
+					JOptionPane.showMessageDialog(PanelPasabordoVendedor.this, "Error cerrando la conexión");
+				}
+			}
+		}
+	}
+
+	/**
+	 * Permite llenar la tabla con los pasabordos asociados a un vuelo
+	 * 
+	 * @param idVuelo
+	 *            Id del vuelo al cual se le van a generar los pasabordos
+	 */
+	public void llenarPasabordos(String idVuelo)
+	{
+
+		ResultSet resultado = null;
+
+		try
+		{
+			resultado = controladorBD.consultarPasabordos(idVuelo);
+			DefaultTableModel model = new DefaultTableModel(columnas, 0);
+
+			while (resultado.next())
+			{
+				String tiqueteId = resultado.getString("tiquete_id");
+				Date fecha = resultado.getDate("fecha");
+				String origen = resultado.getString("origen");
+				String destino = resultado.getString("destino");
+				String hora = resultado.getString("hora");
+				String comprador = resultado.getString("comprador");
+
+				PasabordoVendedor p = new PasabordoVendedor(tiqueteId, fecha, origen, destino, hora, comprador);
+
+				model.addRow(new Object[]
+				{ p.getTiqueteId(), p.getFecha().toString(), p.getOrigen(), p.getDestino(), p.getHora(), p.getComprador() });
+			}
+
+			pasabordos.setModel(model);
+			pasabordos.repaint();
+		} catch (ClassNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(PanelPasabordoVendedor.this, "Error obteniendo vuelos");
+		} catch (SQLException e)
+		{
 			JOptionPane.showMessageDialog(PanelPasabordoVendedor.this, "Error obteniendo vuelos");
 		} finally
 		{
@@ -128,35 +194,7 @@ public class PanelPasabordoVendedor extends JPanel
 				}
 			}
 		}
-	}
 
-	/**
-	 * Permite llenar la tabla con los pasabordos asociados a un vuelo
-	 * 
-	 * @param idVuelo
-	 *            Id del vuelo al cual se le van a generar los pasabordos
-	 */
-	public void llenarPasabordos(String idVuelo)
-	{
-/*		String[] nombres =
-		{ "Vuelo", "Fecha", "Origen", "Destino" };
-		DefaultTableModel model = new DefaultTableModel(nombres, 0);
-		try
-		{
-			while (rs.next())
-			{
-				System.out.println("En el while");
-				model.addRow(new Object[]
-				{ rs.getString(2), rs.getDate(1).toString(), rs.getString(3), rs.getString(4) });
-				System.out.println("Origen" + rs.getString(3));
-
-			}
-			this.table.setModel(model);
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		this.table.repaint();*/
 	}
 
 }
