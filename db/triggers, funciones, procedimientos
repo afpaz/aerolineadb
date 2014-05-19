@@ -191,7 +191,7 @@ END IF;
 end;
 /
 
-create or replace procedure crear_tarifa( usu in VARCHAR2, tarifa in VARCHAR2, valor in NUMBER, limI in NUMBER, limS NUMBER ) is
+create or replace procedure crear_tarifa( usu in VARCHAR2, tarifa in VARCHAR2, valor in NUMBER, limI in NUMBER, limS in NUMBER ) is
 aux INTEGER;
 begin
 SELECT COUNT(u.USUARIO) INTO aux
@@ -205,7 +205,7 @@ END IF;
 end;
 /
 
-create or replace procedure editar_tarifa( usu in VARCHAR2, tarifa in VARCHAR2, valor in NUMBER, limI in NUMBER, limS NUMBER ) is
+create or replace procedure editar_tarifa( usu in VARCHAR2, tarifa in VARCHAR2, valor in NUMBER, limI in NUMBER, limS in NUMBER ) is
 aux INTEGER := 0;
 begin
 SELECT COUNT(u.USUARIO) INTO aux
