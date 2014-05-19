@@ -275,6 +275,31 @@ END IF;
 end;
 /
 
+CREATE OR REPLACE PROCEDURE AGREGAR_VENTA ( fecha in DATE, vendedor in VARCHAR2, comprador in VARCHAR2 )is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = vendedor
+AND u.ROL_ID = 'Vendedor';
+IF aux > 0 THEN
+INSERT INTO VENTAS VALUES(SEQ_VENTA.nextval,fecha, vendedor, comprador);
+ELSE raise_application_error( -20004, 'Debes ser Vendedor.');
+END IF;
+end;
+/
+
+CREATE OR REPLACE PROCEDURE AGREGAR_VIAJE( sentido in VARCHAR2, clase_id in VARCHAR2, descuento_id in VARCHAR2,
+ origen in VARCHAR2, destino in VARCHAR2, fecha in DATE )is
+
+begin
+
+INSERT INTO VIAJES VALUES(SEQ_VIAJE.nextval,sentido, clase_id, descuento_id, origen, destino, fecha);
+
+end;
+/
+
+
 --================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
