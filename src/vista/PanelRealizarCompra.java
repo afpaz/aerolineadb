@@ -168,8 +168,16 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 				@SuppressWarnings("unchecked")
 				JList<String> list = (JList<String>) evt.getSource();
 				
-				if(evt.getClickCount() == 2)
-					JOptionPane.showMessageDialog(null, "Oprimió dos veces el clic en " + list.getSelectedValue(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+				if(evt.getClickCount() == 1)
+				{
+					try {
+						String[] rutas = ControladoraBD.getVuelosDeRuta(list.getSelectedValue().toString());
+						model3.removeAllElements();
+						for (String string : rutas) {
+							model3.addElement(string);
+						}
+					} catch (ClassNotFoundException e) {} catch (SQLException e) {}
+				}
 			}
 		});
 		//********************************************************
