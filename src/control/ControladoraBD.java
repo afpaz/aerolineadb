@@ -39,6 +39,17 @@ public class ControladoraBD
 		return connection;
 	}
 
+	public void anularVenta(String idVenta) throws ClassNotFoundException, SQLException
+	{
+		Connection connection = getConnection();
+		String procedure = "{ call ANULAR_VENTA(?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString(1, idVenta);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
+	
 	static void cambiarEdadAtodos(int edad) throws Exception
 	{
 		Connection connection = getConnection();
