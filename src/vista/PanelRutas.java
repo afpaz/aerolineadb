@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import modelo.Ruta;
 import modelo.Tarifa;
 import modelo.Viaje;
 import control.ControladoraBD;
@@ -32,9 +33,13 @@ public class PanelRutas extends JPanel
 	private JComboBox comboViajeRuta;
 	private JComboBox comboTarifaRuta;
 	private JButton btnAgregar;
+	private JList listaRutas;
+	private JButton btnEliminar;
 
 	// ControladorBD
 	private ControladoraBD controladorBD;
+
+	private ArrayList<Ruta> rutas = new ArrayList<Ruta>();
 
 	public PanelRutas()
 	{
@@ -79,13 +84,12 @@ public class PanelRutas extends JPanel
 
 		JScrollPane scrollPane = new JScrollPane();
 		panelDerecha.add(scrollPane);
-
-		JList rutas = new JList();
-		scrollPane.setViewportView(rutas);
+		scrollPane.setViewportView(listaRutas);
+		
+		panelDerecha.add(btnEliminar);
 
 		GridLayout layout = new GridLayout(1, 2);
 		setLayout(layout);
-
 		add(panelIzquierda);
 		add(panelDerecha);
 
@@ -103,6 +107,12 @@ public class PanelRutas extends JPanel
 		llenarComboBoxTarifas();
 
 		btnAgregar = new JButton("Crear");
+
+		listaRutas = new JList();
+		llenarListaRutas();
+
+		btnEliminar = new JButton("Eliminar");
+
 	}
 
 	/**
@@ -111,6 +121,7 @@ public class PanelRutas extends JPanel
 	public void eventosComponentes()
 	{
 
+		//Evento boton agregar
 		btnAgregar.addActionListener(new ActionListener()
 		{
 
@@ -147,6 +158,41 @@ public class PanelRutas extends JPanel
 				} else
 				{
 					JOptionPane.showMessageDialog(PanelRutas.this, "Hay campos vacíos");
+				}
+
+			}
+		});
+		
+		//Evento boton eliminar
+		btnEliminar.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				if(listaRutas.getSelectedIndex()>=0)
+				{
+					Ruta r = rutas.get(listaRutas.getSelectedIndex());
+					if(r!=null)
+					{
+						try
+						{
+							controladorBD.eliminarRuta(r.getId());
+							rutas.remove(listaRutas.getSelectedIndex());
+							listaRutas.setListData(rutas.toArray());
+						} catch (ClassNotFoundException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (SQLException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+
 				}
 
 			}
@@ -249,5 +295,37 @@ public class PanelRutas extends JPanel
 				}
 			}
 		}
+	}
+
+	public void llenarListaRutas()
+	{
+		ResultSet resultado = null;
+
+		rutas.clear();
+
+		try
+		{
+			resultado = controladorBD.consultarRutas();
+			while (resultado.next())
+			{
+				int idRuta = resultado.getInt("ruta_id");
+				Date fecha = resultado.getDate("fecha");
+				String viajeId = resultado.getString("viaje_id");
+				String tarifaId = resultado.getString("tarifa_id");
+
+				Ruta r = new Ruta(idRuta, fecha, viajeId, tarifaId);
+				rutas.add(r);
+			}
+			listaRutas.setListData(rutas.toArray());
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
