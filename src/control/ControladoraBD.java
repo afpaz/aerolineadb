@@ -242,7 +242,7 @@ public class ControladoraBD
 	public boolean eliminarClase(String nombre) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConnection();
-		String sql = "DELETE FROM CLASES c WHERE c.nombre = '" + nombre + "'";
+		String sql = "DELETE FROM CLASES c WHERE c.clase_id = '" + nombre + "'";
 		Statement statement = con.createStatement();
 		return statement.execute(sql);
 	}
