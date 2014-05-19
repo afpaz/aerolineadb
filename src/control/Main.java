@@ -332,9 +332,10 @@ public class Main {
 			{
 				if( !panelClases.getListClases( ).isSelectionEmpty( ) )
 				{
+					String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 					try
 					{
-						controladoraBD.eliminarClase( ((Clase)listClases.getSelectedValue( )).getNombre( ));
+						controladoraBD.eliminarClase( usu, ((Clase)listClases.getSelectedValue( )).getNombre( ));
 						ventana.actualizarPanelClases( consultarClases( ) );
 						panelClases.getListClases( ).clearSelection( );
 					}
@@ -342,9 +343,13 @@ public class Main {
 					{
 						e1.printStackTrace();
 					}
-					catch ( SQLException e1 )
+					catch (SQLException e1) 
 					{
-						e1.printStackTrace();
+						String[] err = e1.getMessage( ).split( "\n" );
+						if( e1.getErrorCode( ) == 20004 )
+							JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+						else
+							e1.printStackTrace();
 					}
 				}
 			}

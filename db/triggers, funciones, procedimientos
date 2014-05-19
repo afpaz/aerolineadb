@@ -134,6 +134,20 @@ END IF;
 end;
 /
 
+create or replace procedure eliminar_clases( usu in VARCHAR2, clase in VARCHAR2 ) is
+aux INTEGER := 0;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'DELETE FROM CLASES WHERE clase_id = :1' USING clase;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
 --================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
