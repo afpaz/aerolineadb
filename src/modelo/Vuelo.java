@@ -82,7 +82,12 @@ public class Vuelo
 		this.cupoActual = cupoActual;
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return getId()+":"+getFecha().toString()+"|"+getOrigen()+"->"+getDestino()+"|"+getCupoActual()+"/"+getCupoMax();
+	}
 	
 	
 
