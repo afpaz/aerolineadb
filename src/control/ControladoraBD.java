@@ -194,12 +194,19 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public void actualizarTarifa(String id, int valor, double inferior, double superior) throws SQLException, ClassNotFoundException
+	public void actualizarTarifa(String usuario, String nombre, int valor, double inferior, double superior) throws SQLException, ClassNotFoundException
 	{
-		Connection conect = getConnection();
-		String sql = "UPDATE TARIFAS SET vlr_km =" + valor + ", limInfKM = " + inferior + ", limSupKM = " + superior + " where tarifa_id = '" + id + "'";
-		Statement statement = conect.createStatement();
-		statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call editar_tarifa(?, ?, ?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString( 3, valor+"" );
+		pr_almacenado.setString( 4, inferior+"" );
+		pr_almacenado.setString( 5, superior+"" );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public void crearClase(String usuario, String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
@@ -259,20 +266,31 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public void crearTarifa(String id, int valor, double inferior, double superior) throws ClassNotFoundException, SQLException
+	public void crearTarifa(String usuario, String nombre, int valor, double inferior, double superior) throws ClassNotFoundException, SQLException
 	{
-		Connection conect = getConnection();
-		String sql = "INSERT INTO TARIFAS VALUES('" + id + "', " + valor + ", " + inferior + ", " + superior + ")";
-		Statement statement = conect.createStatement();
-		statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call crear_tarifa(?, ?, ?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString( 3, valor+"" );
+		pr_almacenado.setString( 4, inferior+"" );
+		pr_almacenado.setString( 5, superior+"" );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
-	public void eliminarTarifa(String id) throws ClassNotFoundException, SQLException
+	public void eliminarTarifa(String usuario, String nombre) throws ClassNotFoundException, SQLException
 	{
-		Connection conect = getConnection();
-		String sql = "DELETE FROM TARIFAS where tarifa_id = '" + id + "'";
-		Statement statement = conect.createStatement();
-		statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call eliminar_tarifa(?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public boolean eliminarDestino(String id) throws SQLException, ClassNotFoundException
