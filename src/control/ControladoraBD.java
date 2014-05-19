@@ -144,12 +144,19 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public boolean actualizarClase(String usuario, String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
+	public void actualizarClase(String usuario, String nombreV, String nombre, String descripcion, String multiplicador) throws ClassNotFoundException, SQLException
 	{
-		Connection con = getConnection();
-		String sql = "UPDATE CLASES SET clase_id = '" + nombre + "', descripcion = '" + descripcion + "', multiplicador = '" + multiplicador + "' WHERE clase_id = '" + nombreV + "'";
-		Statement statement = con.createStatement();
-		return statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call editar_clases(?, ?, ?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, nombre );
+		pr_almacenado.setString( 3, descripcion );
+		pr_almacenado.setString( 4, multiplicador+"" );
+		pr_almacenado.setString( 5, nombreV );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public boolean actualizarDestino(String id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException
@@ -466,16 +473,16 @@ public class ControladoraBD
 
 	public ResultSet ConsultarDemanda(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException {
 		Connection con = getConnection();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String sql = "SELECT V.FECHA , SUM(OcupacionVuelo(V.VUELO_ID))  FROM VUELOS V ";
-		if(inicio != null)
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		String sql = "SELECT V.FECHA, SUM(OcupacionVuelo(V.VUELO_ID)) FROM VUELOS V GROUP BY V.FECHA;";
+		/*if(inicio != null)
 		{
 
 			
 			sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(inicio) + "'," + "'DD/MM/YYYY')";
 			if(fin != null)
 			{
-				sql+= " AND V.FECHA <= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
+				sql+= " AND V.FECHA >= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
 			}
 			
 			if(origen != null)
@@ -489,7 +496,7 @@ public class ControladoraBD
 			}
 		}else if(fin != null)
 		{
-			sql+= " WHERE V.FECHA <= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
+			sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
 			
 			if(origen != null)
 			{
@@ -512,11 +519,15 @@ public class ControladoraBD
 		{
 			sql+= " WHERE V.ORIGEN = '"+ destino.getId() +"' ";
 		}
-		
-		sql+= " GROUP BY V.FECHA";
+		*/
+		//sql+= " GROUP BY V.FECHA;";
 		return con.prepareStatement( sql ).executeQuery( );
 	}
 
+	public ResultSet ConsultarDemandaMes(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException  {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public static String[ ] generarPasabordos( )
 	{
