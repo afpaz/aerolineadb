@@ -54,7 +54,7 @@ public class ItemSet
 		if(!con[0].equals("No hay pasabordos disponibles!!!"))
 			for(String var : con)
 			{
-				String arreglo[] = var.split("-");
+				String arreglo[] = var.split("%");
 				Pasabordo pasabordo = new Pasabordo(arreglo[0], arreglo[1], arreglo[2], arreglo[3], arreglo[4], arreglo[5], arreglo[6], arreglo[7], arreglo[8]);
 				
 				listaPasabordos.add(pasabordo);
