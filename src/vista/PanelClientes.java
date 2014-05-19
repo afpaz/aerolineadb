@@ -62,14 +62,4 @@ public class PanelClientes extends JPanel
 	{
 		return new ItemSet().llenarListaPasabordos();
 	}
-	
-	public String darIdUsuario()
-	{
-		return panelPasabordo.darIdUsuario();
-	}
-	
-	public String darIdViaje()
-	{
-		return panelPasabordo.darIdViaje();
-	}
 }
