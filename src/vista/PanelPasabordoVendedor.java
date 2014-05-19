@@ -1,6 +1,8 @@
 package vista;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -60,6 +62,7 @@ public class PanelPasabordoVendedor extends JPanel
 		pasabordos = new JTable(model);
 
 		vuelos = new JComboBox();
+		llenarVuelos();
 	}
 
 	/**
@@ -67,6 +70,15 @@ public class PanelPasabordoVendedor extends JPanel
 	 */
 	public void eventos()
 	{
+		vuelos.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				System.out.println(vuelos.getSelectedItem().toString());
+			}
+		});
 
 	}
 
@@ -116,6 +128,35 @@ public class PanelPasabordoVendedor extends JPanel
 				}
 			}
 		}
+	}
+
+	/**
+	 * Permite llenar la tabla con los pasabordos asociados a un vuelo
+	 * 
+	 * @param idVuelo
+	 *            Id del vuelo al cual se le van a generar los pasabordos
+	 */
+	public void llenarPasabordos(String idVuelo)
+	{
+/*		String[] nombres =
+		{ "Vuelo", "Fecha", "Origen", "Destino" };
+		DefaultTableModel model = new DefaultTableModel(nombres, 0);
+		try
+		{
+			while (rs.next())
+			{
+				System.out.println("En el while");
+				model.addRow(new Object[]
+				{ rs.getString(2), rs.getDate(1).toString(), rs.getString(3), rs.getString(4) });
+				System.out.println("Origen" + rs.getString(3));
+
+			}
+			this.table.setModel(model);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		this.table.repaint();*/
 	}
 
 }
