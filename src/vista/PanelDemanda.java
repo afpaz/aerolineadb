@@ -62,7 +62,7 @@ public class PanelDemanda extends JPanel
 		add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
-		DefaultTableModel model = new DefaultTableModel(new String[]{"Vuelo", "Fecha", "Tiquetes Vendidos"}, 0);
+		DefaultTableModel model = new DefaultTableModel(new String[]{"Vuelo", "Fecha", "Origen", "Destino", "Tiquetes Vendidos"}, 0);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
 		
@@ -81,11 +81,11 @@ public class PanelDemanda extends JPanel
 	
 	public void actualizarTabla(ResultSet rs)
 	{
-		DefaultTableModel model = new DefaultTableModel(new String[]{"Vuelo", "Fecha", "Tiquetes Vendidos"}, 0);
+		DefaultTableModel model = new DefaultTableModel(new String[]{"Vuelo", "Fecha", "Origen", "Destino", "Tiquetes Vendidos"}, 0);
 		try {
 			while(rs.next())
 			{
-				model.addRow(new Object[] {rs.getString(1), rs.getDate(2).toString(), rs.getInt(3)});
+				model.addRow(new Object[] {rs.getString(1), rs.getDate(2).toString(), rs.getString(3), rs.getString(4), rs.getInt(5)});
 			}
 			this.table.setModel(model);
 			this.table.repaint();
