@@ -558,7 +558,7 @@ public class Main {
 					{
 						controladoraBD.actualizarTarifa(id, valor, inferior, superior);
 					}
-					actualizarPanelGerente();
+					ventana.actualizarListaTarifas( consultarTarifas( ) );
 				}
 				catch (ClassNotFoundException e1)
 				{
