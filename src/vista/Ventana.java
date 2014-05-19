@@ -123,11 +123,6 @@ public class Ventana extends JFrame {
 		panelVendedores.getCbxOrigen().setSelectedIndex(-1);
 		panelVendedores.getCbxDestino().setSelectedIndex(-1);
 		
-		panelDemanda.getCbxOrigen().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
-		panelDemanda.getCbxDestino().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
-		
-		panelDemanda.getCbxOrigen().setSelectedIndex(-1);
-		panelDemanda.getCbxDestino().setSelectedIndex(-1);
 	}
 	public void listaVentas(ArrayList<Venta> ventas)
 	{
