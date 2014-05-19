@@ -451,6 +451,19 @@ public class ControladoraBD
 		String sql = "SELECT * FROM Rutas";
 		return con.prepareStatement(sql).executeQuery();	
 	}
+	
+	/**
+	 * Permite consultar los vuelos que hay en la bd. Necesario para generar pasabordos de un vuelo.
+	 * @return ResultSet con la lista de vuelos que hay en la bd
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public ResultSet consultarVuelos() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String sql = "SELECT * FROM Vuelos";
+		return con.prepareStatement(sql).executeQuery();	
+	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------------------
 	public String generarVenta(String fecha, int id_comprador, int id_vendedor) throws ClassNotFoundException, SQLException
