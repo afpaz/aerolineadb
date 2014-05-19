@@ -33,9 +33,9 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 	private JCalendar calendario;
 	
 	private JButton btnVolver, btnComprar;
-	private JList<String> lista;
-	private DefaultListModel<String> model;
-	private JScrollPane scrollLista;
+	private JList<String> lista1, lista2, lista3;
+	private DefaultListModel<String> model1, model2, model3;
+	private JScrollPane scrollLista1, scrollLista2, scrollLista3;
 	
 	public PanelRealizarCompra(PanelClientes ventana)
 	{
@@ -95,25 +95,27 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		btnComprar.setVisible(false);
 		add(btnComprar);
 		
-		lista = new JList<String>();
-		lista.setFont(new Font("Times New Roman", Font.ITALIC, 18));
+		//********************************************************
+		//Lista de viajes
+		lista1 = new JList<String>();
+		lista1.setFont(new Font("Times New Roman", Font.ITALIC, 18));
 		
-		model = new DefaultListModel<String>();
+		model1 = new DefaultListModel<String>();
 		
-		scrollLista = new JScrollPane();
-		scrollLista.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollLista.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);  
-		scrollLista.setBounds(165, 10, 360, 330);
-		scrollLista.getViewport().add(lista);
-		scrollLista.setBackground(Color.black);
-		scrollLista.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 18));
-		scrollLista.setBorder(new EmptyBorder(5, 5, 5, 5));
-		scrollLista.setVisible(false);
-		add(scrollLista);
+		scrollLista1 = new JScrollPane();
+		scrollLista1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollLista1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);  
+		scrollLista1.setBounds(15, 10, 200, 330);
+		scrollLista1.getViewport().add(lista1);
+		scrollLista1.setBackground(Color.black);
+		scrollLista1.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 18));
+		scrollLista1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scrollLista1.setVisible(false);
+		add(scrollLista1);
 		
-		lista.setModel(model);
+		lista1.setModel(model1);
 		
-		lista.addMouseListener(new MouseAdapter() 
+		lista1.addMouseListener(new MouseAdapter() 
 		{
 			public void mouseClicked(MouseEvent evt)
 			{
@@ -124,6 +126,80 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 					JOptionPane.showMessageDialog(null, "Oprimió dos veces el clic en " + list.getSelectedValue(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
+		//********************************************************
+		
+		
+		//********************************************************
+		//Lista de la mitad del panel
+		lista2 = new JList<String>();
+		lista2.setFont(new Font("Times New Roman", Font.ITALIC, 18));
+		
+		model2 = new DefaultListModel<String>();
+	
+		scrollLista2 = new JScrollPane();
+		scrollLista2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollLista2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);  
+		scrollLista2.setBounds(235, 10, 200, 330);
+		scrollLista2.getViewport().add(lista2);
+		scrollLista2.setBackground(Color.black);
+		scrollLista2.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 18));
+		scrollLista2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scrollLista2.setVisible(false);
+		add(scrollLista2);
+		
+		//------------------------------------------------------------------
+		model2.add(0, "Esta es la lista 2");
+		//------------------------------------------------------------------
+		
+		lista2.setModel(model2);
+		
+		lista2.addMouseListener(new MouseAdapter() 
+		{
+			public void mouseClicked(MouseEvent evt)
+			{
+				@SuppressWarnings("unchecked")
+				JList<String> list = (JList<String>) evt.getSource();
+				
+				if(evt.getClickCount() == 2)
+					JOptionPane.showMessageDialog(null, "Oprimió dos veces el clic en " + list.getSelectedValue(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		//********************************************************
+		
+		//********************************************************
+		//Lista de la derecha del panel
+		lista3 = new JList<String>();
+		lista3.setFont(new Font("Times New Roman", Font.ITALIC, 18));
+		
+		model3 = new DefaultListModel<String>();
+		
+		scrollLista3 = new JScrollPane();
+		scrollLista3.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollLista3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);  
+		scrollLista3.setBounds(455, 10, 200, 330);
+		scrollLista3.getViewport().add(lista3);
+		scrollLista3.setBackground(Color.black);
+		scrollLista3.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 18));
+		scrollLista3.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scrollLista3.setVisible(false);
+		add(scrollLista3);
+		
+		model3.add(0, "Esta es la lista 3");
+		
+		lista3.setModel(model3);
+		
+		lista3.addMouseListener(new MouseAdapter() 
+		{
+			public void mouseClicked(MouseEvent evt)
+			{
+				@SuppressWarnings("unchecked")
+				JList<String> list = (JList<String>) evt.getSource();
+				
+				if(evt.getClickCount() == 2)
+					JOptionPane.showMessageDialog(null, "Oprimió dos veces el clic en " + list.getSelectedValue(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		//********************************************************
 		
 	}
 
@@ -152,7 +228,9 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 				comboClase.setVisible(false);
 				
 				btnVolver.setVisible(true);
-				scrollLista.setVisible(true);
+				scrollLista1.setVisible(true);
+				scrollLista2.setVisible(true);
+				scrollLista3.setVisible(true);
 				btnComprar.setVisible(true);				
 			}
 			
@@ -167,9 +245,9 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 				String clase = comboClase.getSelectedItem().toString();
 //				JOptionPane.showMessageDialog(this, origen+"."+destino+"."+clase);
 				String[] viajes = ControladoraBD.consultarViajes(origen,destino,clase);
-				model.removeAllElements();
+				model1.removeAllElements();
 				for (int i = 0; i < viajes.length; i++) {
-					model.addElement(viajes[i]);
+					model1.addElement(viajes[i]);
 				}
 			} catch (ClassNotFoundException e1) {
 			} catch (SQLException e1) {
@@ -190,20 +268,22 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 			comboClase.setVisible(true);
 			
 			btnVolver.setVisible(false);
-			scrollLista.setVisible(false);
+			scrollLista1.setVisible(false);
+			scrollLista2.setVisible(false);
+			scrollLista3.setVisible(false);
 			btnComprar.setVisible(false);
 		}
 		
 		else if(e.getSource() == btnComprar)
 		{
-			if(lista.getSelectedValue() != null)
+			if(lista1.getSelectedValue() != null)
 			{
 				String idComprador = JOptionPane.showInputDialog("Ingrese el ID del comprador"),
 					   idVendedor = JOptionPane.showInputDialog("Ingrese el ID del vendedor");
 				
 				if(!idComprador.equals("") && idComprador != null && !idVendedor.equals("") && idVendedor != null)
 				{
-					JOptionPane.showMessageDialog(null, "Gracias por comprar el vuelo " + lista.getSelectedValue(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Gracias por comprar el vuelo " + lista1.getSelectedValue(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
 					
 					comboOrigen.setSelectedIndex(0);
 					comboDestino.setSelectedIndex(0);
@@ -219,7 +299,7 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 					comboClase.setVisible(true);
 					
 					btnVolver.setVisible(false);
-					scrollLista.setVisible(false);
+					scrollLista1.setVisible(false);
 					btnComprar.setVisible(false);					
 				}
 				
