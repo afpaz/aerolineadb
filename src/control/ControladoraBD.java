@@ -293,7 +293,7 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public boolean eliminarRuta(String id) throws ClassNotFoundException, SQLException
+	public boolean eliminarRuta(int id) throws ClassNotFoundException, SQLException
 	{
 		Connection con = getConnection();
 		String sql = "DELETE FROM RUTAS r WHERE r.ruta_id = '" + id + "'";
@@ -387,6 +387,19 @@ public class ControladoraBD
 		statement.registerOutParameter(1, java.sql.Types.INTEGER);
 		statement.execute();
 		return statement.getInt(1);
+	}
+	
+	/**
+	 * Permite consultar las rutas que hay en la bd. Necesario para eliminar rutas.
+	 * @return ResultSet con la lista de rutas que hay en la bd.
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public ResultSet consultarRutas() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String sql = "SELECT * FROM Rutas";
+		return con.prepareStatement(sql).executeQuery();	
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------------------
