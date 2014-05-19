@@ -187,12 +187,15 @@ public class Main {
 			public void actionPerformed(ActionEvent e) 
 			{
 				String id = panelDescuento.getId().getText();
-				String fechaInf = panelDescuento.getdPInicio().getJFormattedTextField().getText();
-				String fechaSup = panelDescuento.getdPFin().getJFormattedTextField().getText();
+				String[] fi = panelDescuento.getdPInicio().getJFormattedTextField().getText().split( "/" );
+				String[] fs = panelDescuento.getdPFin().getJFormattedTextField().getText().split( "/" );
+				
+				int[] fechaInf = new int[]{ Integer.parseInt( fi[0] ), Integer.parseInt( fi[1] )-1, Integer.parseInt( fi[2] )-1900 };
+				int[] fechaSup = new int[]{ Integer.parseInt( fs[0] ), Integer.parseInt( fs[1] )-1, Integer.parseInt( fs[2] )-1900 };
 				Integer ocupacionInf = (Integer) panelDescuento.getjSOcupacionInf( ).getModel( ).getValue();
 				Integer ocupacionSup = (Integer) panelDescuento.getjSocupacionSup( ).getModel( ).getValue();
 				Integer descuento = (Integer) panelDescuento.getsPPorcentage( ).getModel( ).getValue();
-
+				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 
 				try 
 				{
@@ -202,7 +205,7 @@ public class Main {
 						controladoraBD.actualizarDescuento( d.getId( ), id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
 					}
 					else
-						controladoraBD.crearDescuento( id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			
+						controladoraBD.crearDescuento( usu, id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );			
 
 					panelDescuento.getId( ).setText( "" );
 					panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
@@ -220,7 +223,7 @@ public class Main {
 				catch (SQLException e1) 
 				{
 					String[] err = e1.getMessage( ).split( "\n" );
-					if( e1.getErrorCode( ) == 20000 || e1.getErrorCode( ) == 20001 )
+					if( e1.getErrorCode( ) == 20000 || e1.getErrorCode( ) == 20001 || e1.getErrorCode( ) == 20004 )
 						JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
 					else
 						e1.printStackTrace();

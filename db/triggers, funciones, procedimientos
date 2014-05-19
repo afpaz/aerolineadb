@@ -135,7 +135,7 @@ end;
 /
 
 create or replace procedure eliminar_clases( usu in VARCHAR2, clase in VARCHAR2 ) is
-aux INTEGER := 0;
+aux INTEGER;
 begin
 SELECT COUNT(u.USUARIO) INTO aux
 FROM USUARIO_ROL u
