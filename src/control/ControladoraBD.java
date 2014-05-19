@@ -544,18 +544,7 @@ public class ControladoraBD
 		return idVenta;
 	}
 
-	public void generarTiquete(int valor, String id_venta, String id_viaje) throws ClassNotFoundException, SQLException
-	{
-		Connection connection = getConnection();
-		String procedure = "{ call GENERAR_TIQUETE(?,?,?) }";
-		CallableStatement pr_almacenado = connection.prepareCall(procedure);
-		pr_almacenado.setInt(1, valor);
-		pr_almacenado.setString(2, id_venta);
-		pr_almacenado.setString(3, id_viaje);
-		pr_almacenado.execute();
-		pr_almacenado.close();
-		connection.close();
-	}
+	
 
 	public static String[] getLugares() throws ClassNotFoundException, SQLException
 	{
@@ -813,4 +802,52 @@ public class ControladoraBD
 		return stat.executeUpdate();
 		
 	}
+	
+	
+	public static String generarVenta(Date fecha, String id_comprador, String id_vendedor) throws ClassNotFoundException, SQLException 
+	{
+		Connection connection = getConnection();
+		String procedure = "{ call GENERAR_VENTA(?,?,?,?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setDate(1,new java.sql.Date (fecha.getTime()));
+		pr_almacenado.setString(2,id_comprador);
+		pr_almacenado.setString(3,id_vendedor);
+		pr_almacenado.registerOutParameter(4,Types.VARCHAR);
+		pr_almacenado.execute();
+		String idVenta=pr_almacenado.getString(4);
+		pr_almacenado.close();
+		connection.close();
+		return idVenta;
+	}
+	
+	
+	public static void generarTiquete (int valor, String id_venta, String id_viaje) throws ClassNotFoundException, SQLException 
+	{
+		Connection connection = getConnection();
+		String procedure = "{ call GENERAR_TIQUETE(?,?,?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setInt(1,valor);
+		pr_almacenado.setString(2,id_venta);
+		pr_almacenado.setString(3,id_viaje);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
+	
+	
+	public static void aumentarCupo (String id_viaje, int id_ruta) throws ClassNotFoundException, SQLException 
+	{
+		Connection connection = getConnection();
+		String procedure = "{ call AUMENTAR_CUPO(?,?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString(1,id_viaje);
+		pr_almacenado.setInt(2,id_ruta);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
+	
+	
+	
+	
 }
