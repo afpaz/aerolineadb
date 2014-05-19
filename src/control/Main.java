@@ -801,7 +801,7 @@ public class Main {
 		eventosPanelConsultaViajes();
 		eventosPanelGerente( );
 		eventosPanelTarifa();
-
+		eventosPanelDemanda();
 		actualizarPanelGerente();
 	}
 
