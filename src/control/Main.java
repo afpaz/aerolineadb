@@ -239,9 +239,10 @@ public class Main {
 			{
 				if( !panelDescuento.getList( ).isSelectionEmpty( ) )
 				{
+					String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 					try
 					{
-						controladoraBD.eliminarDescuento( ((Descuento)panelDescuento.getList( ).getSelectedValue( )).getId( ) );
+						controladoraBD.eliminarDescuento( usu, ((Descuento)panelDescuento.getList( ).getSelectedValue( )).getId( ) );
 						ventana.actualizarListaDescuentos( consultarDescuentos( ) );
 						panelDescuento.getList( ).clearSelection( );
 					}
@@ -249,10 +250,14 @@ public class Main {
 					{
 						e1.printStackTrace();
 					}
-					catch ( SQLException e1 )
+					catch (SQLException e1) 
 					{
-						e1.printStackTrace();
-					}	
+						String[] err = e1.getMessage( ).split( "\n" );
+						if( e1.getErrorCode( ) == 20004 )
+							JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+						else
+							e1.printStackTrace();
+					}
 				}				
 			}
 		} );
