@@ -76,6 +76,8 @@ public class PanelAnulaciones extends JPanel {
 				model.addRow(new Object[]{rs.getString(1), rs.getDate(2).toString(), rs.getString(3), rs.getString(4)});
 				
 			}
+			table.setModel(model);
+			table.repaint();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
