@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -81,6 +82,39 @@ public class Main {
 				
 			}
 		});
+	}
+	
+	private static void eventosPanelAnulaciones()
+	{
+
+			try {
+				ventana.getPanelAnulaciones().actualizarTabla(controladoraBD.consultarVentas());
+				ventana.getPanelAnulaciones().getBtnAnular().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							controladoraBD.anularVenta(ventana.getPanelAnulaciones().getIdVenta().getText());
+							JOptionPane.showMessageDialog(ventana, "Se ha anulado exitosamente la venta " + ventana.getPanelAnulaciones().getIdVenta().getText());
+							ventana.getPanelAnulaciones().getIdVenta().setText("");
+							ventana.getPanelAnulaciones().actualizarTabla(controladoraBD.consultarVentas());
+						} catch (ClassNotFoundException e1) {
+							JOptionPane.showMessageDialog(ventana, "Ha ocurrido un error al intentar eliminar la venta " + ventana.getPanelAnulaciones().getIdVenta().getText());
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(ventana, "Ha ocurrido un error al intentar eliminar la venta " + ventana.getPanelAnulaciones().getIdVenta().getText());
+							e1.printStackTrace();
+						}
+					}
+				});
+			} catch (ClassNotFoundException e) {
+				JOptionPane.showMessageDialog(ventana, "Ha ocurrido un error al intentar eliminar la venta " + ventana.getPanelAnulaciones().getIdVenta().getText());
+				e.printStackTrace();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(ventana, "Ha ocurrido un error al intentar eliminar la venta " + ventana.getPanelAnulaciones().getIdVenta().getText());
+				e.printStackTrace();
+			}
+
 	}
 	private static void eventosPanelGerente()
 	{
@@ -835,6 +869,7 @@ public class Main {
 		eventosPanelTarifa();
 		eventosPanelDemanda();
 		eventosPanelReporteVentas();
+		eventosPanelAnulaciones();
 		actualizarPanelGerente();
 	}
 
