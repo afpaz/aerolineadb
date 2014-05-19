@@ -23,6 +23,7 @@ public class Ventana extends JFrame {
 	private PanelPasabordoVendedor panelPasabordoVendedor;
 	private PanelClientes panelClientes;
 	private PanelDemanda panelDemanda;
+	private PanelVendedores panelVendedores;
 	/**
 	 * Create the frame.
 	 */
@@ -58,6 +59,17 @@ public class Ventana extends JFrame {
 		
 		panelDemanda = new PanelDemanda();
 		tabbedPane.addTab("Reporte de demanda", null, panelDemanda, null);
+		
+		panelVendedores = new PanelVendedores();
+		tabbedPane.addTab("Vendedores", null, panelVendedores, null);
+	}
+	
+	public PanelVendedores getPanelVendedores() {
+		return panelVendedores;
+	}
+
+	public void setPanelVendedores(PanelVendedores panelVendedores) {
+		this.panelVendedores = panelVendedores;
 	}
 	
 	public PanelDemanda getPanelDemanda() {
@@ -92,6 +104,12 @@ public class Ventana extends JFrame {
 	public void actualizarListaDestinos (ArrayList<Destino> destinos)
 	{
 		panelGerente.getPanelDestinos().getListDestinos().setListData(destinos.toArray());
+		
+		panelVendedores.getCbxOrigen().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
+		panelVendedores.getCbxDestino().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
+		
+		panelVendedores.getCbxOrigen().setSelectedIndex(-1);
+		panelVendedores.getCbxDestino().setSelectedIndex(-1);
 		
 		panelDemanda.getCbxOrigen().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
 		panelDemanda.getCbxDestino().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
