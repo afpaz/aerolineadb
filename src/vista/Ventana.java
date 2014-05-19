@@ -24,6 +24,7 @@ public class Ventana extends JFrame {
 	private PanelClientes panelClientes;
 	private PanelDemanda panelDemanda;
 	private PanelVendedores panelVendedores;
+	private PanelAnulaciones panelAnulaciones;
 	/**
 	 * Create the frame.
 	 */
@@ -48,7 +49,7 @@ public class Ventana extends JFrame {
 		
 		
 		panelConsultaViajes = new PanelConsultaViajes();
-		tabbedPane.addTab("Viajes", null, panelConsultaViajes, null);
+		tabbedPane.addTab("Vuelos", null, panelConsultaViajes, null);
 		
 		panelReporteVentas = new PanelReporteVentas();
 		tabbedPane.addTab("Reporte de Ventas", null, panelReporteVentas, null);
@@ -64,6 +65,9 @@ public class Ventana extends JFrame {
 		
 		panelVendedores = new PanelVendedores();
 		tabbedPane.addTab("Vendedores", null, panelVendedores, null);
+		
+		panelAnulaciones = new PanelAnulaciones();
+		tabbedPane.addTab("Anulaciones", null, panelAnulaciones, null);
 	}
 	
 	public PanelVendedores getPanelVendedores() {
@@ -95,6 +99,11 @@ public class Ventana extends JFrame {
 	public PanelReporteVentas getPanelReporteVentas()
 	{
 		return this.panelReporteVentas;
+	}
+	
+	public PanelAnulaciones getPanelAnulaciones()
+	{
+		return this.panelAnulaciones;
 	}
 	
 	public void actualizarPanelClases(ArrayList< Clase > clases)
