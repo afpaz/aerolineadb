@@ -15,6 +15,7 @@ public class PanelGerente extends JPanel
 	private JButton btnGenerarReporte;
 	private PanelTarifa panelTarifa;
 	private PanelDescuento panelDescuento;
+	private PanelRutas panelRutas;
 	
 	/**
 	 * Create the panel.
@@ -43,6 +44,9 @@ public class PanelGerente extends JPanel
 		
 		panelClases = new PanelClases();
 		tabbedPane.addTab("Clases", null, panelClases, null);
+		
+		panelRutas = new PanelRutas();
+		tabbedPane.addTab("Rutas", null, panelRutas, null);
 	}
 
 	public PanelClases getPanelClases( )
