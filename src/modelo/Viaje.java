@@ -94,4 +94,11 @@ public class Viaje
 		this.fecha = fecha;
 	}
 
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return getId() + ":" + getOrigen() + "->" + getDestino() + "|" + getFecha().toString();
+	}
+
 }
