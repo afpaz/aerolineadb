@@ -11,9 +11,7 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.JOptionPane;
-
 import modelo.Destino;
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
