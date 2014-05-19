@@ -423,8 +423,8 @@ public class Main {
 				String id = panelDestinos.getTxtId().getText();
 				double latitud=0;
 				double longitud=0;
-				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
+				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				//es una longitud y latitud correcta
 				try
 				{
@@ -477,7 +477,7 @@ public class Main {
 							e1.printStackTrace();
 					}
 				}
-				actualizarPanelGerente();
+				ventana.actualizarListaDestinos( consultarDestinos( ) );
 				panelDestinos.deshabilitarCampos();
 			}
 		});
@@ -491,9 +491,10 @@ public class Main {
 				String id = panelDestinos.getTxtId().getText();
 				if( !panelDestinos.getListDestinos().isSelectionEmpty( ) )
 				{
+					String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 					try 
 					{
-						controladoraBD.eliminarDestino(id);
+						controladoraBD.eliminarDestino(usu, id);
 						panelDestinos.limpiarCampos();
 					}
 					catch (ClassNotFoundException e1) 
@@ -502,7 +503,11 @@ public class Main {
 					} 
 					catch (SQLException e1) 
 					{
-						e1.printStackTrace();
+						String[] err = e1.getMessage( ).split( "\n" );
+						if( e1.getErrorCode( ) == 20004 )
+							JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+						else
+							e1.printStackTrace();
 					}
 				}
 				actualizarPanelGerente();
@@ -545,7 +550,6 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				String id=panelTarifa.getTxtId().getText();
 				int valor = 0;
 				double inferior = 0;
@@ -580,11 +584,11 @@ public class Main {
 				{
 					if(listaTarifas.isSelectionEmpty())
 					{
-						controladoraBD.crearTarifa(usu, id, valor, inferior, superior);
+						controladoraBD.crearTarifa(id, valor, inferior, superior);
 					}
 					else
 					{
-						controladoraBD.actualizarTarifa(usu, id, valor, inferior, superior);
+						controladoraBD.actualizarTarifa(id, valor, inferior, superior);
 					}
 					ventana.actualizarListaTarifas( consultarTarifas( ) );
 				}
@@ -609,12 +613,11 @@ public class Main {
 			public void actionPerformed(ActionEvent e) 
 			{				
 				String id = panelTarifa.getTxtId().getText();
-				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				if( !panelTarifa.getListTarifas().isSelectionEmpty( ) )
 				{
 					try 
 					{
-						controladoraBD.eliminarTarifa(usu, id);
+						controladoraBD.eliminarTarifa(id);
 						panelTarifa.limpiarCampos();
 					}
 					catch (ClassNotFoundException e1) 
