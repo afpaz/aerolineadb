@@ -293,12 +293,16 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public boolean eliminarDestino(String id) throws SQLException, ClassNotFoundException
+	public void eliminarDestino(String usuario, String id) throws SQLException, ClassNotFoundException
 	{
-		Connection conect = getConnection();
-		String sql = "DELETE FROM LUGARES WHERE nombre_lugar = '" + id + "'";
-		Statement statement = conect.createStatement();
-		return statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call eliminar_lugar(?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, id );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public void eliminarClase(String usuario, String nombre) throws ClassNotFoundException, SQLException

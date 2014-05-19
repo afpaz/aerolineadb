@@ -582,13 +582,14 @@ public class Main {
 				// agregar o actualizar
 				try
 				{
+					String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 					if(listaTarifas.isSelectionEmpty())
 					{
-						controladoraBD.crearTarifa(id, valor, inferior, superior);
+						controladoraBD.crearTarifa(usu, id, valor, inferior, superior);
 					}
 					else
 					{
-						controladoraBD.actualizarTarifa(id, valor, inferior, superior);
+						controladoraBD.actualizarTarifa(usu, id, valor, inferior, superior);
 					}
 					ventana.actualizarListaTarifas( consultarTarifas( ) );
 				}
@@ -615,9 +616,10 @@ public class Main {
 				String id = panelTarifa.getTxtId().getText();
 				if( !panelTarifa.getListTarifas().isSelectionEmpty( ) )
 				{
+					String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 					try 
 					{
-						controladoraBD.eliminarTarifa(id);
+						controladoraBD.eliminarTarifa(usu,id);
 						panelTarifa.limpiarCampos();
 					}
 					catch (ClassNotFoundException e1) 
