@@ -120,29 +120,27 @@ public class PanelRutas extends JPanel
 
 				if (comboTarifaRuta.getSelectedItem() != null && comboViajeRuta.getSelectedItem() != null)
 				{
-					boolean exitoso = false;
 
-					// Tarifa t = (Tarifa) comboTarifaRuta.getSelectedItem();
-					// Viaje v = (Viaje) comboViajeRuta.getSelectedItem();
+					Tarifa t = (Tarifa) comboTarifaRuta.getSelectedItem();
+					Viaje v = (Viaje) comboViajeRuta.getSelectedItem();
 
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 					Date date = new Date();
 					String fechaFormateada = dateFormat.format(date);
 					try
 					{
-						exitoso = controladorBD.crearRuta(fechaFormateada, "v.getId()", "t.getid()");
-						if (!exitoso)
-						{
-							JOptionPane.showMessageDialog(PanelRutas.this, "No se pudo crear. Intente más tarde.");
-						}
+						controladorBD.crearRuta(fechaFormateada, v.getId(), t.getid());
+
 					} catch (ClassNotFoundException e)
 					{
 						// TODO Auto-generated catch block
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(PanelRutas.this, "Error creando la ruta");
 
 					} catch (SQLException e)
 					{
 						// TODO Auto-generated catch block
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(PanelRutas.this, "Error creando la ruta");
 					}
 
@@ -202,7 +200,7 @@ public class PanelRutas extends JPanel
 			}
 		}
 	}
-	
+
 	/**
 	 * Permite llenar el combo box de viajes
 	 */
@@ -224,8 +222,7 @@ public class PanelRutas extends JPanel
 				String destino = resultado.getString("destino");
 				Date fecha = resultado.getDate("fecha");
 
-				
-				Viaje v = new Viaje(idViaje,sentido,clase_id,descuento_id,origen,destino,fecha);
+				Viaje v = new Viaje(idViaje, sentido, clase_id, descuento_id, origen, destino, fecha);
 				comboViajeRuta.addItem(v);
 
 			}
