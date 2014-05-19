@@ -638,6 +638,8 @@ public class Main {
 						String[] err = e1.getMessage( ).split( "\n" );
 						if( e1.getErrorCode( ) == 20004 )
 							JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+						else if( e1.getErrorCode( ) == 2292 )
+							JOptionPane.showMessageDialog( null, "No puedes eliminar esta tarifa", "Error", JOptionPane.ERROR_MESSAGE );
 						else
 							e1.printStackTrace();
 					}
