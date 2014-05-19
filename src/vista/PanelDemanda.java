@@ -38,7 +38,7 @@ public class PanelDemanda extends JPanel
 		setLayout(null);
 		setBackground( new Color(184, 207, 229) );
 		dPInicio = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel()));
-		dPInicio.setBounds(480, 74, 126, 23);
+		dPInicio.setBounds(480, 74, 126, 29);
 		add(dPInicio);
 		
 		JLabel lblFechaLimiteSuperior = new JLabel("Fecha de inico");
@@ -52,7 +52,7 @@ public class PanelDemanda extends JPanel
 		dPFin = new JDatePickerImpl((new JDatePanelImpl(new UtilDateModel())));
 		dPFin.getJFormattedTextField().setSize(117, 23);
 		dPFin.getJFormattedTextField().setLocation(266, 0);
-		dPFin.setBounds(480, 121, 126, 23);
+		dPFin.setBounds(480, 121, 126, 29);
 		add(dPFin);
 		
 		btnGenerar = new JButton("Generar");
