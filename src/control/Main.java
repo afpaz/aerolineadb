@@ -19,12 +19,15 @@ import modelo.Descuento;
 import modelo.Destino;
 import modelo.ReporteVentas;
 import modelo.Tarifa;
+import modelo.Venta;
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
 import vista.PanelDemanda;
 import vista.PanelDescuento;
 import vista.PanelDestinos;
 import vista.PanelTarifa;
+import vista.PanelVendedores;
+
 import vista.Ventana;
 
 public class Main {
@@ -432,6 +435,27 @@ public class Main {
 
 	}
 
+	private static void eventosPanelVendedores() 
+	{
+		final PanelVendedores panelV = ventana.getPanelVendedores();
+
+//		 Listener de la Lista vendedores
+		final JList listVendedores = panelV.getListVentas();
+		listVendedores.addListSelectionListener(new ListSelectionListener() 
+		{
+			public void valueChanged(ListSelectionEvent e) 
+			{
+				if( !listVendedores.isSelectionEmpty( ) )
+				{
+					Venta venta = (Venta) listVendedores.getSelectedValue( );
+					panelV.getTxtComprador().setText(venta.getComprador()+"");
+					panelV.getTxtVendedor().setText(venta.getVendedor()+"");
+				}
+			}
+		});
+		
+	
+	}
 	private static void eventosPanelDestinos() 
 	{
 		final PanelDestinos panelDestinos = ventana.getPanelGerente().getPanelDestinos();
@@ -778,6 +802,35 @@ public class Main {
 		}
 		return clases;
 	}
+	
+	public static ArrayList< Venta > consultarVentas()
+	{
+		ArrayList< Venta > ventas = new ArrayList< Venta >( );
+		try
+		{
+			ResultSet resultSet = controladoraBD.consultarVentas( );
+			while ( resultSet.next( ) )
+			{
+				String ventaId = resultSet.getString( 1 );
+				
+				String f1[] = resultSet.getString( 3 ).split( " " )[0].split( "-" );
+				String fecha = f1[2] + "/" + f1[1] + "/" + f1[0];
+				String vendedor = resultSet.getString( 3 );
+				String comprador = resultSet.getString( 3 );
+				Venta v = new Venta( ventaId, fecha, vendedor, comprador );
+				ventas.add( v );
+			}
+		}
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return ventas;
+	}
 
 	public static ArrayList<Destino> consultarDestinos()
 	{
@@ -867,6 +920,7 @@ public class Main {
 		eventosPanelConsultaViajes();
 		eventosPanelGerente( );
 		eventosPanelTarifa();
+		eventosPanelVendedores();
 		eventosPanelDemanda();
 		eventosPanelReporteVentas();
 		eventosPanelAnulaciones();
