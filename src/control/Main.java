@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Clase;
 import modelo.Descuento;
 import modelo.Destino;
+import modelo.ReporteVentas;
 import modelo.Tarifa;
 import vista.DialogGenerarReporte;
 import vista.PanelClases;
@@ -57,6 +58,30 @@ public class Main {
 
 	}
 
+	private static void eventosPanelReporteVentas()
+	{
+		ventana.getPanelReporteVentas().getBtnGenerarReporte().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ArrayList<String> lista = new ArrayList<String>();
+				try {
+					ReporteVentas reporte = controladoraBD.reporteVendedor(ventana.getPanelReporteVentas().getIdVendedor().getText());
+					ventana.getPanelReporteVentas().actualizarRankingLugares(reporte.getRanking());
+					ventana.getPanelReporteVentas().getLblNumeroTiquetes().setText("" + reporte.getCantidad());
+					ventana.getPanelReporteVentas().getLblValorTotalVendido().setText("" + reporte.getValorTotal());
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+	}
 	private static void eventosPanelGerente()
 	{
 		ventana.getPanelGerente( ).getBtnGenerarReporte( ).addActionListener(new ActionListener() {
@@ -805,11 +830,11 @@ public class Main {
 		ventana = new Ventana();
 		ventana.setVisible(true);
 		controladoraBD = new ControladoraBD();
-
 		eventosPanelConsultaViajes();
 		eventosPanelGerente( );
 		eventosPanelTarifa();
 		eventosPanelDemanda();
+		eventosPanelReporteVentas();
 		actualizarPanelGerente();
 	}
 
