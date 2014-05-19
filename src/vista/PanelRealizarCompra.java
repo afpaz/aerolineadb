@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -36,6 +37,8 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 	private JList<String> lista1, lista2, lista3;
 	private DefaultListModel<String> model1, model2, model3;
 	private JScrollPane scrollLista1, scrollLista2, scrollLista3;
+	
+	private String comprador, vendedor;
 	
 	public PanelRealizarCompra(PanelClientes ventana)
 	{
@@ -218,14 +221,6 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		//********************************************************
 		
 	}
-
-	public String darFecha()
-	{
-		String respuesta;
-		String[] fecha = calendario.getDate().toString().split(" ");
-		respuesta = new String(fecha[5] + "-" + fecha[1] + "-" + fecha[2] + "-" + fecha[3]);
-		return respuesta;
-	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
@@ -292,24 +287,41 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		
 		else if(e.getSource() == btnComprar)
 		{
-			if(lista1.getSelectedValue() != null)
+			if(lista1.getSelectedValue() != null && lista2.getSelectedValue() != null)
 			{
 				try 
 				{
 					String[] usrs = ControladoraBD.getUsuarios();
 
 					
-					String comprador = (String) JOptionPane.showInputDialog(this, "Quien es el comprador?", "Comprador", JOptionPane.QUESTION_MESSAGE, 
+					comprador = (String) JOptionPane.showInputDialog(this, "Quien es el comprador?", "Comprador", JOptionPane.QUESTION_MESSAGE, 
 					        null, 
 					        usrs, 
 					        usrs[0]);
-					String vendedor = (String) JOptionPane.showInputDialog(this, 
+					vendedor = (String) JOptionPane.showInputDialog(this, 
 					        "Quien es el vendedor?",
 					        "vendedor",
 					        JOptionPane.QUESTION_MESSAGE, 
 					        null, 
 					        usrs, 
 					        usrs[0]);
+					
+					String idVenta = ControladoraBD.generarVenta(calendario.getDate(), comprador, vendedor);
+					ControladoraBD.generarTiquete(4500, idVenta, lista1.getSelectedValue());
+					
+					try
+					{
+						int aumento = Integer.parseInt(lista2.getSelectedValue());
+						ControladoraBD.aumentarCupo(lista1.getSelectedValue(), aumento);
+					}
+					
+					catch(Exception exce)
+					{
+						JOptionPane.showMessageDialog(null, exce, "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					
+					
 					if(!comprador.equals("") && comprador != null && !vendedor.equals("") && vendedor != null)
 					{
 						
@@ -373,5 +385,30 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 	public JComboBox<String> getComboClases()
 	{
 		return comboClase;
+	}
+	
+	public String darComprador()
+	{
+		return comprador;
+	}
+	
+	public String darVendedor()
+	{
+		return vendedor;
+	}
+	
+	public Date darFecha()
+	{
+		return calendario.getDate();
+	}
+	
+	public String darIdViaje()
+	{
+		return lista1.getSelectedValue();
+	}
+	
+	public String darIdRuta()
+	{
+		return lista2.getSelectedValue();
 	}
 }
