@@ -201,9 +201,9 @@ public class ControladoraBD
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
 		pr_almacenado.setString( 1, usuario );
 		pr_almacenado.setString( 2, nombre );
-		pr_almacenado.setString( 3, valor+"" );
-		pr_almacenado.setString( 4, inferior+"" );
-		pr_almacenado.setString( 5, superior+"" );
+		pr_almacenado.setDouble( 3, valor);
+		pr_almacenado.setDouble( 4, inferior );
+		pr_almacenado.setDouble( 5, superior );
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
@@ -273,9 +273,9 @@ public class ControladoraBD
 		CallableStatement pr_almacenado = connection.prepareCall(procedure);
 		pr_almacenado.setString( 1, usuario );
 		pr_almacenado.setString( 2, nombre );
-		pr_almacenado.setString( 3, valor+"" );
-		pr_almacenado.setString( 4, inferior+"" );
-		pr_almacenado.setString( 5, superior+"" );
+		pr_almacenado.setDouble( 3, valor );
+		pr_almacenado.setDouble( 4, inferior);
+		pr_almacenado.setDouble( 5, superior);
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
