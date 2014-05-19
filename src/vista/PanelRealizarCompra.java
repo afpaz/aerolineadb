@@ -327,19 +327,9 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 						
 						JOptionPane.showMessageDialog(null, "Gracias por comprar el vuelo " + lista1.getSelectedValue(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
 						
-						
 						comboOrigen.setSelectedIndex(0);
 						comboDestino.setSelectedIndex(0);
 						comboClase.setSelectedIndex(0);
-						
-						btnConsultar.setVisible(true);
-						lblOrigen.setVisible(true);
-						lblDestino.setVisible(true);
-						lblClase.setVisible(true);
-						comboOrigen.setVisible(true);
-						comboDestino.setVisible(true);
-						calendario.setVisible(true);
-						comboClase.setVisible(true);
 						
 						btnVolver.setVisible(false);
 						scrollLista1.setVisible(false);
@@ -349,24 +339,34 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 						scrollLista2.setVisible(false);
 						scrollLista3.setVisible(false);
 						
+						btnConsultar.setVisible(true);
+						lblOrigen.setVisible(true);
+						lblDestino.setVisible(true);
+						lblClase.setVisible(true);
+						comboOrigen.setVisible(true);
+						comboDestino.setVisible(true);
+						calendario.setVisible(true);
+						comboClase.setVisible(true);
 					}
 					else
 						JOptionPane.showMessageDialog(null, "Los ID's de comprador y vendedor no son válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} 
 				catch (ClassNotFoundException e1) {} catch (SQLException e1) {}
 
-					btnConsultar.setVisible(true);
-					lblOrigen.setVisible(true);
-					lblDestino.setVisible(true);
-					lblClase.setVisible(true);
-					comboOrigen.setVisible(true);
-					comboDestino.setVisible(true);
-					calendario.setVisible(true);
-					comboClase.setVisible(true);
-					
-					btnVolver.setVisible(false);
-					scrollLista1.setVisible(false);
-					btnComprar.setVisible(false);					
+				btnVolver.setVisible(false);
+				scrollLista1.setVisible(false);
+				scrollLista2.setVisible(false);
+				scrollLista3.setVisible(false);
+				btnComprar.setVisible(false);					
+
+				btnConsultar.setVisible(true);
+				lblOrigen.setVisible(true);
+				lblDestino.setVisible(true);
+				lblClase.setVisible(true);
+				comboOrigen.setVisible(true);
+				comboDestino.setVisible(true);
+				calendario.setVisible(true);
+				comboClase.setVisible(true);					
 				}
 			
 			else
