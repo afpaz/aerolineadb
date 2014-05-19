@@ -163,6 +163,7 @@ public class Main {
 					panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( d.getFechaLimiteInferior( ) );
 					panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( d.getFechaLimiteSuperior( ) );
 					panelDescuento.getsPPorcentage( ).getModel( ).setValue( d.getPorcentajeDescuento( ) );
+					panelDescuento.getId( ).setEditable( false );
 				}
 			}
 		});
@@ -171,6 +172,7 @@ public class Main {
 		panelDescuento.getBtnLimpiar( ).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				panelDescuento.getId( ).setEditable( true );
 				panelDescuento.getId( ).setText( "" );
 				panelDescuento.getdPInicio( ).getJFormattedTextField( ).setText( "" );
 				panelDescuento.getdPFin( ).getJFormattedTextField( ).setText( "" );
@@ -274,6 +276,7 @@ public class Main {
 				if( !listClases.isSelectionEmpty( ) )
 				{
 					Clase c = (Clase) listClases.getSelectedValue( );
+					panelClases.getTxtNombreClase().setEditable( false );
 					panelClases.getTxtNombreClase().setText( c.getNombre( ) );
 					panelClases.getTxtMultiplicador( ).setText( c.getMultiplicador( )+"" );
 					panelClases.getTxtDescripcion( ).setText( c.getDescripcion( ) );
@@ -289,6 +292,7 @@ public class Main {
 				panelClases.getTxtMultiplicador().setText( "" );
 				panelClases.getTxtDescripcion().setText( "" );
 				panelClases.getListClases( ).clearSelection( );
+				panelClases.getTxtNombreClase().setEditable( true );
 			}
 		});	
 
@@ -396,6 +400,7 @@ public class Main {
 			public void actionPerformed(ActionEvent e) 
 			{
 				panelDestinos.habilitarCampos();
+				panelDestinos.getTxtId().setEditable( false );
 				panelDestinos.habilitarBut();
 				panelDestinos.setCrear(false);
 			}
@@ -527,6 +532,7 @@ public class Main {
 				if(!listaTarifas.isSelectionEmpty())
 				{
 					Tarifa tarifa = (Tarifa)listaTarifas.getSelectedValue();
+					panelTarifa.getTxtId().setEditable( false );
 					panelTarifa.getTxtId().setText(tarifa.getid()+"");
 					panelTarifa.getTxtValorKm().setText(tarifa.getValorKm()+"");
 					panelTarifa.getTxtLimInfKm().setText(tarifa.getLimInfKm()+"");
@@ -540,7 +546,8 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				panelTarifa.limpiarCampos();	
+				panelTarifa.limpiarCampos();
+				panelTarifa.getTxtId().setEditable( true );
 				listaTarifas.clearSelection();	
 			}
 		});
