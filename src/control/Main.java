@@ -424,7 +424,7 @@ public class Main {
 				double latitud=0;
 				double longitud=0;
 				String descripcion = panelDestinos.getTextAreaDescripcion().getText();
-
+				String usu = JOptionPane.showInputDialog( "Ingrese su usuario" );
 				//es una longitud y latitud correcta
 				try
 				{
@@ -442,7 +442,7 @@ public class Main {
 				{
 					try 
 					{
-						controladoraBD.crearDestino(id, latitud, longitud, descripcion);
+						controladoraBD.crearDestino(usu, id, latitud, longitud, descripcion);
 					} 
 					catch (ClassNotFoundException e1) 
 					{
@@ -450,15 +450,19 @@ public class Main {
 					} 
 					catch (SQLException e1) 
 					{
-						e1.printStackTrace();
+						String[] err = e1.getMessage( ).split( "\n" );
+						if( e1.getErrorCode( ) == 20004 )
+							JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+						else
+							e1.printStackTrace();
 					}
 				}
 				else
 				{
 					try 
 					{
-						controladoraBD.actualizarDestino(id, latitud, longitud, descripcion);
-
+						Destino d = (Destino)panelDestinos.getListDestinos( ).getSelectedValue( );
+						controladoraBD.actualizarDestino(usu, id, latitud, longitud, descripcion, d.getId( ));
 					} 
 					catch (ClassNotFoundException e1)
 					{
@@ -466,7 +470,11 @@ public class Main {
 					} 
 					catch (SQLException e1) 
 					{
-						e1.printStackTrace();
+						String[] err = e1.getMessage( ).split( "\n" );
+						if( e1.getErrorCode( ) == 20004 )
+							JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+						else
+							e1.printStackTrace();
 					}
 				}
 				actualizarPanelGerente();

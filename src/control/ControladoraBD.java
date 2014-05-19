@@ -158,12 +158,20 @@ public class ControladoraBD
 		connection.close();
 	}
 
-	public boolean actualizarDestino(String id, double latitud, double longitud, String descripcion) throws ClassNotFoundException, SQLException
+	public void actualizarDestino(String usuario, String id, double latitud, double longitud, String descripcion, String nombreV) throws ClassNotFoundException, SQLException
 	{
-		Connection conect = getConnection();
-		String sql = "UPDATE LUGARES SET latitud = " + latitud + ", longitud = " + longitud + ", descripcion = '" + descripcion + "' WHERE nombre_lugar = '" + id + "'";
-		Statement statement = conect.createStatement();
-		return statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call editar_lugar(?, ?, ?, ?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, id );
+		pr_almacenado.setString( 3, descripcion );
+		pr_almacenado.setDouble( 4, latitud );
+		pr_almacenado.setDouble( 5, longitud );
+		pr_almacenado.setString( 6, nombreV );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public void actualizarDescuento(String usuario, String id_v, String id, int[] fechaInf, int[] fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException
@@ -217,12 +225,19 @@ public class ControladoraBD
 		return statement.execute(sql);
 	}
 
-	public boolean crearDestino(String id, double latitud, double longitud, String descripcion) throws SQLException, ClassNotFoundException
+	public void crearDestino(String usuario, String id, double latitud, double longitud, String descripcion) throws SQLException, ClassNotFoundException
 	{
-		Connection con = getConnection();
-		String sql = "INSERT INTO LUGARES VALUES( '" + id + "', '" + descripcion + "', " + latitud + ", " + longitud + ")";
-		Statement statement = con.createStatement();
-		return statement.execute(sql);
+		Connection connection = getConnection();
+		String procedure = "{ call crear_lugar(?, ?, ?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.setString( 1, usuario );
+		pr_almacenado.setString( 2, id );
+		pr_almacenado.setString( 3, descripcion );
+		pr_almacenado.setDouble( 4, latitud );
+		pr_almacenado.setDouble( 5, longitud );
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
 	}
 
 	public void crearDescuento(String usuario, String id, int[] fechaInf, int[] fechaSup, int ocupacionInf, int ocupacionSup, int descuento) throws ClassNotFoundException, SQLException
