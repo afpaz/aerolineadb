@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import modelo.Destino;
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
+import vista.PanelPasabordo;
 
 public class ControladoraBD
 {
@@ -573,8 +574,46 @@ public class ControladoraBD
 		return null;
 	}
 
-	public static String[ ] generarPasabordos( )
+	public static String[] generarPasabordos( ) throws ClassNotFoundException, SQLException
 	{
-		return new String[]{"METODO AUXILIAR PARA QUITAR ERROR EN CONTROLADORA DB"};
+		Connection con = getConnection();
+		String function = "{? = call generarPasabordo(?, ?)}";
+		String dato = "";
+		String[] arreglo;
+		CallableStatement cs = null;
+
+		try
+		{
+			cs = con.prepareCall(function);
+			cs.setString(2, PanelPasabordo.idUsuario);
+			cs.setString(3, PanelPasabordo.idViaje);
+//			cs.setString(2, "Fernando");
+//			cs.setString(3, "V1");
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			dato = cs.getString(1);
+		}
+
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+
+		finally
+		{
+			cs.close();
+			con.close();
+		}
+
+		if (dato == null)
+		{
+			arreglo = new String[1];
+			arreglo[0] = "No hay pasabordos disponibles!!!";
+		}
+
+		else
+			arreglo = dato.split(";");
+
+		return arreglo;
 	}
 }
