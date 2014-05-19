@@ -761,10 +761,36 @@ public class ControladoraBD
 		}
 		if (dato == null){
 			arreglo = new String[1];
-			arreglo[0] = "No hay usaurios registrados!!!";
+			arreglo[0] = "No hay rutas registradas!!!";
 		}else
 			arreglo = dato.split(",");
 		return arreglo;
 	}
 	
+	public static String[] getVuelosDeRuta(String RutaId) throws ClassNotFoundException, SQLException {
+		Connection con = getConnection();
+		String function = "{? = call FN_GET_VUELOS_DE_RUTA(?)}";
+		String dato = "";
+		String[] arreglo;
+		CallableStatement cs = null;
+		try{
+			cs = con.prepareCall(function);
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.setString(2, RutaId);
+			cs.execute();
+			dato = cs.getString(1);
+		}
+		catch (Exception e){
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}finally{
+			cs.close();
+			con.close();
+		}
+		if (dato == null){
+			arreglo = new String[1];
+			arreglo[0] = "No hay vuelos registrados!!!";
+		}else
+			arreglo = dato.split(",");
+		return arreglo;
+	}
 }
