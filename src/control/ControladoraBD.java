@@ -65,9 +65,14 @@ public class ControladoraBD
 		int cantidad = pr_almacenado.getInt(3);
 		ResultSet rs = (ResultSet) pr_almacenado.getObject(4);
 		ArrayList<String> lista = new ArrayList<String>();
+		int i = 0;
 		while (rs.next())
 		{
-			lista.add(rs.getString(1) + " - " + rs.getInt(2) + " Tiquete(s)");
+			if(i <= 9)
+			{
+				lista.add(rs.getString(1) + " - " + rs.getInt(2) + " Tiquete(s)");
+			}
+			i++;
 		}
 
 		ReporteVentas reporte = new ReporteVentas(valor, cantidad, lista);
