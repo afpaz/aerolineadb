@@ -130,6 +130,7 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 					try {
 						String[] rutas = ControladoraBD.getRutasDeViaje(list.getSelectedValue().toString());
 						model2.removeAllElements();
+						model3.removeAllElements();
 						for (String string : rutas) {
 							model2.addElement(string);
 						}
