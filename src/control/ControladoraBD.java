@@ -621,39 +621,14 @@ public class ControladoraBD
 		return arreglo;
 	}
 
-	public ResultSet ConsultarDemanda(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException
+	public ResultSet consultarDemanda() throws ClassNotFoundException, SQLException
 	{
-		Connection con = getConnection();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-		String sql = "SELECT V.FECHA, SUM(OcupacionVuelo(V.VUELO_ID)) FROM VUELOS V GROUP BY V.FECHA;";
-		/*
-		 * if(inicio != null) {
-		 * 
-		 * 
-		 * sql+= " WHERE V.FECHA >= TO_DATE('" + sdf.format(inicio) + "'," +
-		 * "'DD/MM/YYYY')"; if(fin != null) { sql+= " AND V.FECHA >= TO_DATE('"
-		 * + sdf.format(fin) + "'," + "'DD/MM/YYYY')"; }
-		 * 
-		 * if(origen != null) { sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
-		 * }
-		 * 
-		 * if(destino != null) { sql+= " AND V.ORIGEN = '"+ destino.getId()
-		 * +"' "; } }else if(fin != null) { sql+= " WHERE V.FECHA >= TO_DATE('"
-		 * + sdf.format(fin) + "'," + "'DD/MM/YYYY')";
-		 * 
-		 * if(origen != null) { sql+= " AND V.ORIGEN = '"+ origen.getId() +"' ";
-		 * }
-		 * 
-		 * if(destino != null) { sql+= " AND V.ORIGEN = '"+ destino.getId()
-		 * +"' "; } }else if(origen != null) { sql+= " WHERE V.ORIGEN = '"+
-		 * origen.getId() +"' ";
-		 * 
-		 * if(destino != null) { sql+= " AND V.ORIGEN = '"+ destino.getId()
-		 * +"' "; } }else if(destino != null) { sql+= " WHERE V.ORIGEN = '"+
-		 * destino.getId() +"' "; }
-		 */
-		// sql+= " GROUP BY V.FECHA;";
-		return con.prepareStatement(sql).executeQuery();
+		Connection connection = getConnection();
+		String procedure = "{ call REPORTE_DEMANDA(?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+		pr_almacenado.registerOutParameter(1, OracleTypes.CURSOR);
+		pr_almacenado.execute();
+        return (ResultSet) pr_almacenado.getObject(1);
 	}
 	
 	public static String[] getUsuarios() throws ClassNotFoundException, SQLException

@@ -27,7 +27,6 @@ import vista.PanelDescuento;
 import vista.PanelDestinos;
 import vista.PanelTarifa;
 import vista.PanelVendedores;
-
 import vista.Ventana;
 
 public class Main {
@@ -933,7 +932,15 @@ public class Main {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				try {
+					ventana.getPanelDemanda().actualizarTabla(controladoraBD.consultarDemanda());
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(ventana, "Ha ocurrido un error");
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(ventana, "Ha ocurrido un error");
+					e1.printStackTrace();
+				}
 				
 			}
 		});
