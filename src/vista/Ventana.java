@@ -115,7 +115,17 @@ public class Ventana extends JFrame {
 	
 	public void actualizarListaDestinos (ArrayList<Destino> destinos)
 	{
+
+		
+//		panelVendedores.getCbxOrigen().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
+//		panelVendedores.getCbxDestino().setModel(new javax.swing.DefaultComboBoxModel(destinos.toArray()));
+//		
+//		panelVendedores.getCbxOrigen().setSelectedIndex(-1);
+//		panelVendedores.getCbxDestino().setSelectedIndex(-1);
+		
+
 		panelGerente.getPanelDestinos().getListDestinos().setListData(destinos.toArray());	
+
 	}
 	public void listaVentas(ArrayList<Venta> ventas)
 	{
