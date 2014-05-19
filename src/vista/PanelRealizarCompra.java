@@ -86,7 +86,7 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		
 		//-------------------------------------------------------
 		
-		btnVolver = new JButton("Atrás");
+		btnVolver = new JButton("Atrï¿½s");
 		btnVolver.addActionListener(this);
 		btnVolver.setBounds(150, 353, 100, 30);
 		add(btnVolver);
@@ -216,7 +216,7 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 				JList<String> list = (JList<String>) evt.getSource();
 				
 				if(evt.getClickCount() == 2)
-					JOptionPane.showMessageDialog(null, "Oprimió dos veces el clic en " + list.getSelectedValue(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Oprimiï¿½ dos veces el clic en " + list.getSelectedValue(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		//********************************************************
@@ -307,6 +307,9 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 					        usrs, 
 					        usrs[0]);
 					
+					comprador = comprador.trim();
+					vendedor = vendedor.trim();
+					
 					String idVenta = ControladoraBD.generarVenta(calendario.getDate(), comprador, vendedor);
 					ControladoraBD.generarTiquete(4500, idVenta, lista1.getSelectedValue());
 					
@@ -350,7 +353,7 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 						comboClase.setVisible(true);
 					}
 					else
-						JOptionPane.showMessageDialog(null, "Los ID's de comprador y vendedor no son válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Los ID's de comprador y vendedor no son vï¿½lidos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} 
 				catch (ClassNotFoundException e1) {} catch (SQLException e1) {}
 
