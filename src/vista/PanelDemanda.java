@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 
 
@@ -29,8 +30,8 @@ public class PanelDemanda extends JPanel
 	private JComboBox cbxOrigen;
 	private JLabel lblLugarFin;
 	private JComboBox cbxDestino;
-	private JTable table;
 	private JButton btnRefrescar;
+	private JTextArea textArea;
 	
 	
 	public PanelDemanda() {
@@ -58,13 +59,6 @@ public class PanelDemanda extends JPanel
 		btnGenerar.setBounds(515, 285, 91, 23);
 		add(btnGenerar);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 269, 298);
-		add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
 		ImageIcon image = new ImageIcon("./imagenes/delete.png");
 		
 		JLabel lblLugarInicio = new JLabel("Lugar de Origen");
@@ -86,6 +80,11 @@ public class PanelDemanda extends JPanel
 		btnRefrescar = new JButton("Refrescar");
 		btnRefrescar.setBounds(325, 285, 91, 23);
 		add(btnRefrescar);
+		
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(10, 74, 305, 236);
+		add(textArea);
 	}
 
 	public JDatePickerImpl getdPInicio( )
@@ -101,8 +100,8 @@ public class PanelDemanda extends JPanel
 
 	
 
-	public JTable getTable() {
-		return table;
+	public JTextArea getTextArea() {
+		return textArea;
 	}
 
 	public JButton getBtnRefrescar() {
@@ -121,6 +120,4 @@ public class PanelDemanda extends JPanel
 	public JComboBox getCbxDestino() {
 		return cbxDestino;
 	}
-
-	
 }
