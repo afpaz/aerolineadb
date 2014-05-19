@@ -411,11 +411,11 @@ public class ControladoraBD
 		Connection con = getConnection();
 		String sql = "SELECT ti.tiquete_id,vu.FECHA,vu.ORIGEN,vu.DESTINO,vu.HORA,ve.COMPRADOR "
 				+ "FROM VUELOS vu, RUTA_VUELO rv, RUTAS ru, VIAJES vi, TIQUETES ti, VENTAS ve "
-				+ "WHERE vu.VUELO_ID ='" +idVuelo+"'AND rv.VUELO_ID = vu.VUELO_ID "
+				+ "WHERE vu.VUELO_ID ='" +idVuelo+"' AND rv.VUELO_ID = vu.VUELO_ID "
 				+ "AND ru.RUTA_ID = rv.RUTA_ID "
 				+ "AND vi.VIAJE_ID = ru.VIAJE_ID "
 				+ "AND ti.VIAJE_ID = vi.VIAJE_ID "
-				+ "AND ve.VENTA_ID = ti.VENTA_ID;";
+				+ "AND ve.VENTA_ID = ti.VENTA_ID";
 		
 		return con.prepareStatement(sql).executeQuery();
 	}
