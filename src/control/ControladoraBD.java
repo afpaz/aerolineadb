@@ -343,6 +343,13 @@ public class ControladoraBD
 		String sql = "SELECT * FROM TARIFAS";
 		return conect.prepareStatement(sql).executeQuery();
 	}
+	
+	public ResultSet consultarVentas() throws ClassNotFoundException, SQLException
+	{
+		Connection conect = getConnection();
+		String sql = "SELECT * FROM VENTAS";
+		return conect.prepareStatement(sql).executeQuery();
+	}
 
 	public ResultSet consultarDescuentos() throws ClassNotFoundException, SQLException
 	{
