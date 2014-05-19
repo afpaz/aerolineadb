@@ -346,6 +346,8 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 						scrollLista2.setVisible(false);
 						scrollLista3.setVisible(false);
 						btnComprar.setVisible(false);
+						scrollLista2.setVisible(false);
+						scrollLista3.setVisible(false);
 						
 					}
 					else
