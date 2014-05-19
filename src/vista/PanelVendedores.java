@@ -145,14 +145,7 @@ public class PanelVendedores extends JPanel
 	public JButton getBtnLimpiar() {
 		return btnLimpiar;
 	}
-	
-	public JComboBox getCbxOrigen() {
-		return cbxOrigen;
-	}
 
-	public JComboBox getCbxDestino() {
-		return cbxDestino;
-	}
 	public JList getListVentas() {
 		return listVentas;
 	}
