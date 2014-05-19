@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JSplitPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
