@@ -67,6 +67,13 @@ public class Ruta
 		this.idTarifa = idTarifa;
 	}
 	
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return getId()+":"+ getFecha().toString() + " | " + getIdViaje() + "-" + getIdTarifa();
+	}
+	
 	
 
 }
