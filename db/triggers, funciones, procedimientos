@@ -232,6 +232,49 @@ ELSE raise_application_error( -20004, 'Debes ser Gerente.');
 END IF;
 end;
 /
+
+create or replace procedure crear_lugar( usu in VARCHAR2, nombre in VARCHAR2, descripcion in VARCHAR2, latitud in NUMBER, longitud NUMBER ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'INSERT INTO LUGARES VALUES( :1, :2, :3, :4 )' USING nombre, descripcion, latitud, longitud;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
+create or replace procedure editar_lugar( usu in VARCHAR2, nombre in VARCHAR2, descripcion in VARCHAR2, latitud in NUMBER, longitud NUMBER, nombre_ant varchar2 ) is
+aux INTEGER := 0;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'UPDATE LUGARES SET nombre_lugar = :1, descripcion = :2, latitud = :3, longitud = :4 WHERE nombre_lugar = :5' USING nombre, descripcion, latitud, longitud, nombre_ant;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
+create or replace procedure eliminar_lugar( usu in VARCHAR2, nombre in VARCHAR2 ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'DELETE FROM LUGARES WHERE nombre_lugar = :1' USING nombre;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
 --================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
