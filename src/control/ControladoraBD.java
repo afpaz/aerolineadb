@@ -11,7 +11,9 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.swing.JOptionPane;
+
 import modelo.Destino;
 import modelo.ReporteVentas;
 import oracle.jdbc.OracleTypes;
@@ -110,7 +112,7 @@ public class ControladoraBD
 		
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci���n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 		}finally{
 			cs.close();
 			con.close();
@@ -156,6 +158,18 @@ public class ControladoraBD
 		pr_almacenado.execute();
 		pr_almacenado.close();
 		connection.close();
+	}
+	
+	public int actualizarVenta (Date fecha, String vendedor, String comprador, String ventaId) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String query = "UPDATE VENTAS SET FECHA = ?, VENDEDOR = ?, COMPRADOR = ? WHERE VENTA_ID = ?";
+		PreparedStatement stat = con.prepareStatement(query);
+		stat.setDate(1, new java.sql.Date(fecha.getTime()));
+		stat.setString(2, vendedor);
+		stat.setString(3, comprador);
+		stat.setString(4, ventaId);
+		return stat.executeUpdate();
 	}
 
 	public void actualizarDestino(String usuario, String id, double latitud, double longitud, String descripcion, String nombreV) throws ClassNotFoundException, SQLException
@@ -490,7 +504,7 @@ public class ControladoraBD
 
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci���n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 
 		finally
@@ -530,7 +544,7 @@ public class ControladoraBD
 
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci���n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 
 		finally
@@ -631,7 +645,7 @@ public class ControladoraBD
 
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci���n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 
 		finally
