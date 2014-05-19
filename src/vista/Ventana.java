@@ -13,6 +13,7 @@ import modelo.Clase;
 import modelo.Descuento;
 import modelo.Destino;
 import modelo.Tarifa;
+import modelo.Venta;
 
 public class Ventana extends JFrame {
 
@@ -128,7 +129,10 @@ public class Ventana extends JFrame {
 		panelDemanda.getCbxOrigen().setSelectedIndex(-1);
 		panelDemanda.getCbxDestino().setSelectedIndex(-1);
 	}
-
+	public void listaVentas(ArrayList<Venta> ventas)
+	{
+		panelVendedores.getListVentas().setListData(ventas.toArray());
+	}
 	public void actualizarListaTarifas(ArrayList<Tarifa> tarifas) 
 	{
 		panelGerente.getPanelTarifa().getListTarifas().setListData(tarifas.toArray());
@@ -138,4 +142,5 @@ public class Ventana extends JFrame {
 	{
 		panelGerente.getPanelDescuento( ).getList( ).setListData(descuentos.toArray());
 	}	
+	
 }
