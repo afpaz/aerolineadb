@@ -11,8 +11,9 @@ public class Vuelo
 	private String origen;
 	private String destino;
 	private int cupoActual;
+	private String hora;
 	
-	public Vuelo(String id, Date fecha, int cupoMax, String origen, String destino, int cupoActual)
+	public Vuelo(String id, Date fecha, int cupoMax, String origen, String destino, int cupoActual, String hora)
 	{
 		this.id = id;
 		this.fecha = fecha;
@@ -20,6 +21,7 @@ public class Vuelo
 		this.origen = origen;
 		this.destino = destino;
 		this.cupoActual = cupoActual;
+		this.hora = hora;
 	}
 
 	public String getId()
@@ -80,6 +82,16 @@ public class Vuelo
 	public void setCupoActual(int cupoActual)
 	{
 		this.cupoActual = cupoActual;
+	}
+	
+	public String getHora()
+	{
+		return hora;
+	}
+	
+	public void setHora(String hora)
+	{
+		this.hora = hora;
 	}
 	
 	@Override
