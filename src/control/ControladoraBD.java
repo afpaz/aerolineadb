@@ -809,4 +809,17 @@ public class ControladoraBD
 			arreglo = dato.split(",");
 		return arreglo;
 	}
+	
+	public int actualizarVenta (Date fecha, String vendedor, String comprador, String idVenta) throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String query = "UPDATE VENTAS SET FECHA = ?, VENDEDOR = ?, COMPRADOR = ? WHERE VENTA_ID = ?";
+		PreparedStatement stat = con.prepareStatement(query);
+		stat.setDate(1, new java.sql.Date(fecha.getTime()));
+		stat.setString(2, vendedor);
+		stat.setString(3, comprador);
+		stat.setString(4, idVenta);
+		return stat.executeUpdate();
+		
+	}
 }
