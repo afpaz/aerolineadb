@@ -278,17 +278,50 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 		{
 			if(lista1.getSelectedValue() != null)
 			{
-				String idComprador = JOptionPane.showInputDialog("Ingrese el ID del comprador"),
-					   idVendedor = JOptionPane.showInputDialog("Ingrese el ID del vendedor");
-				
-				if(!idComprador.equals("") && idComprador != null && !idVendedor.equals("") && idVendedor != null)
+				try 
 				{
-					JOptionPane.showMessageDialog(null, "Gracias por comprar el vuelo " + lista1.getSelectedValue(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
+					String[] usrs = ControladoraBD.getUsuarios();
+
 					
-					comboOrigen.setSelectedIndex(0);
-					comboDestino.setSelectedIndex(0);
-					comboClase.setSelectedIndex(0);
-					
+					String comprador = (String) JOptionPane.showInputDialog(this, "Quien es el comprador?", "Comprador", JOptionPane.QUESTION_MESSAGE, 
+					        null, 
+					        usrs, 
+					        usrs[0]);
+					String vendedor = (String) JOptionPane.showInputDialog(this, 
+					        "Quien es el vendedor?",
+					        "vendedor",
+					        JOptionPane.QUESTION_MESSAGE, 
+					        null, 
+					        usrs, 
+					        usrs[0]);
+					if(!comprador.equals("") && comprador != null && !vendedor.equals("") && vendedor != null)
+					{
+						
+						JOptionPane.showMessageDialog(null, "Gracias por comprar el vuelo " + lista1.getSelectedValue(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
+						
+						
+						comboOrigen.setSelectedIndex(0);
+						comboDestino.setSelectedIndex(0);
+						comboClase.setSelectedIndex(0);
+						
+						btnConsultar.setVisible(true);
+						lblOrigen.setVisible(true);
+						lblDestino.setVisible(true);
+						lblClase.setVisible(true);
+						comboOrigen.setVisible(true);
+						comboDestino.setVisible(true);
+						calendario.setVisible(true);
+						comboClase.setVisible(true);
+						
+						btnVolver.setVisible(false);
+						scrollLista1.setVisible(false);
+						btnComprar.setVisible(false);					
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Los ID's de comprador y vendedor no son válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
+				} 
+				catch (ClassNotFoundException e1) {} catch (SQLException e1) {}
+
 					btnConsultar.setVisible(true);
 					lblOrigen.setVisible(true);
 					lblDestino.setVisible(true);
@@ -302,10 +335,6 @@ public class PanelRealizarCompra extends JPanel implements ActionListener
 					scrollLista1.setVisible(false);
 					btnComprar.setVisible(false);					
 				}
-				
-				else
-					JOptionPane.showMessageDialog(null, "Los ID's de comprador y vendedor no son válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}
 			
 			else
 				JOptionPane.showMessageDialog(null, "Debe seleccionar un vuelo de la lista!", "ERROR", JOptionPane.ERROR_MESSAGE);

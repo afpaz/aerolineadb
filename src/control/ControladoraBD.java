@@ -616,7 +616,58 @@ public class ControladoraBD
 		//sql+= " GROUP BY V.FECHA;";
 		return con.prepareStatement( sql ).executeQuery( );
 	}
+	
+	public static String[] getUsuarios() throws ClassNotFoundException, SQLException
+	{
+		Connection con = getConnection();
+		String function = "{? = call GET_USUARIOS()}";
+		String dato = "";
+		String[] arreglo;
+		CallableStatement cs = null;
 
+		try
+		{
+			cs = con.prepareCall(function);
+			// cs.setString(0, "");
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			dato = cs.getString(1);
+		}
+
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error al recuperar la funci�n desde SQL DEVELOPER\n" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+
+		finally
+		{
+			cs.close();
+			con.close();
+		}
+
+		if (dato == null)
+		{
+			arreglo = new String[1];
+			arreglo[0] = "No hay usaurios registrados!!!";
+		}
+
+		else
+			arreglo = dato.split(",");
+
+		return arreglo;
+	}
+
+	public static void veder(String comprador, String vendedor) throws SQLException, ClassNotFoundException {
+		Connection connection = getConnection();
+		String procedure = "{ call VENDER(?,?) }";
+		CallableStatement funcion = connection.prepareCall(procedure);
+		funcion.setString(1, comprador);
+		funcion.setString(2, comprador);
+		funcion.execute();
+		funcion.close();
+		connection.close();
+	}
+	
 	public ResultSet ConsultarDemandaMes(Date inicio, Date fin, Destino origen, Destino destino) throws ClassNotFoundException, SQLException  {
 		// TODO Auto-generated method stub
 		return null;
