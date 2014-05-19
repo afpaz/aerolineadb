@@ -129,7 +129,7 @@ WHERE u.USUARIO = usu
 AND u.ROL_ID = 'Gerente';
 IF aux > 0 THEN
 EXECUTE IMMEDIATE 'UPDATE CLASES SET clase_id = :1, descripcion = :2, multiplicador = :3 WHERE clase_id = :4' USING clase, descripcion, multiplicador, clase_ant;
-ELSE raise_application_error( -20005, 'Debes ser Gerente.');
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
 END IF;
 end;
 /

@@ -318,7 +318,7 @@ public class Main {
 				catch (SQLException e1) 
 				{
 					String[] err = e1.getMessage( ).split( "\n" );
-					if( e1.getErrorCode( ) == 20004 || e1.getErrorCode( ) == 20005 )
+					if( e1.getErrorCode( ) == 20004 )
 						JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
 					else
 						e1.printStackTrace();
