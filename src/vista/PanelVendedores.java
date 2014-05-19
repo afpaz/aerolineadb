@@ -43,7 +43,7 @@ public class PanelVendedores extends JPanel
 	private JButton btnModificar;
 	private JLabel lblFecha;
 	private JComboBox cbxClase;
-	
+	private JButton btnLimpiar;
 	
 	public PanelVendedores() {
 		
@@ -80,7 +80,7 @@ public class PanelVendedores extends JPanel
 		add(cbxDestino);
 		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(232, 254, 91, 23);
+		btnAgregar.setBounds(222, 254, 91, 23);
 		add(btnAgregar);
 		
 		lblVendedor = new JLabel("Vendedor");
@@ -106,7 +106,7 @@ public class PanelVendedores extends JPanel
 		add(listVentas);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(328, 254, 91, 23);
+		btnModificar.setBounds(322, 254, 91, 23);
 		add(btnModificar);
 		
 		lblDescuento = new JLabel("Desucento Id");
@@ -124,6 +124,10 @@ public class PanelVendedores extends JPanel
 		cbxClase = new JComboBox();
 		cbxClase.setBounds(328, 146, 126, 22);
 		add(cbxClase);
+		
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setBounds(423, 254, 91, 23);
+		add(btnLimpiar);
 	}
 
 	public JTextField getTxtComprador()
@@ -144,7 +148,14 @@ public class PanelVendedores extends JPanel
 	public JButton getBtnAgregar() {
 		return btnAgregar;
 	}
-
+	
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+	
+	public JButton getBtnLimpiar() {
+		return btnLimpiar;
+	}
 	
 	public JComboBox getCbxOrigen() {
 		return cbxOrigen;
@@ -159,5 +170,13 @@ public class PanelVendedores extends JPanel
 
 	public void setlistVentas(JList listVentas) {
 		this.listVentas = listVentas;
+	}
+	
+	public void limpiarCampos()
+	{
+		txtComprador.setText("");
+		txtVendedor.setText("");
+		fecha.getJFormattedTextField( ).setText("");
+		
 	}
 }

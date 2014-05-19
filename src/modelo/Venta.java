@@ -8,7 +8,7 @@ public class Venta
 {
 	
 	private String venta_id;
-	private String fecha;
+	private Date fecha;
 	private String vendedor;
 	private String comprador;
 	
@@ -17,8 +17,16 @@ public class Venta
 		// TODO Auto-generated constructor stub
 	}
 
-	public Venta(String venta_id,	String fecha, String vendedor, String comprador)
+//	public Venta(String venta_id,	String fecha, String vendedor, String comprador)
+//	{
+//		this.venta_id = venta_id;
+//		this.fecha = fecha;
+//		this.vendedor = vendedor;
+//		this.comprador = comprador;
+//	}
+	public Venta(String venta_id,	Date fecha, String vendedor, String comprador)
 	{
+		
 		this.venta_id = venta_id;
 		this.fecha = fecha;
 		this.vendedor = vendedor;
@@ -35,13 +43,13 @@ public class Venta
 		this.venta_id = venta_id;
 	}
 	
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
 
 
-	public void setFecha(String fecha) {
+	public void Date(Date fecha) {
 		this.fecha = fecha;
 	}
 

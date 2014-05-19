@@ -229,6 +229,22 @@ public class ControladoraBD
 		pr_almacenado.close();
 		connection.close();
 	}
+	
+
+	public void agregarVenta(Date fecha, String comprador, String vendedor) throws ClassNotFoundException, SQLException
+	{
+		Connection connection = getConnection();
+		String procedure = "{ call agregar_venta(?, ?, ?) }";
+		CallableStatement pr_almacenado = connection.prepareCall(procedure);
+	
+		java.sql.Date d1 = new java.sql.Date(fecha.getTime());
+		pr_almacenado.setDate(1, d1);
+		pr_almacenado.setString(2, vendedor);
+		pr_almacenado.setString(3, comprador);
+		pr_almacenado.execute();
+		pr_almacenado.close();
+		connection.close();
+	}
 
 	public void crearClase(String usuario, String nombre, String descripcion, int multiplicador) throws ClassNotFoundException, SQLException
 	{

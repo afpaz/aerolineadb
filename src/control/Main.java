@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -449,11 +450,110 @@ public class Main {
 					Venta venta = (Venta) listVendedores.getSelectedValue( );
 					panelV.getTxtComprador().setText(venta.getComprador()+"");
 					panelV.getTxtVendedor().setText(venta.getVendedor()+"");
+					panelV.getdPInicio().getJFormattedTextField( ).setText(venta.getFecha()+"");
 				}
 			}
 		});
+		ventana.listaVentas(consultarVentas());
 		
+		panelV.getBtnLimpiar().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				panelV.limpiarCampos();
+				listVendedores.clearSelection();	
+			}
+		});
 	
+		//evento bnt Guardar
+				panelV.getBtnAgregar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) 
+					{
+						
+						Date fecha = (Date)panelV.getdPInicio().getModel().getValue();					
+						String vendedor = (String)panelV.getTxtVendedor().getText();
+						String comprador = (String)panelV.getTxtComprador().getText();						
+
+						try 
+						{
+//							if( !panelDescuento.getList( ).isSelectionEmpty() )
+//							{
+//								Descuento d = (Descuento) panelDescuento.getList( ).getSelectedValue();
+//								controladoraBD.actualizarDescuento( usu, d.getId( ), id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
+//							}
+//							else
+								controladoraBD.agregarVenta(fecha, comprador, vendedor);
+
+							panelV.limpiarCampos();
+							panelV.getListVentas().clearSelection( );
+							ventana.actualizarListaDescuentos( consultarDescuentos( ) );
+						} 
+						catch (ClassNotFoundException e1) 
+						{
+							e1.printStackTrace();
+						} 
+						catch (SQLException e1) 
+						{
+							String[] err = e1.getMessage( ).split( "\n" );
+							if( e1.getErrorCode( ) == 20000 || e1.getErrorCode( ) == 20001 || e1.getErrorCode( ) == 20004 )
+								JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+							else
+								e1.printStackTrace();
+						}
+					}
+				});	
+				
+				//evento bnt Modificar
+				panelV.getBtnModificar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) 
+					{
+						Venta venta = (Venta) listVendedores.getSelectedValue( );
+						Date fecha = venta.getFecha();
+//				        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+//				        Date nuevaFecha = null;
+//						try {
+//							nuevaFecha = formatoFecha.parse(fecha);
+//						} catch(Exception ex) {
+//				            JOptionPane.showMessageDialog(null, "Formato de ingreso incorrecto",
+//				                    "Erro de conversión:" + ex.getMessage(),
+//				                    JOptionPane.ERROR_MESSAGE);
+//						}
+//				        
+						String vendedor = (String)panelV.getTxtVendedor().getText();
+						String comprador = (String)panelV.getTxtComprador().getText();
+						
+						String ventaId = venta.getVenta_id();
+
+						try 
+						{
+//							if( !panelDescuento.getList( ).isSelectionEmpty() )
+//							{
+//								Descuento d = (Descuento) panelDescuento.getList( ).getSelectedValue();
+//								controladoraBD.actualizarDescuento( usu, d.getId( ), id, fechaInf, fechaSup, ocupacionInf, ocupacionSup, descuento );
+//							}
+//							else
+								controladoraBD.actualizarVenta(fecha, vendedor, comprador, ventaId);
+
+							panelV.limpiarCampos();
+							panelV.getListVentas().clearSelection( );
+							ventana.actualizarListaDescuentos( consultarDescuentos( ) );
+						} 
+						catch (ClassNotFoundException e1) 
+						{
+							e1.printStackTrace();
+						} 
+						catch (SQLException e1) 
+						{
+							String[] err = e1.getMessage( ).split( "\n" );
+							if( e1.getErrorCode( ) == 20000 || e1.getErrorCode( ) == 20001 || e1.getErrorCode( ) == 20004 )
+								JOptionPane.showMessageDialog( null, err[0], "Error", JOptionPane.ERROR_MESSAGE );
+							else
+								e1.printStackTrace();
+						}
+					}
+				});	
+
 	}
 	private static void eventosPanelDestinos() 
 	{
@@ -812,10 +912,11 @@ public class Main {
 			{
 				String ventaId = resultSet.getString( 1 );
 				
-				String f1[] = resultSet.getString( 3 ).split( " " )[0].split( "-" );
-				String fecha = f1[2] + "/" + f1[1] + "/" + f1[0];
+//				String f1[] = resultSet.getString( 2 ).split( " " )[0].split( "-" );
+//				String fecha = f1[2] + "/" + f1[1] + "/" + f1[0];
+				Date fecha = resultSet.getDate(2);
 				String vendedor = resultSet.getString( 3 );
-				String comprador = resultSet.getString( 3 );
+				String comprador = resultSet.getString( 4 );
 				Venta v = new Venta( ventaId, fecha, vendedor, comprador );
 				ventas.add( v );
 			}
