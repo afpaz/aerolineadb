@@ -141,6 +141,7 @@ public class PanelRutas extends JPanel
 					try
 					{
 						controladorBD.crearRuta(fechaFormateada, v.getId(), t.getid());
+						llenarListaRutas();
 
 					} catch (ClassNotFoundException e)
 					{
@@ -184,11 +185,11 @@ public class PanelRutas extends JPanel
 						} catch (ClassNotFoundException e)
 						{
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							JOptionPane.showMessageDialog(PanelRutas.this, "Error eliminando la ruta");
 						} catch (SQLException e)
 						{
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							JOptionPane.showMessageDialog(PanelRutas.this, "Elimine los datos que dependan de esta ruta para poder eliminarla.");
 						}
 
 					}
