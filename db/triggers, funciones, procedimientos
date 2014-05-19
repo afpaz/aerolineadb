@@ -191,7 +191,47 @@ END IF;
 end;
 /
 
+create or replace procedure crear_tarifa( usu in VARCHAR2, tarifa in VARCHAR2, valor in NUMBER, limI in NUMBER, limS NUMBER ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'INSERT INTO TARIFAS VALUES( :1, :2, :3, :4 )' USING tarifa, valor, limI, limS;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
 
+create or replace procedure editar_tarifa( usu in VARCHAR2, tarifa in VARCHAR2, valor in NUMBER, limI in NUMBER, limS NUMBER ) is
+aux INTEGER := 0;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'UPDATE TARIFAS SET vlr_km = :1, liminfkm = :2, limsupkm = :3 WHERE tarifa_id = :4' USING valor, limI, limS, tarifa;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
+
+create or replace procedure eliminar_tarifa( usu in VARCHAR2, tarifa in VARCHAR2 ) is
+aux INTEGER;
+begin
+SELECT COUNT(u.USUARIO) INTO aux
+FROM USUARIO_ROL u
+WHERE u.USUARIO = usu
+AND u.ROL_ID = 'Gerente';
+IF aux > 0 THEN
+EXECUTE IMMEDIATE 'DELETE FROM TARIFAS WHERE tarifa_id = :1' USING tarifa;
+ELSE raise_application_error( -20004, 'Debes ser Gerente.');
+END IF;
+end;
+/
 --================ FUNCIONES ========================
 
 create or replace FUNCTION compactar_tabla_rank return varchar2 IS
